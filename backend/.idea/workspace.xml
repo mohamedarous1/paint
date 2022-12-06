@@ -4,28 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6fbcfa6a-1bf1-4256-a115-1b9cbc4bb490" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/example/backend/BackendApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/example/backend/BackendApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paint/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paint/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paint/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paint/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paint/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paint/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paint/src/main/java/com/paint/paint/PaintApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paint/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/paint/src/test/java/com/paint/paint/PaintApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/paint_frontend/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/paint_frontend/src/app/app.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/paint_frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/paint_frontend/src/app/app.component.html" afterDir="false" />
-    </list>
+    <list default="true" id="6fbcfa6a-1bf1-4256-a115-1b9cbc4bb490" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,7 +50,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "D:/college terms/term 3/1st Semester/Programming 2/labs/lab 3/paint/backend/backend",
+    "last_opened_file_path": "D:/LEVEL 2 CSE (semester_1)/OOP/paint_lab/paint",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
