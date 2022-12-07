@@ -12,7 +12,10 @@ public class BackendApplication {
 		JSONObject obj=new JSONObject();
 		obj.put("name","sonoo");
 		System.out.print(obj);
-
 	}
 
+}
+enum color
+{
+	
 }
