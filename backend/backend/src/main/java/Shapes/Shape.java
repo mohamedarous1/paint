@@ -27,7 +27,6 @@ public abstract class Shape
     {
         this.StrokeWidth = width;
     }
-
     public void SetEnabled(boolean b)
     {
         this.Enabled = b;

@@ -15,7 +15,3 @@ public class BackendApplication {
 	}
 
 }
-enum color
-{
-	
-}
