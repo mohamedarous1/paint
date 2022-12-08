@@ -1,0 +1,11 @@
+.drawing{
+    
+    padding : 10px;
+    width : 100%;
+    border-width: 10px;
+    border-color: rgb(0, 0, 0);
+    height: 600px;
+    width: 1200px;
+    background-color: white;
+  
+}
