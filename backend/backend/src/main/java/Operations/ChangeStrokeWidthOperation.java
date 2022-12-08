@@ -13,7 +13,6 @@ public class ChangeStrokeWidthOperation extends Operation
         super(id);
         this.OldStrokeWidth = prevwidth;
         this.NewStrokeWidth = newwidth;
-
     }
 
     @Override
