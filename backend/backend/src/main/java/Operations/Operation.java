@@ -6,6 +6,10 @@ public class Operation
 {
     private int ShapeID;
 
+    public int GetShapeID()
+    {
+        return this.ShapeID;
+    }
     public Operation(int id)
     {
         this.ShapeID = id;
@@ -17,4 +21,5 @@ public class Operation
     {
         return null;
     }
+
 }

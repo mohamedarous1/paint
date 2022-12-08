@@ -1,7 +1,5 @@
 package Shapes;
 
-import HelpingClasses.CircleSize;
-import HelpingClasses.LWSize;
 import HelpingClasses.RegularPolygonSize;
 import HelpingClasses.Size;
 

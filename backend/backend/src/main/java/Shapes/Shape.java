@@ -1,15 +1,15 @@
 package Shapes;
 
-public abstract class Shape
+public abstract class Shape implements Cloneable
 {
-    protected int Id;
+    protected int ID;
     protected int StrokeWidth;
     protected String StrokeColor;
     protected boolean Enabled;
 
     public int GetId()
     {
-        return this.Id;
+        return this.ID;
     }
     public String GetStrokeColor()
     {
@@ -27,9 +27,54 @@ public abstract class Shape
     {
         this.StrokeWidth = width;
     }
-    public void SetEnabled(boolean b)
+    public void SetEnabled()
     {
-        this.Enabled = b;
+        this.Enabled = true;
+    }
+    public void SetDisabled()
+    {
+        this.Enabled = false;
     }
 
+    @Override
+    protected Object clone()
+    {
+        Shape shape = GetSimilarShapeType();
+
+        shape.ID = this.ID;
+        shape.StrokeColor = this.StrokeColor;
+        shape.StrokeWidth = this.StrokeWidth;
+        shape.Enabled = this.Enabled;
+
+        return shape;
+    }
+
+    public Shape GetSimilarShapeType()
+    {
+        if (this instanceof Circle)
+        {
+            return new Circle();
+        }
+        else if (this instanceof Rectangle)
+        {
+            return new Rectangle();
+        }
+        else if (this instanceof Ellipse)
+        {
+            return new Ellipse();
+        }
+        else if (this instanceof Square)
+        {
+            return new Square();
+        }
+        else if (this instanceof Pentagon)
+        {
+            return new Pentagon();
+        }
+        else if (this instanceof Triangle)
+        {
+            return new Triangle();
+        }
+        return null;
+    }
 }

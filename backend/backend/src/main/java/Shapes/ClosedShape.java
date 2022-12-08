@@ -11,7 +11,7 @@ public abstract class ClosedShape extends Shape
     {
         this.FilColor = color;
     }
-    public void SetPos(int x, int y)
+    public void SetPosition(int x, int y)
     {
         this.ShapePosition = new Position(x, y);
     }
