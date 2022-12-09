@@ -15,7 +15,7 @@ import { ToolsComponent } from './home/tools/tools.component';
     ToolsComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

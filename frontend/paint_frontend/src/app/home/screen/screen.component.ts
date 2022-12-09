@@ -10,6 +10,7 @@ export class ScreenComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }
