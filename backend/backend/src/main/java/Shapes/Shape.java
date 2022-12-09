@@ -3,7 +3,7 @@ package Shapes;
 import HelpingClasses.Position;
 import System.MyCloneable;
 
-public abstract class Shape
+public abstract class Shape implements MyCloneable
 {
     private int ID;
     private boolean Enabled;
@@ -49,13 +49,12 @@ public abstract class Shape
         this.ID = id;
     }
 
-//
-    protected Object clone(Shape shape)
+    @Override
+    public void Clone(Shape shape)
     {
         shape.StrokeColor = this.StrokeColor;
         shape.StrokeWidth = this.StrokeWidth;
         shape.Enabled = this.Enabled;
-        return shape;
     }
 
 }

@@ -15,5 +15,17 @@ public class Circle extends ClosedShape
     {
         this.mySize = (CircleSize) size;
     }
+    @Override
+    public Size GetSize()
+    {
+        return this.mySize;
+    }
+
+
+    @Override
+    public void Clone(Shape shape)
+    {
+        super.Clone(shape);
+    }
 
 }

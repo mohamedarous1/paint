@@ -6,4 +6,10 @@ public class Pentagon extends RegularPolygon
     {
         super(id);
     }
+
+    @Override
+    public void Clone(Shape shape)
+    {
+        super.Clone(shape);
+    }
 }

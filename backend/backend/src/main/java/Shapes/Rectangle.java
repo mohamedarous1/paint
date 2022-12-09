@@ -13,8 +13,21 @@ public class Rectangle extends ClosedShape
         this.mySize = (LWSize)size;
     }
 
+    @Override
+    public Size GetSize()
+    {
+        return this.mySize;
+    }
+
     public Rectangle(int id)
     {
         super(id);
+    }
+
+
+    @Override
+    public void Clone(Shape shape)
+    {
+        super.Clone(shape);
     }
 }

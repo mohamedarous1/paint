@@ -12,6 +12,13 @@ public class Ellipse extends ClosedShape
     {
         this.mySize = (LWSize) size;
     }
+
+    @Override
+    public Size GetSize()
+    {
+        return this.mySize;
+    }
+
     public Ellipse(int id)
     {
         super(id);
