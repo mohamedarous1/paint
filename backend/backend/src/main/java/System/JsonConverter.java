@@ -10,9 +10,10 @@ public class JsonConverter
 {
     public JSONObject ShapeJson;
     public Shape ShapeObject;
-    public JsonConverter(JSONObject obj)
+    public JsonConverter(JSONObject obj, Shape sh)
     {
         this.ShapeJson = obj;
+        this.ShapeObject = sh;
     }
 
     public void ExtractAllProperties()
@@ -72,5 +73,17 @@ public class JsonConverter
     public void ExtractSize()
     {
 
+    }
+
+    public static int GetShapeIdFromJson(JSONObject obj)
+    {
+        int id = (int)obj.get("id");
+        return id;
+    }
+
+    public static String GetShapeTypeFromJson(JSONObject obj)
+    {
+        String ShapeType = (String)obj.get("ShapeType");
+        return ShapeType;
     }
 }

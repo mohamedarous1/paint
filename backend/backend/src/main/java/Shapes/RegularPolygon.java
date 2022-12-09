@@ -12,4 +12,8 @@ public abstract class RegularPolygon extends ClosedShape
     {
         this.mySize = (RegularPolygonSize) size;
     }
+    public RegularPolygon(int id)
+    {
+        super(id);
+    }
 }

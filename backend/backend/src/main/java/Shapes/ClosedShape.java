@@ -14,4 +14,9 @@ public abstract class ClosedShape extends Shape
     public void SetSize(Size s)
     {
     }
+
+    public ClosedShape(int id)
+    {
+        super(id);
+    }
 }

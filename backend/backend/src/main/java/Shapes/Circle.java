@@ -6,10 +6,10 @@ public class Circle extends ClosedShape
 {
     private CircleSize mySize;
 
-//    public Circle(int id)
-//    {
-//
-//    }
+    public Circle(int id)
+    {
+        super(id);
+    }
     @Override
     public void SetSize(Size size)
     {

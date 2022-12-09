@@ -2,12 +2,9 @@ package System;
 
 import Operations.Operation;
 import Shapes.Shape;
-import Shapes.ShapeFactory;
 import com.sun.tools.javac.Main;
 import org.json.simple.JSONObject;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -17,7 +14,14 @@ public class MainSystem
     static Stack<Operation> OperationStack = new Stack<>();
     static Stack<Operation> OperationUndoStack = new Stack<>();
     static ShapeFactory shapeFactory = new ShapeFactory();
+    private static int IDCounter = 1;
 
+    private static int GetAndIncreamentIdCounter()
+    {
+        int OldIDCounter = IDCounter;
+        IDCounter = IDCounter + 1;
+        return OldIDCounter;
+    }
     public static void Undo()
     {
         Operation CurrentOperation = MainSystem.OperationStack.peek();
@@ -49,13 +53,24 @@ public class MainSystem
             MainSystem.OperationUndoStack.pop();
     }
 
-    public static void ReceiveFrontJsonObject(JSONObject object)
+    public static void CreateNewObject(JSONObject object)
     {
+        int shapeId = JsonConverter.GetShapeIdFromJson(object);
+        String shapeType = JsonConverter.GetShapeTypeFromJson(object);
+
+//        JsonConverter jsonConverter = new JsonConverter(object);
+    }
+
+    public static void CloneObject(int ShapeId)
+    {
+        Shape shape = MainSystem.ShapesMap.get(ShapeId);
 
     }
 
-    public static void CreateAndInitializeShape(JSONObject object)
+    public Shape CreateObjectOfSameClass(Shape shape)
     {
-
+        int NewShapeId = MainSystem.GetAndIncreamentIdCounter();
+        Shape NewShape = MainSystem.shapeFactory.CreateObjectOfSameClassAndGivenId(NewShapeId, shape);
+        return NewShape;
     }
 }

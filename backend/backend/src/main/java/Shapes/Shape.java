@@ -1,13 +1,14 @@
 package Shapes;
 
 import HelpingClasses.Position;
+import System.MyCloneable;
 
-public abstract class Shape implements Cloneable
+public abstract class Shape
 {
-    protected int ID;
+    private int ID;
+    private boolean Enabled;
     protected int StrokeWidth;
     protected String StrokeColor;
-    protected boolean Enabled;
     protected Position ShapePosition;
 
     public int GetId()
@@ -43,45 +44,18 @@ public abstract class Shape implements Cloneable
         this.ShapePosition = new Position(x, y);
     }
 
-    @Override
-    protected Object clone()
+    public Shape(int id)
     {
-        Shape shape = GetSimilarShapeType();
+        this.ID = id;
+    }
 
-        shape.ID = this.ID;
+//
+    protected Object clone(Shape shape)
+    {
         shape.StrokeColor = this.StrokeColor;
         shape.StrokeWidth = this.StrokeWidth;
         shape.Enabled = this.Enabled;
-
         return shape;
     }
 
-    public Shape GetSimilarShapeType()
-    {
-        if (this instanceof Circle)
-        {
-            return new Circle();
-        }
-        else if (this instanceof Rectangle)
-        {
-            return new Rectangle();
-        }
-        else if (this instanceof Ellipse)
-        {
-            return new Ellipse();
-        }
-        else if (this instanceof Square)
-        {
-            return new Square();
-        }
-        else if (this instanceof Pentagon)
-        {
-            return new Pentagon();
-        }
-        else if (this instanceof Triangle)
-        {
-            return new Triangle();
-        }
-        return null;
-    }
 }
