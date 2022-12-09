@@ -47,12 +47,6 @@ public class MainSystem
         operation.Execute(shape);
     }
 
-    private static void EmptyOperationUndoStack() // called when we do any operation other thatn undo and redo
-    {
-        while (MainSystem.OperationUndoStack.empty() == false)
-            MainSystem.OperationUndoStack.pop();
-    }
-
     public static void CreateNewObject(JSONObject object)
     {
         int shapeId = JsonConverter.GetShapeIdFromJson(object);
@@ -61,16 +55,32 @@ public class MainSystem
 //        JsonConverter jsonConverter = new JsonConverter(object);
     }
 
-    public static void CloneObject(int ShapeId)
+    public static void CloneShapeAndInsertInShapeMapp(int ShapeId)
     {
-        Shape shape = MainSystem.ShapesMap.get(ShapeId);
+
 
     }
 
-    public Shape CreateObjectOfSameClass(Shape shape)
+    private void InsertInShapeMap(Shape shape)
     {
+        int id = shape.GetId();
+
+        MainSystem.ShapesMap.put(id, shape);
+    }
+
+    private Shape CreateObjectOfSameClass(int ShapeId)
+    {
+        Shape shape = MainSystem.ShapesMap.get(ShapeId);
+
         int NewShapeId = MainSystem.GetAndIncreamentIdCounter();
+
         Shape NewShape = MainSystem.shapeFactory.CreateObjectOfSameClassAndGivenId(NewShapeId, shape);
         return NewShape;
+    }
+
+    private static void EmptyOperationUndoStack() // called when we do any operation other thatn undo and redo
+    {
+        while (MainSystem.OperationUndoStack.empty() == false)
+            MainSystem.OperationUndoStack.pop();
     }
 }

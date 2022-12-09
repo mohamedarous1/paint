@@ -7,7 +7,6 @@ public class Triangle extends RegularPolygon
         super(id);
     }
 
-
     @Override
     public void Clone(Shape shape)
     {

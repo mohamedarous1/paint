@@ -6,6 +6,10 @@ import HelpingClasses.Size;
 public abstract class RegularPolygon extends ClosedShape
 {
     private RegularPolygonSize mySize;
+    public RegularPolygon(int id)
+    {
+        super(id);
+    }
 
     @Override
     public void SetSize(Size size)
@@ -18,12 +22,6 @@ public abstract class RegularPolygon extends ClosedShape
     {
         return this.mySize;
     }
-
-    public RegularPolygon(int id)
-    {
-        super(id);
-    }
-
 
     @Override
     public void Clone(Shape shape)

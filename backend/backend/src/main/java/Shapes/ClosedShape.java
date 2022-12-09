@@ -6,6 +6,11 @@ public abstract class ClosedShape extends Shape
 {
     protected String FilColor;
 
+    public ClosedShape(int id)
+    {
+        super(id);
+    }
+
     public void SetFillColor(String color)
     {
         this.FilColor = color;
@@ -15,19 +20,9 @@ public abstract class ClosedShape extends Shape
         return this.FilColor;
     }
 
-    public void SetSize(Size s)
-    {
-    }
+    public abstract void SetSize(Size s);
 
-    public Size GetSize()
-    {
-        return null; // Overrided Function
-    }
-
-    public ClosedShape(int id)
-    {
-        super(id);
-    }
+    public abstract Size GetSize();
 
     @Override
     public void Clone(Shape shape)

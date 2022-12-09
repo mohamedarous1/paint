@@ -7,6 +7,11 @@ public class Rectangle extends ClosedShape
 {
     private LWSize mySize;
 
+    public Rectangle(int id)
+    {
+        super(id);
+    }
+
     @Override
     public void SetSize(Size size)
     {
@@ -18,12 +23,6 @@ public class Rectangle extends ClosedShape
     {
         return this.mySize;
     }
-
-    public Rectangle(int id)
-    {
-        super(id);
-    }
-
 
     @Override
     public void Clone(Shape shape)
