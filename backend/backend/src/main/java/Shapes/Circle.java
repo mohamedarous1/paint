@@ -6,9 +6,14 @@ public class Circle extends ClosedShape
 {
     private CircleSize mySize;
 
+//    public Circle(int id)
+//    {
+//
+//    }
     @Override
     public void SetSize(Size size)
     {
         this.mySize = (CircleSize) size;
     }
+
 }

@@ -26,12 +26,9 @@ public class ResizeAndChangePositionOperation extends Operation
     @Override
     public void Execute(Shape shape)
     {
-        ClosedShape closedshape = (ClosedShape) shape;
-
         Point newposition = this.NewPosition.GetPosition();
 
-        closedshape.SetPosition(newposition.x, newposition.y);
-        closedshape.SetSize(this.NewSize);
+        shape.SetPosition(newposition.x, newposition.y);
     }
     @Override
     public Operation GetReversedOperation()

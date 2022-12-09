@@ -1,11 +1,14 @@
 package Shapes;
 
+import HelpingClasses.Position;
+
 public abstract class Shape implements Cloneable
 {
     protected int ID;
     protected int StrokeWidth;
     protected String StrokeColor;
     protected boolean Enabled;
+    protected Position ShapePosition;
 
     public int GetId()
     {
@@ -34,6 +37,10 @@ public abstract class Shape implements Cloneable
     public void SetDisabled()
     {
         this.Enabled = false;
+    }
+    public void SetPosition(int x, int y)
+    {
+        this.ShapePosition = new Position(x, y);
     }
 
     @Override
