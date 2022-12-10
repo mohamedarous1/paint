@@ -5,62 +5,74 @@ import { Konva } from "konva/cmj/_FullInternals";
 import { TitleStrategy } from '@angular/router';
 
 export class factoryShape{
-    shape :any
+    
     public shapecreator(s:string  , id : string){
-        switch (s) {
-            case 'cir':
+      
+            if(s == 'cir')
               return new circle( id);
-            case 'rect':
+            else if ( s == 'elli')
+              return new ellipse(id);
+            else if ( s ==  'rect' )
               return new rectangle( id);
-            case 'squ':
+            else if (s == 'squ')
               return new square( id);
-            case 'line':
+            else if (s ==  'line' )
               return new line( id);
-            case 'tri':
+            else 
               return new triangle( id);
-            default:
-              return new square(id);
+
           }
-    }
-
-
 }
 
 
+
+
+
 export interface Shape {
-    x: number
-    y: number,
-    width: number,
-    height: number,
-    fill: string,
-    stroke: string,
-    strokeWidth: number,
-    draggable: boolean;
-    get(): any;
+  structure :any;
+  get(): any;
 }
 
 
 class circle implements Shape {
-    x; y; width; height; fill; stroke; strokeWidth; draggable;
-    structure;
+
+  structure;
   
     constructor(id : string) {
-      this.x = 50;
-      this.y = 100;
-      this.width = 20;
-      this.height = 20;
-      this.fill = "red";
-      this.stroke = "yellow";
-      this.strokeWidth = 3;
-      this.draggable = true;
+
       this.structure = new Konva.Circle({
         x: 50,
         y: 100,
         radius: Math.abs(20),
-        fill: "red",
-        stroke: "yellow",
+        fill: "black",
         strokeWidth: 3,
-        draggable: true,
+        draggable: false,
+        id: id
+
+      });
+    }
+    
+    public get(): any {
+      return this.structure;
+
+    }
+  }
+
+
+  class rectangle implements Shape {
+   
+    structure;
+  
+    constructor(id : string) {
+
+      this.structure = new Konva.Rect({
+        x: 50,
+        y: 100,
+        width:70,
+        height : 70,
+        fill: "black",
+        strokeWidth: 3,
+        draggable: false,
         id: id
 
       });
@@ -73,28 +85,19 @@ class circle implements Shape {
   }
 
 
-  class rectangle implements Shape {
-    x; y; width; height; fill; stroke; strokeWidth; draggable;
+  class ellipse implements Shape {
     structure;
   
     constructor(id : string) {
-      this.x = 50;
-      this.y = 100;
-      this.width = 20;
-      this.height = 20;
-      this.fill = "red";
-      this.stroke = "yellow";
-      this.strokeWidth = 3;
-      this.draggable = true;
-      this.structure = new Konva.Rect({
-        x: 50,
+
+      this.structure = new Konva.Ellipse({
+        x: 200,
         y: 100,
-        width:70,
-        height : 70,
-        fill: "red",
-        stroke: "yellow",
-        strokeWidth: 3,
-        draggable: true,
+        radiusX: 100,
+        radiusY: 50,
+        strokeWidth: 4,
+        fill: "black",
+        draggable : false,
         id: id
 
       });
@@ -109,61 +112,19 @@ class circle implements Shape {
 
 
   class square implements Shape {
-    x; y; width; height; fill; stroke; strokeWidth; draggable;
+
     structure;
   
-    constructor(id2 : string) {
-      this.x = 50;
-      this.y = 100;
-      this.width = 20;
-      this.height = 20;
-      this.fill = "red";
-      this.stroke = "yellow";
-      this.strokeWidth = 3;
-      this.draggable = true;
+    constructor(id : string) {
+
       this.structure = new Konva.Rect({
         x: 200,
         y: 200,
         width:70,
         height : 70,
-        fill: "red",
-        stroke: "yellow",
         strokeWidth: 3,
-        draggable: true,
-        id: id2
-      });
-    }
-    
-    public get(): any {
-      return this.structure;
-  
-    }
-  }
-
-
-
-  class ellipse implements Shape {
-    x; y; width; height; fill; stroke; strokeWidth; draggable;
-    structure;
-  
-    constructor(id : string) {
-      this.x = 50;
-      this.y = 100;
-      this.width = 20;
-      this.height = 40;
-      this.fill = "red";
-      this.stroke = "yellow";
-      this.strokeWidth = 3;
-      this.draggable = true;
-      this.structure = new Konva.Circle({
-        x: 50,
-        y: 100,
-        width : this.width,
-        height : this.height,
-        fill: "red",
-        stroke: "yellow",
-        strokeWidth: 3,
-        draggable: true,
+        draggable: false,
+        fill: "black",
         id: id
 
       });
@@ -176,27 +137,23 @@ class circle implements Shape {
   }
 
 
+
+ 
+
 export class triangle implements Shape {
-    x; y; width; height; fill; stroke; strokeWidth; draggable;
+
     structure;
   
     constructor(id : string) {
-      this.x = 50;
-      this.y = 100;
-      this.width = 20;
-      this.height = 20;
-      this.fill = "red";
-      this.stroke = "yellow";
-      this.strokeWidth = 3;
-      this.draggable = true;
+
       this.structure = new Konva.RegularPolygon({
-        x: this.x,
-        y: this.y,
+        x: 50,
+        y: 100,
         sides: 3,
-        radius: Math.abs(this.width),
-        fill: this.fill,
-        stroke: this.stroke,
-        strokeWidth: this.strokeWidth,
+        radius: Math.abs(200),
+        strokeWidth: 3,
+        draggable: false, 
+        fill: "black",
         id : id
       });
     }
@@ -207,25 +164,19 @@ export class triangle implements Shape {
 }
 
 class line implements Shape {
-    x; y; width; height; fill; stroke; strokeWidth; draggable;
+
     structure;
-  
+
     constructor(id : string) {
-      this.x = 50;
-      this.y = 100;
-      this.width = 20;
-      this.height = 20;
-      this.fill = "none";
-      this.stroke = "yellow";
-      this.strokeWidth = 3;
-      this.draggable = true;
+
       this.structure = new Konva.Line({
         lineCap:"round",
-        x: this.x,
-        y: this.y,
-        stroke: this.stroke,
-        strokeWidth: this.strokeWidth,
-        points:[this.x,this.y,this.width,this.height],
+        x: 50,
+        y: 100,
+        strokeWidth: 3,
+        points:[50,100,20,20],
+        draggable : false,
+        stroke:"black",
         id : id
       });
     }

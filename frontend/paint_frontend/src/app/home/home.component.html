@@ -1,14 +1,14 @@
 <body>
     <div class="program"> 
         <div class="section1">
-          <button class="button"  (click)="create()" ><i><img src="assets/images/ellipse3.png" /></i></button>
-          <button class="button"><i><img src="assets/images/square3.png" /></i></button>
-          <button class="button"><i><img src="assets/images/circle3.png" /></i></button>
-          <button class="button"><i><img src="assets/images/rectangle3.png" /></i></button>
-          <button class="button"><i><img src="assets/images/traingle3.png" /></i></button>
-          <button class="button"><i><img src="assets/images/line3.png" /></i></button>
+          <button class="button"  (click)="create('elli')"><i><img src="assets/images/ellipse3.png" /></i></button>
+          <button class="button"  (click)="create('squ')"><i><img src="assets/images/square3.png" /></i></button>
+          <button class="button"  (click)="create('cir')"><i><img src="assets/images/circle3.png" /></i></button>
+          <button class="button"  (click)="create('rect')"><i><img src="assets/images/rectangle3.png" /></i></button>
+          <button class="button"  (click)="create('tri')"><i><img src="assets/images/traingle3.png" /></i></button>
+          <button class="button"  (click)="create('line')"><i><img src="assets/images/line3.png" /></i></button>
           <li>
-            <input type="checkbox" id ="fill-color">
+            <input type="checkbox" id ="fill-color" (click)="check_fill()">
             <label for="fill-color">fill color</label>
           </li>
           <div class="title">shapes</div>

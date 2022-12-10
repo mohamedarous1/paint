@@ -3,6 +3,10 @@ import {KonvaModule} from "ng2-konva";
 import {KonvaComponent} from "ng2-konva";
 import { Konva } from "konva/cmj/_FullInternals";
 import {factoryShape} from "./factoryShape";
+import { HitCanvas } from 'konva/cmj/Canvas';
+import { Conditional } from '@angular/compiler';
+import {request} from './request'
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -18,9 +22,12 @@ export class HomeComponent implements OnInit {
   drawMode : boolean  = false;
   freeDraw : boolean  = false;
   shape :any =  new factoryShape();
-
-
-  constructor() { }
+  id : number = 1;
+  fill : boolean = false ;
+  color : string = "black";
+  request : any = new request(this.http);
+  selected : any;
+  constructor(public http  : HttpClient) { }
 
   ngOnInit(): void {
     
@@ -34,26 +41,54 @@ export class HomeComponent implements OnInit {
     this.stage.add(this.layer);
     
     this.layer.add(this.shape.shapecreator("squ", "15").get());
-   console.log("fgfg");
-   var tr  = new Konva.Transformer();
+    //this.selected = this.shape.shapecreator("cir" , "-1").get();
+    //this.selected.visible("false");
+    var tr  = new Konva.Transformer();
     this.layer.add(tr);
-    var temp =  this.stage.findOne('#'+"15");
-    tr.nodes([temp]);
+    var temp ;
+
+
+    this.stage.on('mousedown', (e: any) => {
+      if(e.target == this.stage){
+        tr.nodes([]);
+        return;
+      }
+      this.selected = this.stage.findOne("#" + e.target.id());
+      this.selected.draggable("true");
+      tr.nodes([this.selected]);
+      
+    });
+
+
+    this.stage.on('mousemove', (e : any) => {
+      //this.selected = this.stage.findOne(e.target.id());
+      
+      
+    });
+
+    this.stage.on('mouseup', (e :any ) => {
+      return; 
+    });
+
+    
   }
 
+  check_fill(){
+    if(this.fill){
+      this.fill = false;
+      
+    }else{
+      this.fill = true;
+    }
+  }
 
-  create(){
-    var  gfh = new Konva.RegularPolygon({
-      x: 156,
-      y: 145,
-      sides: 3,
-      radius: Math.abs(50),
-      fill: "yellow",
-      stroke: "red",
-      strokeWidth: 30,
-      id : "51"
-    });
-    this.layer.add(gfh);
+  create(s : string){
+    var temp =  this.shape.shapecreator(s, this.id.toString()).get();
+    if(this.fill && s != "line"){
+      temp.fill("color");
+    }
+    this.layer.add(temp);
+    this.id = this.id +1;
   }
 
   
