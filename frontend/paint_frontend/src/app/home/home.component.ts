@@ -27,6 +27,8 @@ export class HomeComponent implements OnInit {
   color : string = "black";
   request : any = new request(this.http);
   selected : any;
+  tr : any ;
+  isselected : boolean = true ;
   constructor(public http  : HttpClient) { }
 
   ngOnInit(): void {
@@ -43,33 +45,77 @@ export class HomeComponent implements OnInit {
     this.layer.add(this.shape.shapecreator("squ", "15").get());
     //this.selected = this.shape.shapecreator("cir" , "-1").get();
     //this.selected.visible("false");
-    var tr  = new Konva.Transformer();
-    this.layer.add(tr);
-    var temp ;
+    this.tr  = new Konva.Transformer();
+    this.layer.add(this.tr);
 
+    let isdrawing = false;
+    console.log(this.isselected);
+    
+      /*this.stage.on('mousedown', (e:any) => {
+        if(e.target.attrs.id == undefined){
+          this.tr.nodes([]);
+          return;
+        }
 
-    this.stage.on('mousedown', (e: any) => {
-      if(e.target == this.stage){
-        tr.nodes([]);
-        return;
-      }
-      this.selected = this.stage.findOne("#" + e.target.id());
-      this.selected.draggable("true");
-      tr.nodes([this.selected]);
+        this.selected = this.stage.findOne("#" + e.target.attrs.id);
+        this.selected.draggable(true);
+        this.tr.nodes([this.selected]);
+      });
+  
+      this.stage.on('mousemove', (e:any) => {
       
-    });
+      });
+ 
+      this.stage.on('mouseup', (e:any) => {
+        //this.request(temp.("id") , )
+        isdrawing = false;
+        console.log(this.selected.x());
+        console.log(this.selected.y());
+        console.log(this.selected.height());
+        console.log(this.selected.width());
+        
+ 
+      });*/
+  
+      this.stage.on('click',  (e:any) => {
+        if(e.target.attrs.id == undefined){
+          this.tr.nodes([]);
+          
+          return ;
+          
+        }else{
+          this.selected = this.stage.findOne("#" + e.target.attrs.id);
+          this.selected.draggable(true);
+          this.tr.nodes([this.selected]);
+        }
+        console.log(this.selected);
+        this.selected.on('transformend', (e:any) => {
+            //this.request(temp.("id") , )
+            //isdrawing = false;
+            console.log("gfgdg");
+            console.log(this.selected.x());
+            console.log(this.selected.y());
+            console.log(this.selected.height());
+            console.log(this.selected.width());
+        });
 
+        this.selected.on('dragend' , (e:any) => {
+            console.log("ghhghdgghgf");
+        });
+          
+    
+     });
+    
+    
+  }
 
-    this.stage.on('mousemove', (e : any) => {
-      //this.selected = this.stage.findOne(e.target.id());
-      
-      
-    });
-
-    this.stage.on('mouseup', (e :any ) => {
-      return; 
-    });
-
+  select(){
+    
+    if(this.isselected){
+      this.isselected = false;
+    }else{
+      this.isselected = true;
+    }
     
   }
 
@@ -89,6 +135,8 @@ export class HomeComponent implements OnInit {
     }
     this.layer.add(temp);
     this.id = this.id +1;
+    this.selected = temp;
+    this.tr.nodes([this.selected])
   }
 
   
