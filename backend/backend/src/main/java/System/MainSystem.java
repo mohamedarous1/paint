@@ -1,8 +1,8 @@
 package System;
 
+import Operations.EnableShapeOperation;
 import Operations.Operation;
 import Shapes.Shape;
-import com.sun.tools.javac.Main;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class MainSystem
     static ShapeFactory shapeFactory = new ShapeFactory();
     private static int IDCounter = 1;
 
-    private static int GetAndIncreamentIdCounter()
+    private static int GetAndIncreamentIDCounter()
     {
         int OldIDCounter = IDCounter;
         IDCounter = IDCounter + 1;
@@ -47,40 +47,70 @@ public class MainSystem
         operation.Execute(shape);
     }
 
-    public static void CreateNewObject(JSONObject object)
+    public static void CreateNewObjectFront(String ShapeType, JSONObject ShapeJson)
     {
-        int shapeId = JsonConverter.GetShapeIdFromJson(object);
-        String shapeType = JsonConverter.GetShapeTypeFromJson(object);
+        int ID = MainSystem.GetAndIncreamentIDCounter();
+        Shape NewShape = MainSystem.shapeFactory.CreateShape(ID, ShapeType);
 
-//        JsonConverter jsonConverter = new JsonConverter(object);
+        JsonConverter jsonConverter = new JsonConverter(ShapeJson, NewShape);
+        jsonConverter.ExtractAllProperties();
+
+        Operation operation = new EnableShapeOperation(ID);
+        MainSystem.PushOperationToStack(operation);
     }
 
+
+
+
+    public static Shape CreateNewObject(String ShapeType)
+    {
+        int newid = MainSystem.GetAndIncreamentIDCounter();
+
+        Shape NewShape = MainSystem.shapeFactory.CreateShape(newid, ShapeType);
+
+        MainSystem.InsertInShapeMap(NewShape);
+
+        return NewShape;
+    }
+    private Shape CreateObjectOfSameClass(int ShapeId)
+    {
+        Shape shape = MainSystem.ShapesMap.get(ShapeId);
+
+        int NewShapeId = MainSystem.GetAndIncreamentIDCounter();
+
+        Shape NewShape = MainSystem.shapeFactory.CreateObjectOfSameClassAndGivenId(NewShapeId, shape);
+        return NewShape;
+    }
     public static void CloneShapeAndInsertInShapeMapp(int ShapeId)
     {
 
-
     }
-
-    private void InsertInShapeMap(Shape shape)
+    private static void InsertInShapeMap(Shape shape)
     {
         int id = shape.GetId();
 
         MainSystem.ShapesMap.put(id, shape);
     }
-
-    private Shape CreateObjectOfSameClass(int ShapeId)
-    {
-        Shape shape = MainSystem.ShapesMap.get(ShapeId);
-
-        int NewShapeId = MainSystem.GetAndIncreamentIdCounter();
-
-        Shape NewShape = MainSystem.shapeFactory.CreateObjectOfSameClassAndGivenId(NewShapeId, shape);
-        return NewShape;
-    }
-
     private static void EmptyOperationUndoStack() // called when we do any operation other thatn undo and redo
     {
         while (MainSystem.OperationUndoStack.empty() == false)
             MainSystem.OperationUndoStack.pop();
     }
+    private static void PushOperationToStack(Operation operation)
+    {
+        MainSystem.OperationStack.push(operation);
+    }
+    private static void PopOperationFromStack()
+    {
+        MainSystem.OperationStack.pop();
+    }
+    private static void PushOperationToUndo(Operation operation)
+    {
+        MainSystem.OperationUndoStack.push(operation);
+    }
+    private static void PopOperationFromUndo()
+    {
+        MainSystem.OperationUndoStack.pop();
+    }
+
 }

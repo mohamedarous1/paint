@@ -5,9 +5,9 @@ import { Konva } from "konva/cmj/_FullInternals";
 import { TitleStrategy } from '@angular/router';
 
 export class factoryShape{
-    
+
     public shapecreator(s:string  , id : string){
-      
+
             if(s == 'cir')
               return new circle( id);
             else if ( s == 'elli')
@@ -18,15 +18,11 @@ export class factoryShape{
               return new square( id);
             else if (s ==  'line' )
               return new line( id);
-            else 
+            else
               return new triangle( id);
 
           }
 }
-
-
-
-
 
 export interface Shape {
   structure :any;
@@ -37,7 +33,7 @@ export interface Shape {
 class circle implements Shape {
 
   structure;
-  
+
     constructor(id : string) {
 
       this.structure = new Konva.Circle({
@@ -47,11 +43,11 @@ class circle implements Shape {
         fill: "black",
         strokeWidth: 3,
         draggable: false,
-        id: id
-
+        id: id,
+        keepRatio: true,
       });
     }
-    
+
     public get(): any {
       return this.structure;
 
@@ -59,62 +55,62 @@ class circle implements Shape {
   }
 
 
-  class rectangle implements Shape {
-   
-    structure;
-  
-    constructor(id : string) {
+class rectangle implements Shape {
 
-      this.structure = new Konva.Rect({
-        x: 50,
-        y: 100,
-        width:70,
-        height : 70,
-        fill: "black",
-        strokeWidth: 3,
-        draggable: false,
-        id: id
+  structure;
 
-      });
-    }
-    
-    public get(): any {
-      return this.structure;
-  
-    }
+  constructor(id : string) {
+
+    this.structure = new Konva.Rect({
+      x: 50,
+      y: 100,
+      width:70,
+      height : 70,
+      fill: "black",
+      strokeWidth: 3,
+      draggable: false,
+      id: id
+
+    });
   }
 
+  public get(): any {
+    return this.structure;
 
-  class ellipse implements Shape {
-    structure;
-  
-    constructor(id : string) {
+  }
+}
 
-      this.structure = new Konva.Ellipse({
-        x: 200,
-        y: 100,
-        radiusX: 100,
-        radiusY: 50,
-        strokeWidth: 4,
-        fill: "black",
-        draggable : false,
-        id: id
 
-      });
-    }
-    
-    public get(): any {
-      return this.structure;
-  
-    }
+class ellipse implements Shape {
+  structure;
+
+  constructor(id : string) {
+
+    this.structure = new Konva.Ellipse({
+      x: 200,
+      y: 100,
+      radiusX: 100,
+      radiusY: 50,
+      strokeWidth: 4,
+      fill: "black",
+      draggable : false,
+      id: id
+
+    });
   }
 
+  public get(): any {
+    return this.structure;
+
+  }
+}
 
 
-  class square implements Shape {
+
+class square implements Shape {
 
     structure;
-  
+
     constructor(id : string) {
 
       this.structure = new Konva.Rect({
@@ -129,21 +125,19 @@ class circle implements Shape {
 
       });
     }
-    
+
     public get(): any {
       return this.structure;
-  
+
     }
   }
 
 
 
- 
-
 export class triangle implements Shape {
 
     structure;
-  
+
     constructor(id : string) {
 
       this.structure = new Konva.RegularPolygon({
@@ -152,12 +146,12 @@ export class triangle implements Shape {
         sides: 3,
         radius: Math.abs(200),
         strokeWidth: 3,
-        draggable: false, 
+        draggable: false,
         fill: "black",
         id : id
       });
     }
-    
+
     public get(): any {
       return this.structure;
     }
@@ -180,7 +174,7 @@ class line implements Shape {
         id : id
       });
     }
-    
+
     public get(): any {
       return this.structure;
     }

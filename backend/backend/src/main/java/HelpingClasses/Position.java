@@ -4,14 +4,14 @@ import java.awt.*;
 
 public class Position
 {
-    private int Posx;
-    private int Posy;
+    private double Posx;
+    private double Posy;
 
-    public Point GetPosition()
+    public MyPoint GetPosition()
     {
-        return new Point(this.Posx, this.Posy);
+        return new MyPoint(this.Posx, this.Posy);
     }
-    public Position(int x, int y)
+    public Position(double x, double y)
     {
         this.Posx = x;
         this.Posy = y;

@@ -1,5 +1,7 @@
 package System;
 
+import HelpingClasses.CircleSize;
+import HelpingClasses.LWSize;
 import HelpingClasses.Position;
 import Shapes.ClosedShape;
 import Shapes.Shape;
@@ -10,10 +12,10 @@ public class JsonConverter
 {
     public JSONObject ShapeJson;
     public Shape ShapeObject;
-    public JsonConverter(JSONObject obj, Shape sh)
+    public JsonConverter(JSONObject obj, Shape shape)
     {
         this.ShapeJson = obj;
-        this.ShapeObject = sh;
+        this.ShapeObject = shape;
     }
 
     public void ExtractAllProperties()
@@ -63,16 +65,31 @@ public class JsonConverter
 
         if (tempx == null) return;
 
-        int x = (int)tempx;
-        int y = (int)tempy;
+        double x = (int)tempx;
+        double y = (int)tempy;
 
-        this.ShapeObject.SetPosition(x, y);
+        this.ShapeObject.SetPosition(new Position(x, y));
     }
 
     // Waiting For Frontend
     public void ExtractSize()
     {
 
+        ClosedShape closedShape = (ClosedShape) this.ShapeObject;
+        if (this.ShapeJson.containsKey("height"))
+        {
+            double length = (double)this.ShapeJson.get("height");
+            double width = (double)this.ShapeJson.get("width");
+            LWSize size = new LWSize(length, width);
+            closedShape.SetSize(size);
+        }
+        else if (this.ShapeJson.containsKey("radius"))
+        {
+            double radius = (double) this.ShapeJson.get("radius");
+            CircleSize size = new CircleSize(radius);
+            closedShape.SetSize(size);
+        }
+        //else if (this.ShapeJson.containsKey(""))
     }
 
     public static int GetShapeIdFromJson(JSONObject obj)

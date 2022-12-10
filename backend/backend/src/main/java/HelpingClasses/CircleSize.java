@@ -2,9 +2,13 @@ package HelpingClasses;
 
 public class CircleSize extends Size
 {
-    private int Radius;
-    public int GetRadius()
+    private double Radius;
+    public double GetRadius()
     {
         return this.Radius;
+    }
+    public CircleSize(double radius)
+    {
+        this.Radius = radius;
     }
 }

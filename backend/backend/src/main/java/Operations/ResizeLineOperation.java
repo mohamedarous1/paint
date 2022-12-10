@@ -12,8 +12,7 @@ public class ResizeLineOperation extends Operation
     private Position OldPosition;
     private Position NewPosition;
 
-    public ResizeLineOperation
-            (int id, Position prevposition, Position newposition)
+    public ResizeLineOperation(int id, Position prevposition, Position newposition)
     {
         super(id);
         this.OldPosition = prevposition;
@@ -25,9 +24,7 @@ public class ResizeLineOperation extends Operation
     {
         ClosedShape closedshape = (ClosedShape) shape;
 
-        Point newposition = this.NewPosition.GetPosition();
-
-        closedshape.SetPosition(newposition.x, newposition.y);
+        closedshape.SetPosition(this.NewPosition);
     }
     @Override
     public Operation GetReversedOperation()
