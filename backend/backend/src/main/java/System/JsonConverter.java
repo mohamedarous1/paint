@@ -103,4 +103,9 @@ public class JsonConverter
         String ShapeType = (String)obj.get("ShapeType");
         return ShapeType;
     }
+
+    public static String ExtractName(JSONObject jsonObject)
+    {
+        return (String)jsonObject.get("name");
+    }
 }

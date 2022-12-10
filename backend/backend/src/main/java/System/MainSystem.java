@@ -47,8 +47,9 @@ public class MainSystem
         operation.Execute(shape);
     }
 
-    public static void CreateNewObjectFront(String ShapeType, JSONObject ShapeJson)
+    public static int CreateNewObjectFront(JSONObject ShapeJson)
     {
+        String ShapeType = JsonConverter.ExtractName(ShapeJson);
         int ID = MainSystem.GetAndIncreamentIDCounter();
         Shape NewShape = MainSystem.shapeFactory.CreateShape(ID, ShapeType);
 
@@ -57,6 +58,7 @@ public class MainSystem
 
         Operation operation = new EnableShapeOperation(ID);
         MainSystem.PushOperationToStack(operation);
+        return ID;
     }
 
 
