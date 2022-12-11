@@ -1,18 +1,15 @@
 package Operations;
 
 import HelpingClasses.Position;
-import HelpingClasses.Size;
 import Shapes.ClosedShape;
 import Shapes.Shape;
 
-import java.awt.*;
-
-public class ResizeLineOperation extends Operation
+public class ChangePositionLineOperation extends Operation
 {
     private Position OldPosition;
     private Position NewPosition;
 
-    public ResizeLineOperation(int id, Position prevposition, Position newposition)
+    public ChangePositionLineOperation(int id, Position prevposition, Position newposition)
     {
         super(id);
         this.OldPosition = prevposition;
@@ -29,8 +26,8 @@ public class ResizeLineOperation extends Operation
     @Override
     public Operation GetReversedOperation()
     {
-        ResizeLineOperation ReversedOperation
-                = new ResizeLineOperation
+        ChangePositionLineOperation ReversedOperation
+                = new ChangePositionLineOperation
                 (this.GetShapeID(), this.NewPosition, this.OldPosition);
         return ReversedOperation;
     }

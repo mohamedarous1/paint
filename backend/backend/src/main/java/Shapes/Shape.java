@@ -43,7 +43,10 @@ public abstract class Shape implements MyCloneable
     {
         this.ShapePosition = position;
     }
-
+    public Position GetPosition()
+    {
+        return this.ShapePosition;
+    }
     public Shape(int id)
     {
         this.ID = id;

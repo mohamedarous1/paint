@@ -5,10 +5,10 @@ import Shapes.Shape;
 
 public class ChangeStrokeWidthOperation extends Operation
 {
-    private int OldStrokeWidth;
-    private int NewStrokeWidth;
+    private double OldStrokeWidth;
+    private double NewStrokeWidth;
 
-    public ChangeStrokeWidthOperation(int id, int prevwidth, int newwidth)
+    public ChangeStrokeWidthOperation(int id, double prevwidth, double newwidth)
     {
         super(id);
         this.OldStrokeWidth = prevwidth;

@@ -1,7 +1,9 @@
 package System;
 
-import Operations.EnableShapeOperation;
-import Operations.Operation;
+import HelpingClasses.Position;
+import HelpingClasses.Size;
+import Operations.*;
+import Shapes.ClosedShape;
 import Shapes.Shape;
 import com.sun.tools.javac.Main;
 import org.json.simple.JSONObject;
@@ -11,7 +13,7 @@ import java.util.Stack;
 
 public class MainSystem
 {
-    public static HashMap<Integer, Shape> ShapesMap = new HashMap<>();
+    private static HashMap<Integer, Shape> ShapesMap = new HashMap<>();
     static Stack<Operation> OperationStack = new Stack<>();
     static Stack<Operation> OperationUndoStack = new Stack<>();
     static ShapeFactory shapeFactory = new ShapeFactory();
@@ -25,6 +27,7 @@ public class MainSystem
     }
     public static void Undo()
     {
+        if (MainSystem.CanMakeRedo() == false) return;
         Operation CurrentOperation = MainSystem.OperationStack.peek();
         Operation ReversedOperation = CurrentOperation.GetReversedOperation();
         MainSystem.DoOperation(ReversedOperation);
@@ -34,6 +37,8 @@ public class MainSystem
     }
     public static void Redo()
     {
+        if (MainSystem.CanMakeRedo() == false)
+            return;
         Operation CurrentOperation = MainSystem.OperationUndoStack.peek();
         Operation ReversedOperation = CurrentOperation.GetReversedOperation();
         MainSystem.DoOperation(ReversedOperation);
@@ -50,23 +55,97 @@ public class MainSystem
 
     public static int CreateNewObjectFront(String ShapeType, JSONObject ShapeJson)
     {
-        System.out.println(ShapeJson);
-        System.out.println(ShapeJson);
-        System.out.println(ShapeJson);
-        System.out.println(ShapeJson);
-        System.out.println(ShapeJson);
-
         int ID = MainSystem.GetAndIncreamentIDCounter();
         Shape NewShape = MainSystem.shapeFactory.CreateShape(ID, ShapeType);
-        JsonConverter jsonConverter = new JsonConverter(ShapeJson, NewShape);
-        jsonConverter.ExtractAllProperties();
+        JsonConverter.ExtractAllProperties(ShapeJson, NewShape);
 
         Operation operation = new EnableShapeOperation(ID);
         MainSystem.PushOperationToStack(operation);
+        DoOperation(operation);
         MainSystem.InsertInShapeMap(NewShape);
         return ID;
     }
 
+    public static void ResizeAndChangePosition(JSONObject ShapeJson)
+    {
+        int ID = JsonConverter.ExtractId(ShapeJson);
+
+        Shape Shape = MainSystem.ShapesMap.get(ID);
+        ClosedShape closedShape = (ClosedShape) Shape;
+
+        Size OldSize = closedShape.GetSize();
+        Position OldPosition = closedShape.GetPosition();
+
+        Size NewSize = JsonConverter.ExtractSize(ShapeJson, Shape);
+        Position NewPosition = JsonConverter.ExtractPosition(ShapeJson);
+
+        Operation operation = new ResizeAndChangePositionOperation
+                (ID, OldPosition, NewPosition, OldSize, NewSize);
+        DoOperation(operation);
+        MainSystem.PushOperationToStack(operation);
+    }
+
+    public static void ChangePositionLine(JSONObject ShapeJson)
+    {
+        int ID = JsonConverter.ExtractId(ShapeJson);
+
+        Shape Shape = MainSystem.ShapesMap.get(ID);
+        ClosedShape closedShape = (ClosedShape) Shape;
+
+        Position OldPosition = closedShape.GetPosition();
+
+        Position NewPosition = JsonConverter.ExtractPosition(ShapeJson);
+
+        ChangePositionLineOperation operation
+                = new ChangePositionLineOperation(ID, OldPosition, NewPosition);
+        DoOperation(operation);
+        MainSystem.PushOperationToStack(operation);
+    }
+
+
+    public static void ChangeStrokeWidth(JSONObject ShapeJson)
+    {
+        int ID = JsonConverter.ExtractId(ShapeJson);
+
+        Shape Shape = MainSystem.ShapesMap.get(ID);
+
+        double OldWidth = Shape.GetStrokeWidth();
+
+        double NewWidth = JsonConverter.ExtractStrokeWidth(ShapeJson);
+
+        Operation operation = new ChangeStrokeWidthOperation(ID, OldWidth, NewWidth);
+
+        DoOperation(operation);
+        MainSystem.PushOperationToStack(operation);
+    }
+
+    public static void ChangeStrokeColor(JSONObject ShapeJson)
+    {
+        int ID = JsonConverter.ExtractId(ShapeJson);
+
+        Shape Shape = MainSystem.ShapesMap.get(ID);
+
+        String OldColor = Shape.GetStrokeColor();
+
+        String NewColor = JsonConverter.ExtractStrokeColor(ShapeJson);
+
+        Operation operation = new ChangeStokeColorOperation(ID, OldColor, NewColor);
+
+        DoOperation(operation);
+        MainSystem.PushOperationToStack(operation);
+    }
+
+    public static void DisableShape(JSONObject ShapeJson)
+    {
+        int ID = JsonConverter.ExtractId(ShapeJson);
+
+        Shape Shape = MainSystem.ShapesMap.get(ID);
+
+        Operation operation = new DisableShapeOperation(ID);
+
+        DoOperation(operation);
+        MainSystem.PushOperationToStack(operation);
+    }
 
 
 
@@ -119,6 +198,18 @@ public class MainSystem
     private static void PopOperationFromUndo()
     {
         MainSystem.OperationUndoStack.pop();
+    }
+
+
+    private static boolean CanMakeUndo()
+    {
+        if (MainSystem.OperationStack.empty()) return false;
+        return true;
+    }
+    private static boolean CanMakeRedo()
+    {
+        if (MainSystem.OperationUndoStack.empty()) return false;
+        return true;
     }
 
 }
