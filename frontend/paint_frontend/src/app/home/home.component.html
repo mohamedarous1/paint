@@ -15,7 +15,7 @@
     </div>
 
     <div class="section2">
-      <button class = "button" id ="functions"  >
+      <button class = "button" id ="functions" (click) = "undo()" >
         &laquo; Undo
       </button>
       <button class = "button" id ="functions" >
@@ -23,11 +23,12 @@
       </button>
       <button class = "button"id = "functions" (click)="BrushClick()">brush</button>
       <button class = "button"id = "functions" (click)="DeleteShape()"  >delete</button>
-      <button class="button" (click)="SelectButtonClick()">selected</button>
-      <li>
-        <input type="range" id="size">
-      </li>
-      <div class="title">functions</div>
+      <button class="button" (click)="SelectButtonClick()">select</button>
+      <button class = "button"id = "copy" (click)="copy()"  >copy</button>
+      <!--<li>
+        <input type="range" id="size"  min="1" max="20" value="2">
+      </li>-->
+      <div class="title">operations</div>
     </div>
     <div class="section3">
       <form>

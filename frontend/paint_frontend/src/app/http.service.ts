@@ -13,14 +13,13 @@ export class HttpService {
   CreateRequest(shape: any, ShapeType:string):Observable<any>
   {
     var temp = JSON.stringify(shape.attrs);
+
     return this.http.get('http://localhost:8080/create/' + ShapeType +
       "/" + temp, {responseType: 'text'});
   }
 
-  edit_pos_sizeRequest(shape: any) :Observable<any>
-  {
+  edit_pos_sizeRequest(shape: any) :Observable<any>{
     var temp = JSON.stringify(shape.attrs);
-    console.log(temp);
     return this.http.get('http://localhost:8080/ResizeAndChangePosition/' + temp,{responseType : 'text'});
   }
 
@@ -38,4 +37,13 @@ strokeRequest(shape : any):Observable<any>{
   var temp = JSON.stringify(shape.attrs);
   return this.http.get('http://localhost:8080/edit_posandsize/' + temp,{responseType : 'text'});
   }
+
+  undoRequest():Observable<any>{
+    return this.http.get('http://localhost:8080/Undo' ,{responseType : 'text'});
+    }
+
+    redoRequest():Observable<any>{
+      return this.http.get('http://localhost:8080/redo/' ,{responseType : 'text'});
+      }
+
 }

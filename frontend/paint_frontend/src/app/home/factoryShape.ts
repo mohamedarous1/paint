@@ -66,7 +66,7 @@ class rectangle implements Shape {
     this.structure = new Konva.Rect({
       x: 50,
       y: 100,
-      width:70,
+      width:100,
       height : 70,
       stroke:"black",
       strokeWidth: 2,
