@@ -59,10 +59,22 @@ public class MainSystem
         Shape NewShape = MainSystem.shapeFactory.CreateShape(ID, ShapeType);
         JsonConverter.ExtractAllProperties(ShapeJson, NewShape);
 
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(NewShape.GetPosition());
+        System.out.println(NewShape.GetStrokeColor());
+        System.out.println(NewShape.GetStrokeWidth());
+
+
+
+
         Operation operation = new EnableShapeOperation(ID);
         MainSystem.PushOperationToStack(operation);
-        DoOperation(operation);
         MainSystem.InsertInShapeMap(NewShape);
+
+        DoOperation(operation);
         return ID;
     }
 
@@ -81,8 +93,9 @@ public class MainSystem
 
         Operation operation = new ResizeAndChangePositionOperation
                 (ID, OldPosition, NewPosition, OldSize, NewSize);
-        DoOperation(operation);
         MainSystem.PushOperationToStack(operation);
+
+        DoOperation(operation);
     }
 
     public static void ChangePositionLine(JSONObject ShapeJson)
@@ -98,8 +111,9 @@ public class MainSystem
 
         ChangePositionLineOperation operation
                 = new ChangePositionLineOperation(ID, OldPosition, NewPosition);
-        DoOperation(operation);
         MainSystem.PushOperationToStack(operation);
+
+        DoOperation(operation);
     }
 
 
@@ -115,8 +129,9 @@ public class MainSystem
 
         Operation operation = new ChangeStrokeWidthOperation(ID, OldWidth, NewWidth);
 
-        DoOperation(operation);
         MainSystem.PushOperationToStack(operation);
+
+        DoOperation(operation);
     }
 
     public static void ChangeStrokeColor(JSONObject ShapeJson)
@@ -131,8 +146,9 @@ public class MainSystem
 
         Operation operation = new ChangeStokeColorOperation(ID, OldColor, NewColor);
 
-        DoOperation(operation);
         MainSystem.PushOperationToStack(operation);
+
+        DoOperation(operation);
     }
 
     public static void DisableShape(JSONObject ShapeJson)
@@ -143,8 +159,9 @@ public class MainSystem
 
         Operation operation = new DisableShapeOperation(ID);
 
-        DoOperation(operation);
         MainSystem.PushOperationToStack(operation);
+
+        DoOperation(operation);
     }
 
 

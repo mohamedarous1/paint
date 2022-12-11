@@ -110,15 +110,6 @@ public class JsonConverter
         return null;
     }
 
-
-
-
-    public static String GetShapeTypeFromJson(JSONObject obj)
-    {
-        String ShapeType = (String)obj.get("ShapeType");
-        return ShapeType;
-    }
-
     public static String ExtractName(JSONObject jsonObject)
     {
         return (String)jsonObject.get("className");

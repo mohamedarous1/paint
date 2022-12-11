@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.selected.on('dragend' , (e:any) => {
-      this.selected.edit_pos_sizeRequest(this.selected);
+      this.http.edit_pos_sizeRequest(this.selected);
       console.log(this.GetNewSizeAndPosition());
     });
   }
@@ -191,7 +191,7 @@ export class HomeComponent implements OnInit {
     this.BruchColor = e.target.value;
   }
 
-  
+
   ClearEventListeners()
   {
     let ColorBtn = document.getElementById("favcolor");
