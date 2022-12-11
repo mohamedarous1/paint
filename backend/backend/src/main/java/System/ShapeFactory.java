@@ -2,22 +2,31 @@ package System;
 
 import Shapes.*;
 
+import java.io.Console;
+
 public class ShapeFactory
 {
     public Shape CreateShape(int ID, String ObjectString)
     {
+        System.out.println(ObjectString);
+        System.out.println(ObjectString);
+        System.out.println(ObjectString);
+        System.out.println(ObjectString);
+        System.out.println(ObjectString);
+        System.out.println(ObjectString);
+
         if (ObjectString.equals("Circle"))
             return new Circle(ID);
         else if (ObjectString.equals("Rectangle"))
             return new Rectangle(ID);
         else if (ObjectString.equals("Triangle"))
-            return new Rectangle(ID);
+            return new Triangle(ID);
         else if (ObjectString.equals("Ellipse"))
-            return new Rectangle(ID);
+            return new Ellipse(ID);
         else if (ObjectString.equals("Square"))
-            return new Rectangle(ID);
+            return new Square(ID);
         else if (ObjectString.equals("Pentagon"))
-            return new Rectangle(ID);
+            return new Pentagon(ID);
         else if (ObjectString.equals("Line"))
             return new Line(ID);
 

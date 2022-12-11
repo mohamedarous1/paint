@@ -3,8 +3,9 @@ package System;
 import HelpingClasses.CircleSize;
 import HelpingClasses.LWSize;
 import HelpingClasses.Position;
-import Shapes.ClosedShape;
-import Shapes.Shape;
+import HelpingClasses.RegularPolygonSize;
+import Shapes.*;
+import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 //import org.json.*;
 
@@ -53,7 +54,7 @@ public class JsonConverter
         Object temp = ShapeJson.get("StrokeWidth");
         if (temp == null) return;
 
-        int width = (int)temp;
+        double width = (double)temp;
 
         this.ShapeObject.SetStrokeWidth(width);
     }
@@ -65,8 +66,8 @@ public class JsonConverter
 
         if (tempx == null) return;
 
-        double x = (int)tempx;
-        double y = (int)tempy;
+        double x = (double)tempx;
+        double y = (double)tempy;
 
         this.ShapeObject.SetPosition(new Position(x, y));
     }
@@ -74,22 +75,39 @@ public class JsonConverter
     // Waiting For Frontend
     public void ExtractSize()
     {
-
         ClosedShape closedShape = (ClosedShape) this.ShapeObject;
-        if (this.ShapeJson.containsKey("height"))
+        if (this.ShapeObject instanceof Square)
+        {
+            double radius = (double) this.ShapeJson.get("height");
+            RegularPolygonSize size = new RegularPolygonSize(radius);
+            closedShape.SetSize(size);
+        }
+        else if (this.ShapeObject instanceof Ellipse)
+        {
+            double length = (double)this.ShapeJson.get("radiusX");
+            double width = (double)this.ShapeJson.get("radiusY");
+            LWSize size = new LWSize(length, width);
+            closedShape.SetSize(size);
+        }
+        else if (this.ShapeObject instanceof Rectangle)
         {
             double length = (double)this.ShapeJson.get("height");
             double width = (double)this.ShapeJson.get("width");
             LWSize size = new LWSize(length, width);
             closedShape.SetSize(size);
         }
-        else if (this.ShapeJson.containsKey("radius"))
+        else if (this.ShapeObject instanceof Circle)
         {
             double radius = (double) this.ShapeJson.get("radius");
             CircleSize size = new CircleSize(radius);
             closedShape.SetSize(size);
         }
-        //else if (this.ShapeJson.containsKey(""))
+        else if (this.ShapeObject instanceof RegularPolygon)
+        {
+            double radius = (double) this.ShapeJson.get("radius");
+            RegularPolygonSize size = new RegularPolygonSize(radius);
+            closedShape.SetSize(size);
+        }
     }
 
     public static int GetShapeIdFromJson(JSONObject obj)
@@ -107,5 +125,13 @@ public class JsonConverter
     public static String ExtractName(JSONObject jsonObject)
     {
         return (String)jsonObject.get("className");
+    }
+
+    public static Gson ExtractJson(JSONObject Data)
+    {
+        Object obj = Data.get("attrs");
+        if (obj == null) System.out.println("nnnnnnnnn");
+        System.out.println(obj);
+        return (Gson) Data.get("attrs");
     }
 }

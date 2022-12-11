@@ -3,6 +3,7 @@ package System;
 import Operations.EnableShapeOperation;
 import Operations.Operation;
 import Shapes.Shape;
+import com.sun.tools.javac.Main;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Stack;
 
 public class MainSystem
 {
-    static HashMap<Integer, Shape> ShapesMap = new HashMap<>();
+    public static HashMap<Integer, Shape> ShapesMap = new HashMap<>();
     static Stack<Operation> OperationStack = new Stack<>();
     static Stack<Operation> OperationUndoStack = new Stack<>();
     static ShapeFactory shapeFactory = new ShapeFactory();
@@ -47,17 +48,22 @@ public class MainSystem
         operation.Execute(shape);
     }
 
-    public static int CreateNewObjectFront(JSONObject ShapeJson)
+    public static int CreateNewObjectFront(String ShapeType, JSONObject ShapeJson)
     {
-        String ShapeType = JsonConverter.ExtractName(ShapeJson);
+        System.out.println(ShapeJson);
+        System.out.println(ShapeJson);
+        System.out.println(ShapeJson);
+        System.out.println(ShapeJson);
+        System.out.println(ShapeJson);
+
         int ID = MainSystem.GetAndIncreamentIDCounter();
         Shape NewShape = MainSystem.shapeFactory.CreateShape(ID, ShapeType);
-
         JsonConverter jsonConverter = new JsonConverter(ShapeJson, NewShape);
         jsonConverter.ExtractAllProperties();
 
         Operation operation = new EnableShapeOperation(ID);
         MainSystem.PushOperationToStack(operation);
+        MainSystem.InsertInShapeMap(NewShape);
         return ID;
     }
 

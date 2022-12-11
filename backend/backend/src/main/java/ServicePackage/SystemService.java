@@ -7,9 +7,9 @@ import System.MainSystem;
 @Service
 public class SystemService
 {
-    public int Create(JSONObject obj)
+    public int Create(String ShapeType, JSONObject obj)
     {
-        int ID = MainSystem.CreateNewObjectFront(obj);
+        int ID = MainSystem.CreateNewObjectFront(ShapeType, obj);
         return ID;
     }
 }

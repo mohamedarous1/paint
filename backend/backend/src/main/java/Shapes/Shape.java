@@ -7,7 +7,7 @@ public abstract class Shape implements MyCloneable
 {
     private int ID;
     private boolean Enabled;
-    protected int StrokeWidth;
+    protected double StrokeWidth;
     protected String StrokeColor;
     protected Position ShapePosition;
 
@@ -23,11 +23,11 @@ public abstract class Shape implements MyCloneable
     {
         this.StrokeColor = color;
     }
-    public int GetStrokeWidth()
+    public double GetStrokeWidth()
     {
         return this.StrokeWidth;
     }
-    public void SetStrokeWidth(int width)
+    public void SetStrokeWidth(double width)
     {
         this.StrokeWidth = width;
     }

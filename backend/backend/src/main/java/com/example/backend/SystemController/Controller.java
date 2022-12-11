@@ -4,6 +4,10 @@ import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import Shapes.*;
+
+
+import System.MainSystem;
 
 @RestController
 @CrossOrigin
@@ -17,12 +21,16 @@ public class Controller {
 //        //this.MyService = service;
 //    }
 
-    @GetMapping("/create/{jsonObject}")
-    public String CreateNewObject(@PathVariable String jsonObject)
+    @GetMapping("/create/{shapetype}/{jsonObject}")
+    @CrossOrigin
+    public int CreateNewObject(@PathVariable String shapetype, @PathVariable String jsonObject)
     {
-        System.out.println(jsonObject);
-        JSONObject hh = new Gson().fromJson(jsonObject , JSONObject.class);
-        int id = MyService.Create(hh);
-        return Integer.toString(id);
+        JSONObject NewJson = new Gson().fromJson(jsonObject , JSONObject.class);
+
+
+        int id = MyService.Create(shapetype, NewJson);
+        //System.out.println(id);
+
+        return id;
     }
 }
