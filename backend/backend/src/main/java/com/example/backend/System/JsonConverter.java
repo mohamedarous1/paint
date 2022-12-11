@@ -106,6 +106,6 @@ public class JsonConverter
 
     public static String ExtractName(JSONObject jsonObject)
     {
-        return (String)jsonObject.get("name");
+        return (String)jsonObject.get("className");
     }
 }

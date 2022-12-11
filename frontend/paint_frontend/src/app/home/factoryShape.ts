@@ -24,6 +24,10 @@ export class factoryShape{
           }
 }
 
+
+
+
+
 export interface Shape {
   structure :any;
   get(): any;
@@ -43,8 +47,8 @@ class circle implements Shape {
         fill: "black",
         strokeWidth: 3,
         draggable: false,
-        id: id,
-        keepRatio: true,
+        id: id
+
       });
     }
 
@@ -55,59 +59,59 @@ class circle implements Shape {
   }
 
 
-class rectangle implements Shape {
+  class rectangle implements Shape {
 
-  structure;
+    structure;
 
-  constructor(id : string) {
+    constructor(id : string) {
 
-    this.structure = new Konva.Rect({
-      x: 50,
-      y: 100,
-      width:70,
-      height : 70,
-      fill: "black",
-      strokeWidth: 3,
-      draggable: false,
-      id: id
+      this.structure = new Konva.Rect({
+        x: 50,
+        y: 100,
+        width:70,
+        height : 70,
+        fill: "black",
+        strokeWidth: 3,
+        draggable: false,
+        id: id
 
-    });
+      });
+    }
+
+    public get(): any {
+      return this.structure;
+
+    }
   }
 
-  public get(): any {
-    return this.structure;
 
+  class ellipse implements Shape {
+    structure;
+
+    constructor(id : string) {
+
+      this.structure = new Konva.Ellipse({
+        x: 200,
+        y: 100,
+        radiusX: 100,
+        radiusY: 50,
+        strokeWidth: 4,
+        fill: "black",
+        draggable : false,
+        id: id
+
+      });
+    }
+
+    public get(): any {
+      return this.structure;
+
+    }
   }
-}
-
-
-class ellipse implements Shape {
-  structure;
-
-  constructor(id : string) {
-
-    this.structure = new Konva.Ellipse({
-      x: 200,
-      y: 100,
-      radiusX: 100,
-      radiusY: 50,
-      strokeWidth: 4,
-      fill: "black",
-      draggable : false,
-      id: id
-
-    });
-  }
-
-  public get(): any {
-    return this.structure;
-
-  }
-}
 
 
 
-class square implements Shape {
+  class square implements Shape {
 
     structure;
 
@@ -131,6 +135,8 @@ class square implements Shape {
 
     }
   }
+
+
 
 
 

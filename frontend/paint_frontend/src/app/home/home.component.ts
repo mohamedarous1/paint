@@ -35,78 +35,91 @@ export class HomeComponent implements OnInit {
 
     this.stage = new Konva.Stage({
       container: 'container',
-      width: 1200,
-      height: 600
+      width: window.innerWidth,
+      height: window.innerHeight
     });
 
     this.layer = new Konva.Layer;
     this.stage.add(this.layer);
 
-
+    this.layer.add(this.shape.shapecreator("squ", "15").get());
+    //this.selected = this.shape.shapecreator("cir" , "-1").get();
+    //this.selected.visible("false");
     this.tr  = new Konva.Transformer();
     this.layer.add(this.tr);
 
+    let isdrawing = false;
     console.log(this.isselected);
 
+      /*this.stage.on('mousedown', (e:any) => {
+        if(e.target.attrs.id == undefined){
+          this.tr.nodes([]);
+          return;
+        }
 
-    this.stage.on('click',  (e:any) => this.OnClickOnStageSelect(e));
+        this.selected = this.stage.findOne("#" + e.target.attrs.id);
+        this.selected.draggable(true);
+        this.tr.nodes([this.selected]);
+      });
+
+      this.stage.on('mousemove', (e:any) => {
+
+      });
+
+      this.stage.on('mouseup', (e:any) => {
+        //this.request(temp.("id") , )
+        isdrawing = false;
+        console.log(this.selected.x());
+        console.log(this.selected.y());
+        console.log(this.selected.height());
+        console.log(this.selected.width());
+
+
+      });*/
+
+      this.stage.on('click',  (e:any) => {
+        if(e.target.attrs.id == undefined){
+          this.tr.nodes([]);
+
+          return ;
+
+        }else{
+          this.selected = this.stage.findOne("#" + e.target.attrs.id);
+          this.selected.draggable(true);
+          this.tr.nodes([this.selected]);
+        }
+        console.log(this.selected);
+        this.selected.on('transformend', (e:any) => {
+            //this.request(temp.("id") , )
+            //isdrawing = false;
+            console.log("gfgdg");
+            console.log(this.selected.x());
+            console.log(this.selected.y());
+            console.log(this.selected.height());
+            console.log(this.selected.width());
+        });
+
+        this.selected.on('dragend' , (e:any) => {
+            console.log("ghhghdgghgf");
+        });
+
+
+     });
 
 
   }
 
-  OnClickOnStageSelect(e:any)
-  {
-    let id = e.target.attrs.id;
-    let ClickedShape = e.target;
+  select(){
 
-    if(id == undefined)
-    {
-      this.RemoveSelection();
-      return;
+    if(this.isselected){
+      this.isselected = false;
+    }else{
+      this.isselected = true;
     }
-    this.SelectShape(ClickedShape);
 
-    // This part is for requesting from backend
-    this.selected.on('transformend', (e:any) =>
-    {
-      console.log(this.GetNewSizeAndPosition());
-    });
-
-    this.selected.on('dragend' , (e:any) => {
-      console.log(this.GetNewSizeAndPosition());
-    });
   }
 
-  GetNewSizeAndPosition()
-  {
-    this.selected.width( this.selected.width()* this.selected.scaleX()) ;
-    this.selected.height(  this.selected.height()*this.selected.scaleY()) ;
-    this.selected.scaleX(1);
-    this.selected.scaleY(1);
-
-    let arr =
-      [this.selected.x(), this.selected.y(), this.selected.height(),
-        this.selected.width()];
-    return arr;
-  }
-
-  RemoveSelection()
-  {
-    if (this.selected == undefined) return;
-
-    this.selected.draggable(false);
-    this.tr.nodes([]);
-  }
-
-  SelectShape(SelectedShape:any)
-  {
-    this.selected = SelectedShape;
-    this.selected.draggable(true);
-    this.tr.nodes([this.selected]);
-  }
-
-  check_fill()
-  {
+  check_fill(){
     if(this.fill){
       this.fill = false;
 
@@ -115,8 +128,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  create(s : string)
-  {
+  create(s : string){
     var temp =  this.shape.shapecreator(s, this.id.toString()).get();
     if(this.fill && s != "line"){
       temp.fill("color");
@@ -124,78 +136,12 @@ export class HomeComponent implements OnInit {
     this.layer.add(temp);
     this.id = this.id +1;
     this.selected = temp;
-    this.tr.nodes([this.selected])
-    this.SelectButtonClick();
-  }
-
-  OnClickOnStageBrush(ee:any)
-  {
-    var isPaint = false;
-    var mode = 'brush';
-    var lastLine : any;
-
-    this.stage.on('mousedown touchstart',  (e:any) => {
-      isPaint = true;
-      var pos = this.stage.getPointerPosition();
-      lastLine = new Konva.Line({
-        stroke: '#df4b26',
-        strokeWidth: 5,
-        globalCompositeOperation:
-          mode === 'brush' ? 'source-over' : 'destination-out',
-        // round cap for smoother lines
-        lineCap: 'round',
-        lineJoin: 'round',
-        // add point twice, so we have some drawings even on a simple click
-        points: [pos.x, pos.y, pos.x, pos.y],
-      });
-      this.layer.add(lastLine);
-    });
-
-    this.stage.on('mouseup touchend', function () {
-      isPaint = false;
-    });
-
-    // and core function - drawing
-    this.stage.on('mousemove touchmove',  (e:any) => {
-      if (!isPaint) {
-        return;
-      }
-
-      // prevent scrolling on touch devices
-      e.evt.preventDefault();
-
-      const pos = this.stage.getPointerPosition();
-      var newPoints = lastLine.points().concat([pos.x, pos.y]);
-      lastLine.points(newPoints);
-    });
+    this.tr.nodes([this.selected]);
+    this.request.createRequest(temp);
 
   }
 
-  BrushClick()
-  {
-    this.RemoveSelection();
-    this.ClearStageEventListeners();
-    this.stage.on('click', (e:any)=>this.OnClickOnStageBrush(e));
-  }
 
-  SelectButtonClick()
-  {
-    this.ClearStageEventListeners();
-    this.stage.on('click', (e:any) => this.OnClickOnStageSelect(e));
-  }
-
-  ClearStageEventListeners()
-  {
-    this.stage.off("click");
-    this.stage.off('mousedown touchstart');
-    this.stage.off('mousemove touchmove');
-    this.stage.off('mouseup touchend');
-  }
-
-  select()
-  {
-    this.SelectButtonClick();
-  }
 
 
 
