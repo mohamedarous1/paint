@@ -117,7 +117,9 @@ public class JsonConverter
 
     public static int ExtractId(JSONObject jsonObject)
     {
-        return (int)jsonObject.get("id");
+        String idString = (String)jsonObject.get("id");
+        int id = Integer.parseInt(idString);
+        return id;
     }
 
 

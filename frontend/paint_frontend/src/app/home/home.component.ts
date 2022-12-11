@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.selected.on('dragend' , (e:any) => {
-      this.http.edit_pos_sizeRequest(this.selected);
+      this.http.edit_pos_sizeRequest(this.selected).subscribe(e=>{});
       console.log(this.GetNewSizeAndPosition());
     });
   }

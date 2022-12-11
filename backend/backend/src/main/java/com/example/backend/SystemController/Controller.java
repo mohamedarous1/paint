@@ -26,7 +26,7 @@ public class Controller {
     }
 
     @GetMapping("/ChangePositionLine/{jsonObject}")
-    public void ChangePositionLine(String jsonObject)
+    public void ChangePositionLine(@PathVariable String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
 
@@ -34,24 +34,20 @@ public class Controller {
     }
 
     @GetMapping("/ResizeAndChangePosition/{jsonObject}")
-    public void ResizeAndChangePosition(String jsonObject)
+    public void ResizeAndChangePosition(@PathVariable String jsonObject)
     {
-        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
-        System.out.println("hello");
-        System.out.println("hello");
-        System.out.println("hello");
-        System.out.println("hello");
-        System.out.println("hello");
-        System.out.println("hello");
-        System.out.println("hello");
-        System.out.println("hello");
-        System.out.println("hello");
+        System.out.println(jsonObject);
+        System.out.println(jsonObject);
+        System.out.println(jsonObject);
+        System.out.println(jsonObject);
 
+
+        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
         MyService.ResizeAndChangePosition(NewJson);
     }
 
     @GetMapping("/ChangeStrokeWidth/{jsonObject}")
-    public void ChangeStrokeWidth(String jsonObject)
+    public void ChangeStrokeWidth(@PathVariable String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
 
@@ -59,7 +55,7 @@ public class Controller {
     }
 
     @GetMapping("/ChangeStrokeColor/{jsonObject}")
-    public void ChangeStrokeColor(String jsonObject)
+    public void ChangeStrokeColor(@PathVariable String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
 
@@ -67,10 +63,9 @@ public class Controller {
     }
 
     @GetMapping("/DisableShape/{jsonObject}")
-    public void DisableShape(String jsonObject)
+    public void DisableShape(@PathVariable String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
-
         MyService.DisableShape(NewJson);
     }
 

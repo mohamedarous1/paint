@@ -116,7 +116,6 @@ public class MainSystem
         DoOperation(operation);
     }
 
-
     public static void ChangeStrokeWidth(JSONObject ShapeJson)
     {
         int ID = JsonConverter.ExtractId(ShapeJson);
