@@ -164,8 +164,6 @@ public class MainSystem
         DoOperation(operation);
     }
 
-
-
     public static Shape CreateNewObject(String ShapeType)
     {
         int newid = MainSystem.GetAndIncreamentIDCounter();

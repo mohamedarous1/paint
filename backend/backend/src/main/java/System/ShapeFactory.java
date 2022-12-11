@@ -8,13 +8,6 @@ public class ShapeFactory
 {
     public Shape CreateShape(int ID, String ObjectString)
     {
-        System.out.println(ObjectString);
-        System.out.println(ObjectString);
-        System.out.println(ObjectString);
-        System.out.println(ObjectString);
-        System.out.println(ObjectString);
-        System.out.println(ObjectString);
-
         if (ObjectString.equals("Circle"))
             return new Circle(ID);
         else if (ObjectString.equals("Rectangle"))

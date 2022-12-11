@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
     // This part is for requesting from backend
     this.selected.on('transformend', (e:any) =>
     {
-      this.http.edit_pos_sizeRequest(this.selected);
+      this.http.edit_pos_sizeRequest(this.selected).subscribe(e=>{});
       console.log(this.hashmap[id]);
       console.log(this.GetNewSizeAndPosition());
     });

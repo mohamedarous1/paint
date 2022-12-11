@@ -13,12 +13,13 @@ export class HttpService {
   CreateRequest(shape: any, ShapeType:string):Observable<any>
   {
     var temp = JSON.stringify(shape.attrs);
-
     return this.http.get('http://localhost:8080/create/' + ShapeType +
       "/" + temp, {responseType: 'text'});
   }
 
-  edit_pos_sizeRequest(shape: any) :Observable<any>{
+  edit_pos_sizeRequest(shape: any) :Observable<any>
+  {
+    console.log("3roos");
     var temp = JSON.stringify(shape.attrs);
     return this.http.get('http://localhost:8080/ResizeAndChangePosition/' + temp,{responseType : 'text'});
   }

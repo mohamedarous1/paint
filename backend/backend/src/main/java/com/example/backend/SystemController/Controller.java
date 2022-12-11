@@ -16,18 +16,16 @@ public class Controller {
     public SystemService MyService  = new SystemService();
 
     @GetMapping("/create/{shapetype}/{jsonObject}")
-    @CrossOrigin
     public int CreateNewObject
             (@PathVariable String shapetype, @PathVariable String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
         int id = MyService.Create(shapetype, NewJson);
-
+        System.out.println("3roos");
         return id;
     }
 
     @GetMapping("/ChangePositionLine/{jsonObject}")
-    @CrossOrigin
     public void ChangePositionLine(String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
@@ -36,16 +34,23 @@ public class Controller {
     }
 
     @GetMapping("/ResizeAndChangePosition/{jsonObject}")
-    @CrossOrigin
     public void ResizeAndChangePosition(String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
         System.out.println("hello");
+        System.out.println("hello");
+        System.out.println("hello");
+        System.out.println("hello");
+        System.out.println("hello");
+        System.out.println("hello");
+        System.out.println("hello");
+        System.out.println("hello");
+        System.out.println("hello");
+
         MyService.ResizeAndChangePosition(NewJson);
     }
 
     @GetMapping("/ChangeStrokeWidth/{jsonObject}")
-    @CrossOrigin
     public void ChangeStrokeWidth(String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
@@ -54,7 +59,6 @@ public class Controller {
     }
 
     @GetMapping("/ChangeStrokeColor/{jsonObject}")
-    @CrossOrigin
     public void ChangeStrokeColor(String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
@@ -63,7 +67,6 @@ public class Controller {
     }
 
     @GetMapping("/DisableShape/{jsonObject}")
-    @CrossOrigin
     public void DisableShape(String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
