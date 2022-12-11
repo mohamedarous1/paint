@@ -125,7 +125,6 @@ export class HomeComponent implements OnInit {
 
     this.stage.on('mouseup touchend', ()=>
     {
-
       isPaint = false;
     });
 
@@ -192,6 +191,7 @@ export class HomeComponent implements OnInit {
     console.log(Shape);
     this.http.CreateRequest(Shape, ShapeType)
       .subscribe(id => {this.UpdateIdAndPutInMap(Shape, ShapeType, id)});
+    document.getElementById("30").valu
   }
 
   UpdateIdAndPutInMap(Shape:any, ShapeType:string, id:number)

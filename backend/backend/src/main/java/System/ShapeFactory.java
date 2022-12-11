@@ -28,21 +28,27 @@ public class ShapeFactory
 
     Shape CreateObjectOfSameClassAndGivenId(int GivenId, Shape ToBeCopied)
     {
-        if (ToBeCopied instanceof Circle)
-            return new Circle(GivenId);
-        else if (ToBeCopied instanceof Rectangle)
-            return new Rectangle(GivenId);
-        else if (ToBeCopied instanceof Ellipse)
-            return new Ellipse(GivenId);
-        else if (ToBeCopied instanceof Square)
-            return new Square(GivenId);
-        else if (ToBeCopied instanceof Pentagon)
-            return new Pentagon(GivenId);
-        else if (ToBeCopied instanceof Triangle)
-            return new Triangle(GivenId);
-        else if (ToBeCopied instanceof Line)
-            return new Line(GivenId);
+        String ShapeType = this.GetShapeType(ToBeCopied);
+        return this.CreateShape(GivenId, ShapeType);
+    }
 
-        return null;
+    String GetShapeType(Shape shape)
+    {
+        if (shape instanceof Circle)
+            return "Circle";
+        else if (shape instanceof Rectangle)
+            return "Rectangle";
+        else if (shape instanceof Ellipse)
+            return "Ellipse";
+        else if (shape instanceof Square)
+            return "Square";
+        else if (shape instanceof Pentagon)
+            return "Pentagon";
+        else if (shape instanceof Triangle)
+            return "Triangle";
+        else if (shape instanceof Line)
+            return "Line";
+
+        return "No Type Corresponds to this shape";
     }
 }

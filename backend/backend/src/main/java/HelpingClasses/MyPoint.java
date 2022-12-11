@@ -10,4 +10,13 @@ public class MyPoint
         this.x = x;
         this.y = y;
     }
+
+    public double Getx()
+    {
+        return this.x;
+    }
+    public double Gety()
+    {
+        return this.y;
+    }
 }

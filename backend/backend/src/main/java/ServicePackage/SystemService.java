@@ -1,5 +1,6 @@
 package ServicePackage;
 
+import Operations.Operation;
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
@@ -36,4 +37,10 @@ public class SystemService
         MainSystem.DisableShape(obj);
     }
 
+    public JSONObject Undo()
+    {
+        Operation operation = MainSystem.GetAndExecuteUndoOperation();
+        JSONObject object = MainSystem.GenerateJsonForFrontEnd(operation);
+        return object;
+    }
 }

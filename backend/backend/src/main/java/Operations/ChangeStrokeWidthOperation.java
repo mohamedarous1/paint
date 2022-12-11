@@ -2,6 +2,7 @@ package Operations;
 
 
 import Shapes.Shape;
+import org.json.simple.JSONObject;
 
 public class ChangeStrokeWidthOperation extends Operation
 {
@@ -28,4 +29,14 @@ public class ChangeStrokeWidthOperation extends Operation
         return ReversedOperation;
     }
 
+
+
+    @Override
+    public JSONObject GetJsonForFrontend()
+    {
+        JSONObject jsonObject = super.GetJsonForFrontend();
+        jsonObject.put("OperationType", "ChangeStrokeWidthOperation");
+        jsonObject.put("strokeWidth", this.NewStrokeWidth);
+        return jsonObject;
+    }
 }

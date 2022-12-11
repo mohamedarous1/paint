@@ -69,4 +69,12 @@ public class Controller {
         MyService.DisableShape(NewJson);
     }
 
+
+    @GetMapping("/Undo")
+    public JSONObject DisableShape()
+    {
+        JSONObject object = MyService.Undo();
+        return object;
+    }
+
 }

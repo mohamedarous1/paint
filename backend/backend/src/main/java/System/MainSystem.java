@@ -5,7 +5,6 @@ import HelpingClasses.Size;
 import Operations.*;
 import Shapes.ClosedShape;
 import Shapes.Shape;
-import com.sun.tools.javac.Main;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
@@ -16,7 +15,7 @@ public class MainSystem
     private static HashMap<Integer, Shape> ShapesMap = new HashMap<>();
     static Stack<Operation> OperationStack = new Stack<>();
     static Stack<Operation> OperationUndoStack = new Stack<>();
-    static ShapeFactory shapeFactory = new ShapeFactory();
+    static ShapeFactory ShapeFactory = new ShapeFactory();
     private static int IDCounter = 1;
 
     private static int GetAndIncreamentIDCounter()
@@ -25,26 +24,37 @@ public class MainSystem
         IDCounter = IDCounter + 1;
         return OldIDCounter;
     }
-    public static void Undo()
+
+    public static JSONObject GenerateJsonForFrontEnd(Operation operation)
     {
-        if (MainSystem.CanMakeRedo() == false) return;
+        JSONObject object = operation.GetJsonForFrontend();
+        return object;
+    }
+
+    public static Operation GetAndExecuteUndoOperation()
+    {
+        if (MainSystem.CanMakeRedo() == false) return null;
         Operation CurrentOperation = MainSystem.OperationStack.peek();
         Operation ReversedOperation = CurrentOperation.GetReversedOperation();
-        MainSystem.DoOperation(ReversedOperation);
 
         MainSystem.OperationStack.pop();
         MainSystem.OperationUndoStack.push(ReversedOperation);
+
+        MainSystem.DoOperation(ReversedOperation);
+        return ReversedOperation;
     }
-    public static void Redo()
+    public static Operation GetAndExecuteRedoOperation()
     {
         if (MainSystem.CanMakeRedo() == false)
-            return;
+            return null;
         Operation CurrentOperation = MainSystem.OperationUndoStack.peek();
         Operation ReversedOperation = CurrentOperation.GetReversedOperation();
-        MainSystem.DoOperation(ReversedOperation);
 
         MainSystem.OperationUndoStack.pop();
         MainSystem.OperationStack.push(ReversedOperation);
+
+        MainSystem.DoOperation(ReversedOperation);
+        return ReversedOperation;
     }
 
     public static void DoOperation(Operation operation)
@@ -56,7 +66,7 @@ public class MainSystem
     public static int CreateNewObjectFront(String ShapeType, JSONObject ShapeJson)
     {
         int ID = MainSystem.GetAndIncreamentIDCounter();
-        Shape NewShape = MainSystem.shapeFactory.CreateShape(ID, ShapeType);
+        Shape NewShape = MainSystem.ShapeFactory.CreateShape(ID, ShapeType);
         JsonConverter.ExtractAllProperties(ShapeJson, NewShape);
 
         System.out.println(" ");
@@ -167,7 +177,7 @@ public class MainSystem
     {
         int newid = MainSystem.GetAndIncreamentIDCounter();
 
-        Shape NewShape = MainSystem.shapeFactory.CreateShape(newid, ShapeType);
+        Shape NewShape = MainSystem.ShapeFactory.CreateShape(newid, ShapeType);
 
         MainSystem.InsertInShapeMap(NewShape);
 
@@ -179,7 +189,7 @@ public class MainSystem
 
         int NewShapeId = MainSystem.GetAndIncreamentIDCounter();
 
-        Shape NewShape = MainSystem.shapeFactory.CreateObjectOfSameClassAndGivenId(NewShapeId, shape);
+        Shape NewShape = MainSystem.ShapeFactory.CreateObjectOfSameClassAndGivenId(NewShapeId, shape);
         return NewShape;
     }
     public static void CloneShapeAndInsertInShapeMapp(int ShapeId)
@@ -213,8 +223,6 @@ public class MainSystem
     {
         MainSystem.OperationUndoStack.pop();
     }
-
-
     private static boolean CanMakeUndo()
     {
         if (MainSystem.OperationStack.empty()) return false;
@@ -226,4 +234,9 @@ public class MainSystem
         return true;
     }
 
+    public static String GetShapeType(int id)
+    {
+        Shape shape = MainSystem.ShapesMap.get(id);
+        return MainSystem.ShapeFactory.GetShapeType(shape);
+    }
 }

@@ -1,8 +1,10 @@
 package Operations;
 
+import HelpingClasses.MyPoint;
 import HelpingClasses.Position;
 import Shapes.ClosedShape;
 import Shapes.Shape;
+import org.json.simple.JSONObject;
 
 public class ChangePositionLineOperation extends Operation
 {
@@ -30,5 +32,17 @@ public class ChangePositionLineOperation extends Operation
                 = new ChangePositionLineOperation
                 (this.GetShapeID(), this.NewPosition, this.OldPosition);
         return ReversedOperation;
+    }
+
+    @Override
+    public JSONObject GetJsonForFrontend()
+    {
+        JSONObject jsonObject = super.GetJsonForFrontend();
+        jsonObject.put("OperationType", "ChangeStokeColorOperation");
+        MyPoint point = NewPosition.GetPosition();
+        jsonObject.put("x", point.Getx());
+        jsonObject.put("y", point.Gety());
+
+        return jsonObject;
     }
 }

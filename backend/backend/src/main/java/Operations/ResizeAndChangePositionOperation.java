@@ -2,7 +2,10 @@ package Operations;
 
 import HelpingClasses.*;
 import Shapes.ClosedShape;
+import Shapes.RegularPolygon;
 import Shapes.Shape;
+import org.json.simple.JSONObject;
+import System.MainSystem;
 
 import java.awt.*;
 
@@ -38,5 +41,61 @@ public class ResizeAndChangePositionOperation extends Operation
                 = new ResizeAndChangePositionOperation
                 (this.GetShapeID(), this.NewPosition, this.OldPosition, this.NewSize, this.OldSize);
         return ReversedOperation;
+    }
+
+
+    @Override
+    public JSONObject GetJsonForFrontend()
+    {
+        JSONObject jsonObject = super.GetJsonForFrontend();
+        jsonObject.put("OperationType", "ResizeAndChangePositionOperation");
+        MyPoint point = NewPosition.GetPosition();
+        jsonObject.put("x", point.Getx());
+        jsonObject.put("y", point.Gety());
+
+        return jsonObject;
+    }
+
+    private void PutSizeInJson(JSONObject jsonObject)
+    {
+        String ShapeType = MainSystem.GetShapeType(this.GetShapeID());
+
+        if (ShapeType == "Square")
+        {
+            RegularPolygonSize size = (RegularPolygonSize) this.NewSize;
+            double x = size.GetSideLength();
+            jsonObject.put("height", x);
+            jsonObject.put("width", x);
+        }
+        else if (ShapeType == "Rectangle")
+        {
+            LWSize size = (LWSize) this.NewSize;
+            double x = size.GetLWSize().Getx();
+            double y = size.GetLWSize().Gety();
+
+            jsonObject.put("height", x);
+            jsonObject.put("width", y);
+        }
+        else if (ShapeType == "Circle")
+        {
+            CircleSize size = (CircleSize) this.NewSize;
+            double x = size.GetRadius();
+            jsonObject.put("radius", x);
+        }
+        else if (ShapeType == "Ellipse")
+        {
+            LWSize size = (LWSize) this.NewSize;
+            double x = size.GetLWSize().Getx();
+            double y = size.GetLWSize().Gety();
+            jsonObject.put("radiusX", x);
+            jsonObject.put("radiusY", y);
+        }
+        else if (ShapeType == "Triangle" || ShapeType == "Pentagon")
+        {
+            RegularPolygonSize size = (RegularPolygonSize) this.NewSize;
+            double x = size.GetSideLength();
+            jsonObject.put("radius", x);
+        }
+
     }
 }

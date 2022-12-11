@@ -1,15 +1,15 @@
 package Operations;
 
-
+import Shapes.ClosedShape;
 import Shapes.Shape;
 import org.json.simple.JSONObject;
 
-public class ChangeStokeColorOperation extends Operation
+public class ChangeFillColorOperation extends Operation
 {
     private String OldColor;
     private String NewColor;
 
-    public ChangeStokeColorOperation(int id, String prevcolor, String newcolor)
+    public ChangeFillColorOperation(int id, String prevcolor, String newcolor)
     {
         super(id);
         this.OldColor = prevcolor;
@@ -19,13 +19,13 @@ public class ChangeStokeColorOperation extends Operation
     @Override
     public void Execute(Shape shape)
     {
-        shape.SetStrokeColor(this.NewColor);
+        ((ClosedShape)shape).SetFillColor(this.NewColor);
     }
     @Override
     public Operation GetReversedOperation()
     {
-        ChangeStokeColorOperation ReversedOperation
-                = new ChangeStokeColorOperation(this.GetShapeID(), this.NewColor, this.OldColor);
+        ChangeFillColorOperation ReversedOperation
+                = new ChangeFillColorOperation(this.GetShapeID(), this.NewColor, this.OldColor);
         return ReversedOperation;
     }
 
@@ -33,9 +33,8 @@ public class ChangeStokeColorOperation extends Operation
     public JSONObject GetJsonForFrontend()
     {
         JSONObject jsonObject = super.GetJsonForFrontend();
-        jsonObject.put("OperationType", "ChangeStokeColorOperation");
-        jsonObject.put("strokecolor", this.NewColor);
+        jsonObject.put("OperationType", "ChangeFillColorOperation");
+        jsonObject.put("fill", this.NewColor);
         return jsonObject;
     }
-
 }

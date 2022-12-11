@@ -1,6 +1,7 @@
 package Operations;
 
 import Shapes.Shape;
+import org.json.simple.JSONObject;
 
 public class EnableShapeOperation extends Operation
 {
@@ -20,5 +21,13 @@ public class EnableShapeOperation extends Operation
         DisableShapeOperation ReversedOperation
                 = new DisableShapeOperation(this.GetShapeID());
         return ReversedOperation;
+    }
+
+    @Override
+    public JSONObject GetJsonForFrontend()
+    {
+        JSONObject jsonObject = super.GetJsonForFrontend();
+        jsonObject.put("OperationType", "EnableShapeOperation");
+        return jsonObject;
     }
 }
