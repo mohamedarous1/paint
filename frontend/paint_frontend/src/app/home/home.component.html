@@ -1,56 +1,56 @@
 <body>
-<div class="program">
-  <div class="section1">
-    <button class="button"  (click)="create('Ellipse')"><i><img src="assets/images/ellipse3.png" /></i></button>
-    <button class="button"  (click)="create('Square')"><i><img src="assets/images/square3.png" /></i></button>
-    <button class="button"  (click)="create('Circle')"><i><img src="assets/images/circle3.png" /></i></button>
-    <button class="button"  (click)="create('Rectangle')"><i><img src="assets/images/rectangle3.png" /></i></button>
-    <button class="button"  (click)="create('Triangle')"><i><img src="assets/images/traingle3.png" /></i></button>
-    <button class="button"  (click)="create('Line')"><i><img src="assets/images/line3.png" /></i></button>
-    <li>
-<!--      <input type="checkbox" id ="fill-color" (click)="check_fill()">-->
-<!--      <label for="fill-color">fill color</label>-->
-    </li>
-    <div class="title">shapes</div>
-  </div>
-
-  <div class="section2">
-    <button class = "button" id ="functions"  >
-      &laquo; Undo
-    </button>
-    <button class = "button" id ="functions" >
-      Redo &raquo;
-    </button>
-    <button class = "button"id = "functions" (click)="BrushClick()">brush</button>
-    <button class = "button"id = "functions" >delete</button>
-    <li>
-      <input type="range" id="size">
-    </li>
-    <button class="button" (click)="SelectButtonClick()">selected</button>
-    <div class="title">functions</div>
-  </div>
-  <div class="section3">
-    <form>
-      <label for="favcolor">Select color: </label>
-      <input type="color" id="favcolor" name="favcolor">
-    </form>
-
-  </div>
-  <div class="section4">
-    <div>
-      <button class="button">save</button>
+  <div class="program">
+    <div class="section1">
+      <button class="button"  (click)="create('Ellipse')"><i><img src="assets/images/ellipse3.png" /></i></button>
+      <button class="button"  (click)="create('Square')"><i><img src="assets/images/square3.png" /></i></button>
+      <button class="button"  (click)="create('Circle')"><i><img src="assets/images/circle3.png" /></i></button>
+      <button class="button"  (click)="create('Rectangle')"><i><img src="assets/images/rectangle3.png" /></i></button>
+      <button class="button"  (click)="create('Triangle')"><i><img src="assets/images/traingle3.png" /></i></button>
+      <button class="button"  (click)="create('Line')"><i><img src="assets/images/line3.png" /></i></button>
+      <li>
+  <!--      <input type="checkbox" id ="fill-color" (click)="check_fill()">-->
+  <!--      <label for="fill-color">fill color</label>-->
+      </li>
+      <div class="title">shapes</div>
     </div>
-    <div>
-      <button class="button">load</button>
+
+    <div class="section2">
+      <button class = "button" id ="functions"  >
+        &laquo; Undo
+      </button>
+      <button class = "button" id ="functions" >
+        Redo &raquo;
+      </button>
+      <button class = "button"id = "functions" (click)="BrushClick()">brush</button>
+      <button class = "button"id = "functions" (click)="DeleteShape()"  >delete</button>
+      <button class="button" (click)="SelectButtonClick()">selected</button>
+      <li>
+        <input type="range" id="size">
+      </li>
+      <div class="title">functions</div>
     </div>
+    <div class="section3">
+      <form>
+        <label for="favcolor">Select Color: </label>
+        <input type="color" id="favcolor" name="favcolor">
+      </form>
+
+    </div>
+    <div class="section4">
+      <div>
+        <button class="button">save</button>
+      </div>
+      <div>
+        <button class="button">load</button>
+      </div>
+    </div>
+
+
   </div>
 
+  <section class="drawing" >
+    <div id="container">
+    </div>
+  </section>
 
-</div>
-
-<section class="drawing" >
-  <div id="container">
-  </div>
-</section>
-
-</body>
+  </body>

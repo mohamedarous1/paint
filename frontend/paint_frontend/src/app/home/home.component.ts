@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   color : string = "black";
   selected : any;
   tr : any;
+  BruchColor:string="black";
 
   hashmap:any = new Map();
   constructor(public http  : HttpService) { }
@@ -34,7 +35,7 @@ export class HomeComponent implements OnInit {
 
     this.stage = new Konva.Stage({
       container: 'container',
-      width: 1200,
+      width: 1370,
       height: 600
     });
 
@@ -47,6 +48,12 @@ export class HomeComponent implements OnInit {
     this.stage.on('click',  (e:any) => this.OnClickOnStageSelect(e));
   }
 
+  SelectButtonClick()
+  {
+    this.ClearEventListeners();
+    this.AddFillEventListener();
+    this.stage.on('click', (e:any) => this.OnClickOnStageSelect(e));
+  }
   OnClickOnStageSelect(e:any)
   {
     let id = e.target.attrs.id;
@@ -62,13 +69,21 @@ export class HomeComponent implements OnInit {
     // This part is for requesting from backend
     this.selected.on('transformend', (e:any) =>
     {
+      this.http.edit_pos_sizeRequest(this.selected);
       console.log(this.hashmap[id]);
       console.log(this.GetNewSizeAndPosition());
     });
 
     this.selected.on('dragend' , (e:any) => {
+      this.selected.edit_pos_sizeRequest(this.selected);
       console.log(this.GetNewSizeAndPosition());
     });
+  }
+  SelectShape(SelectedShape:any)
+  {
+    this.selected = SelectedShape;
+    this.selected.draggable(true);
+    this.tr.nodes([this.selected]);
   }
 
   GetNewSizeAndPosition()
@@ -91,23 +106,6 @@ export class HomeComponent implements OnInit {
     this.selected.draggable(false);
     this.tr.nodes([]);
     this.selected = undefined;
-  }
-
-  SelectShape(SelectedShape:any)
-  {
-    this.selected = SelectedShape;
-    this.selected.draggable(true);
-    this.tr.nodes([this.selected]);
-  }
-
-  check_fill()
-  {
-    if(this.fill){
-      this.fill = false;
-
-    }else{
-      this.fill = true;
-    }
   }
 
   create(ShapeType : string)
@@ -139,8 +137,15 @@ export class HomeComponent implements OnInit {
     this.hashmap[id] = ShapeType;
   }
 
+  BrushClick()
+  {
+    this.ClearEventListeners();
+    this.stage.on('click', (e:any)=>this.OnClickOnStageBrush(e));
+  }
   OnClickOnStageBrush(ee:any)
   {
+    let brushcolor = document.getElementById("favcolor");
+    brushcolor?.addEventListener('input', (e:any)=>this.BrushColorValue(e));
     var isPaint = false;
     var mode = 'brush';
     var lastLine : any;
@@ -150,7 +155,7 @@ export class HomeComponent implements OnInit {
       isPaint = true;
       var pos = this.stage.getPointerPosition();
       lastLine = new Konva.Line({
-        stroke: '#df4b26',
+        stroke: this.BruchColor,
         strokeWidth: 5,
         globalCompositeOperation:
           mode === 'brush' ? 'source-over' : 'destination-out',
@@ -182,24 +187,17 @@ export class HomeComponent implements OnInit {
     });
 
   }
+  BrushColorValue(e:any){
+    this.BruchColor = e.target.value;
+  }
 
-  BrushClick()
-  {
-    this.RemoveSelection();
-    this.ClearEventListeners();
-    this.stage.on('click', (e:any)=>this.OnClickOnStageBrush(e));
-  }
-  SelectButtonClick()
-  {
-    this.ClearEventListeners();
-    this.AddFillEventListener();
-    this.stage.on('click', (e:any) => this.OnClickOnStageSelect(e));
-  }
+  
   ClearEventListeners()
   {
     let ColorBtn = document.getElementById("favcolor");
     ColorBtn?.removeEventListener('input', (e:any)=>this.ColorValue(e));
 
+    this.RemoveSelection();
     this.stage.off("click");
     this.stage.off('mousedown touchstart');
     this.stage.off('mousemove touchmove');
@@ -210,21 +208,31 @@ export class HomeComponent implements OnInit {
     let colorbtn = document.getElementById("favcolor");
     colorbtn?.addEventListener('input', (e:any)=>this.ColorValue(e));
   }
-
-
   ColorValue(evt:any)
   {
     if (this.selected == undefined) return;
     let color:string = evt.target.value;
-
     this.ColorShape(this.selected, color);
   }
-
   ColorShape(SelectedShape:any, color:string)
   {
     SelectedShape.fill(color);
     console.log(color);
   }
-
+  DeleteShape(){
+    this.ClearEventListeners();
+    this.AddFillEventListener();
+    this.stage.on('click', (e:any) => this.DeleteSelectedShape(e));
+  }
+  DeleteSelectedShape(e:any){
+    let id = e.target.attrs.id;
+    let ClickedShape = e.target;
+    if(id==undefined){
+      return;
+    }
+    this.tr.nodes([]);
+    ClickedShape.destroy();
+    this.ClearEventListeners();
+  }
 
 }

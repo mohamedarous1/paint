@@ -36,7 +36,7 @@ public class JsonConverter
 
     public static String ExtractFillColor(JSONObject ShapeJson)
     {
-        Object temp = ShapeJson.get("FillColor");
+        Object temp = ShapeJson.get("fill");
         if (temp == null) return null;
 
         String color = (String)temp;
@@ -45,7 +45,7 @@ public class JsonConverter
 
     public static String ExtractStrokeColor(JSONObject ShapeJson)
     {
-        Object temp = ShapeJson.get("StrokeColor");
+        Object temp = ShapeJson.get("stroke");
         if (temp == null) return null;
 
         return (String)temp;
@@ -53,7 +53,7 @@ public class JsonConverter
 
     public static double ExtractStrokeWidth(JSONObject ShapeJson)
     {
-        Object temp = ShapeJson.get("StrokeWidth");
+        Object temp = ShapeJson.get("strokeWidth");
 
         double width = (double)temp;
         return width;

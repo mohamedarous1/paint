@@ -40,7 +40,7 @@ public class Controller {
     public void ResizeAndChangePosition(String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
-
+        System.out.println("hello");
         MyService.ResizeAndChangePosition(NewJson);
     }
 

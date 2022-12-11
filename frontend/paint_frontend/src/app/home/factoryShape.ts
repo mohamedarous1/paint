@@ -42,8 +42,8 @@ class circle implements Shape {
         x: 50,
         y: 100,
         radius: Math.abs(20),
-        fill: "black",
-        strokeWidth: 3,
+        stroke:"black",
+        strokeWidth: 2,
         draggable: false,
         id: id
 
@@ -68,8 +68,8 @@ class rectangle implements Shape {
       y: 100,
       width:70,
       height : 70,
-      fill: "black",
-      strokeWidth: 3,
+      stroke:"black",
+      strokeWidth: 2,
       draggable: false,
       id: id
 
@@ -93,8 +93,8 @@ class ellipse implements Shape {
       y: 100,
       radiusX: 100,
       radiusY: 50,
-      strokeWidth: 4,
-      fill: "black",
+      stroke:"black",
+      strokeWidth: 2,
       draggable : false,
       id: id
 
@@ -118,9 +118,9 @@ class square implements Shape {
       y: 200,
       height:50,
       width:50,
-      strokeWidth: 3,
       draggable: false,
-      fill: "black",
+      stroke:"black",
+      strokeWidth: 2,
       id: id,
       rotation:0
 
@@ -143,10 +143,10 @@ export class triangle implements Shape {
         x: 50,
         y: 100,
         sides: 3,
-        radius: Math.abs(200),
-        strokeWidth: 3,
+        radius: Math.abs(50),
+        stroke:"black",
+        strokeWidth: 2,
         draggable: false,
-        fill: "black",
         id : id
       });
     }
