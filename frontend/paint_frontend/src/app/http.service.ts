@@ -30,20 +30,27 @@ edit_posRequest(shape : any):Observable<any>{
 
 fillRequest(shape : any):Observable<any>{
   var temp = JSON.stringify(shape.attrs);
-  return this.http.get('http://localhost:8080/edit_posandsize/' + temp,{responseType : 'text' });
-  }
+  return this.http.get('http://localhost:8080/FillColor/' + temp,{responseType : 'text' });
+}
+
 
 strokeRequest(shape : any):Observable<any>{
   var temp = JSON.stringify(shape.attrs);
-  return this.http.get('http://localhost:8080/edit_posandsize/' + temp,{responseType : 'text'});
-  }
+  return this.http.get('http://localhost:8080/stroke/' + temp,{responseType : 'text'});
+  
+}
 
-  undoRequest():Observable<any>{
+deleteRequest(shape : any){
+  var temp = JSON.stringify(shape.attrs);
+  return this.http.get('http://localhost:8080/DisableShape/' + temp,{responseType : 'text'});
+}
+
+undoRequest():Observable<any>{
     return this.http.get('http://localhost:8080/Undo' ,{responseType : 'text'});
     }
 
     redoRequest():Observable<any>{
       return this.http.get('http://localhost:8080/redo/' ,{responseType : 'text'});
-      }
+    }
 
 }

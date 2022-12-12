@@ -237,6 +237,7 @@ export class HomeComponent implements OnInit {
   ColorShape(SelectedShape:any, color:string)
   {
     SelectedShape.fill(color);
+    this.http.fillRequest(SelectedShape).subscribe(e=>{});
     console.log(color);
   }
   DeleteShape(){
@@ -251,6 +252,7 @@ export class HomeComponent implements OnInit {
       return;
     }
     this.tr.nodes([]);
+    this.http.deleteRequest(ClickedShape).subscribe(e=>{});
     ClickedShape.destroy();
     this.ClearEventListeners();
   }

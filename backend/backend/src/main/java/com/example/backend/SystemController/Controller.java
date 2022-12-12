@@ -55,9 +55,10 @@ public class Controller {
         MyService.ChangeStrokeColor(NewJson);
     }
 
-    @GetMapping("/ChangeStrokeColor/{jsonObject}")
+    @GetMapping("/FillColor/{jsonObject}")
     public void ChangeFillColor(@PathVariable String jsonObject)
     {
+        System.out.println("fill");
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
 
         MyService.ChangeFilColor(NewJson);
@@ -67,6 +68,7 @@ public class Controller {
     @GetMapping("/DisableShape/{jsonObject}")
     public void DisableShape(@PathVariable String jsonObject)
     {
+        System.out.println("delete");
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
         MyService.DisableShape(NewJson);
     }
