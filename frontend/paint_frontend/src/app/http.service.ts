@@ -63,11 +63,20 @@ export class HttpService {
   {
     var temp = JSON.stringify(shape.attrs);
     var temp2 = JSON.parse(temp);
+    if (temp2.hasOwnProperty("fill") == false)
+      return temp;
     temp2["fill"] = shape.fill().slice(1);
     temp = JSON.stringify(temp2);
     return temp;
   }
 
+  CreateLineRequest(shape: any) :Observable<any>
+  {
+    var temp = this.UpdateJsonForFillError(shape);
+    console.log("Reached Line Request");
+    return this.http.get('http://localhost:8080/CreateLine/' + temp
+      ,{responseType : 'text'});
+  }
 
 
 

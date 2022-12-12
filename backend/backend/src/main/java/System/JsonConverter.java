@@ -4,6 +4,8 @@ import HelpingClasses.*;
 import Shapes.*;
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
+
+import java.util.ArrayList;
 //import org.json.*;
 
 public class JsonConverter
@@ -122,7 +124,14 @@ public class JsonConverter
         return id;
     }
 
-    public static JSONObject GetJsoon(String jsonObject)
+
+    public static ArrayList<Double> ExtractPointsArrayForLine(JSONObject jsonObject)
+    {
+        ArrayList<Double> list = (ArrayList<Double>) jsonObject.get("points");
+        return list;
+    }
+
+    public static JSONObject GetJson(String jsonObject)
     {
         JSONObject NewJson = new Gson().fromJson(jsonObject , JSONObject.class);
         return NewJson;

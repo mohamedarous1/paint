@@ -1,13 +1,8 @@
 package com.example.backend.SystemController;
 import ServicePackage.SystemService;
-import com.google.gson.Gson;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import Shapes.*;
 import System.JsonConverter;
-
-import System.MainSystem;
 
 @RestController
 @CrossOrigin
@@ -19,7 +14,8 @@ public class Controller {
     public int CreateNewObject
             (@PathVariable String shapetype, @PathVariable String jsonObject)
     {
-        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
+        System.out.println("New Object created");
+        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
         int id = MyService.Create(shapetype, NewJson);
         return id;
     }
@@ -27,7 +23,7 @@ public class Controller {
     @GetMapping("/ChangePositionLine/{jsonObject}")
     public void ChangePositionLine(@PathVariable String jsonObject)
     {
-        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
+        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
 
         MyService.ChangePositionLine(NewJson);
     }
@@ -35,14 +31,14 @@ public class Controller {
     @GetMapping("/ResizeAndChangePosition/{jsonObject}")
     public void ResizeAndChangePosition(@PathVariable String jsonObject)
     {
-        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
+        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
         MyService.ResizeAndChangePosition(NewJson);
     }
 
     @GetMapping("/ChangeStrokeWidth/{jsonObject}")
     public void ChangeStrokeWidth(@PathVariable String jsonObject)
     {
-        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
+        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
 
         MyService.ChangeStrokeWidth(NewJson);
     }
@@ -50,7 +46,7 @@ public class Controller {
     @GetMapping("/ChangeStrokeColor/{jsonObject}")
     public void ChangeStrokeColor(@PathVariable String jsonObject)
     {
-        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
+        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
 
         MyService.ChangeStrokeColor(NewJson);
     }
@@ -60,7 +56,7 @@ public class Controller {
     {
         System.out.println("fill");
         System.out.println(jsonObject);
-        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
+        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
 
         MyService.ChangeFilColor(NewJson);
     }
@@ -69,8 +65,7 @@ public class Controller {
     @GetMapping("/DisableShape/{jsonObject}")
     public void DisableShape(@PathVariable String jsonObject)
     {
-        System.out.println("delete");
-        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
+        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
         MyService.DisableShape(NewJson);
     }
 
@@ -84,11 +79,16 @@ public class Controller {
     @GetMapping("/Redo")
     public JSONObject Redo()
     {
-        System.out.println("RedoOperation");
         JSONObject object = MyService.Redo();
         return object;
     }
 
-
+    @GetMapping("/CreateLine/{jsonObject}")
+    public void CreateLine(@PathVariable String jsonObject)
+    {
+        System.out.println("Reached Controller");
+        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
+        MyService.CreateLine(NewJson);
+    }
 
 }

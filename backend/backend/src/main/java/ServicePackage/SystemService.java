@@ -1,6 +1,7 @@
 package ServicePackage;
 
 import Operations.Operation;
+import com.sun.tools.javac.Main;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import System.MainSystem;
@@ -54,5 +55,10 @@ public class SystemService
         Operation operation = MainSystem.GetAndExecuteRedoOperation();
         JSONObject object = MainSystem.GenerateJsonForFrontEnd(operation);
         return object;
+    }
+
+    public void CreateLine(JSONObject jsonObject)
+    {
+        MainSystem.CreateNewLine(jsonObject);
     }
 }

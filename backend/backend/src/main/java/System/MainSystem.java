@@ -7,6 +7,7 @@ import Shapes.ClosedShape;
 import Shapes.Shape;
 import org.json.simple.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -85,6 +86,14 @@ public class MainSystem
 
         DoOperation(operation);
         return ID;
+    }
+
+    public static void CreateNewLine(JSONObject ShapeJson)
+    {
+        System.out.println("Reached Main system");
+        ArrayList<Double> list = JsonConverter.ExtractPointsArrayForLine(ShapeJson);
+        for (double i : list)
+            System.out.print(i);
     }
 
     public static void ResizeAndChangePosition(JSONObject ShapeJson)

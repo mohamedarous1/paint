@@ -6,7 +6,7 @@ import {factoryShape} from "./factoryShape";
 import { HitCanvas } from 'konva/cmj/Canvas';
 import { Conditional } from '@angular/compiler';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from "rxjs";
+import {last, Observable} from "rxjs";
 import {HttpService} from "../http.service";
 
 
@@ -179,14 +179,13 @@ export class HomeComponent implements OnInit {
     var isPaint = false;
     var mode = 'brush';
     var lastLine : any;
-    let id = this.id.toString();
     this.stage.on('mousedown touchstart',  (e:any) =>
     {
       isPaint = true;
       var pos = this.stage.getPointerPosition();
       lastLine = new Konva.Line({
-        id:id,
         stroke: this.BruchColor,
+        id:"5",
         strokeWidth: 5,
         globalCompositeOperation:
           mode === 'brush' ? 'source-over' : 'destination-out',
@@ -201,7 +200,8 @@ export class HomeComponent implements OnInit {
 
     this.stage.on('mouseup touchend',  () => {
       isPaint = false;
-      this.id++;
+      console.log(lastLine);
+      this.http.CreateLineRequest(lastLine);
     });
 
     // and core function - drawing
