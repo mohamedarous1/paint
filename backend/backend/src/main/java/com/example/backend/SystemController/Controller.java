@@ -21,7 +21,6 @@ public class Controller {
     {
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
         int id = MyService.Create(shapetype, NewJson);
-        System.out.println("3roos");
         return id;
     }
 
@@ -36,12 +35,6 @@ public class Controller {
     @GetMapping("/ResizeAndChangePosition/{jsonObject}")
     public void ResizeAndChangePosition(@PathVariable String jsonObject)
     {
-        System.out.println(jsonObject);
-        System.out.println(jsonObject);
-        System.out.println(jsonObject);
-        System.out.println(jsonObject);
-
-
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
         MyService.ResizeAndChangePosition(NewJson);
     }
@@ -62,6 +55,15 @@ public class Controller {
         MyService.ChangeStrokeColor(NewJson);
     }
 
+    @GetMapping("/ChangeStrokeColor/{jsonObject}")
+    public void ChangeFillColor(@PathVariable String jsonObject)
+    {
+        JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
+
+        MyService.ChangeFilColor(NewJson);
+    }
+
+
     @GetMapping("/DisableShape/{jsonObject}")
     public void DisableShape(@PathVariable String jsonObject)
     {
@@ -69,11 +71,9 @@ public class Controller {
         MyService.DisableShape(NewJson);
     }
 
-
     @GetMapping("/Undo")
     public JSONObject DisableShape()
     {
-        System.out.println("hellloooooooo");
         JSONObject object = MyService.Undo();
         return object;
     }

@@ -32,6 +32,12 @@ public class SystemService
     {
         MainSystem.ChangeStrokeColor(obj);
     }
+
+    public void ChangeFilColor(JSONObject obj)
+    {
+        MainSystem.ChangeFillColor(obj);
+    }
+
     public void DisableShape(JSONObject obj)
     {
         MainSystem.DisableShape(obj);

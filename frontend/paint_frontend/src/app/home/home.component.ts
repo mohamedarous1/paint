@@ -102,17 +102,13 @@ export class HomeComponent implements OnInit {
       this.selected.radiusX( this.selected.width()* this.selected.scaleX());
       this.selected.radiusY(  this.selected.height()*this.selected.scaleY());
     }
-    
+
     this.selected.scaleX(1);
     this.selected.scaleY(1);
   }
 
   GetNewSizeAndPosition()
   {
-    // this.selected.width( this.selected.width()* this.selected.scaleX()) ;
-    // this.selected.height(  this.selected.height()*this.selected.scaleY()) ;
-    // this.selected.scaleX(1);
-    // this.selected.scaleY(1);
 
     let arr =
       [this.selected.x(), this.selected.y(), this.selected.height(),
@@ -277,17 +273,22 @@ export class HomeComponent implements OnInit {
     this.http.undoRequest().subscribe(response => {
       console.log(response);
       temp = JSON.parse(response);
-      
-      if(temp["OperationType"] == "DisableChangeOperation"){
-        this.stage.findOne("#"+temp.id).hide();
-      }else if (temp["OperationType"] == "EnableOperation"){
-        this.stage.findOne("#"+temp.id).show();
-      }else if(temp["OperationType"]== "ChangeFillColorOperation"){
-        this.stage.findOne("#"+temp.id).fill(temp["fill"]);
-    }
+
+      if(temp["OperationType"] == "DisableChangeOperation")
+      {
+        this.stage.findOne("#"+temp.id.toString()).hide();
+      }
+      else if (temp["OperationType"] == "EnableOperation")
+      {
+        this.stage.findOne("#"+temp.id.toString()).show();
+      }
+      else if(temp["OperationType"]== "ChangeFillColorOperation")
+      {
+        this.stage.findOne("#"+temp.id.toString()).fill(temp["fill"]);
+      }
 
     })
-    
+
   }
 
   redo(){

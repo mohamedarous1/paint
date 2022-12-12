@@ -18,22 +18,11 @@ public class MainSystem
     static ShapeFactory ShapeFactory = new ShapeFactory();
     private static int IDCounter = 1;
 
-    private static int GetAndIncreamentIDCounter()
-    {
-        int OldIDCounter = IDCounter;
-        IDCounter = IDCounter + 1;
-        return OldIDCounter;
-    }
 
-    public static JSONObject GenerateJsonForFrontEnd(Operation operation)
-    {
-        JSONObject object = operation.GetJsonForFrontend();
-        return object;
-    }
 
     public static Operation GetAndExecuteUndoOperation()
     {
-        if (MainSystem.CanMakeRedo() == false) return null;
+        if (MainSystem.CanMakeUndo() == false) return null;
         Operation CurrentOperation = MainSystem.OperationStack.peek();
         Operation ReversedOperation = CurrentOperation.GetReversedOperation();
 
@@ -57,6 +46,26 @@ public class MainSystem
         return ReversedOperation;
     }
 
+    private static int GetAndIncreamentIDCounter()
+    {
+        int OldIDCounter = IDCounter;
+        IDCounter = IDCounter + 1;
+        return OldIDCounter;
+    }
+
+    public static JSONObject GenerateJsonForFrontEnd(Operation operation)
+    {
+        if (operation == null)
+        {
+            JSONObject EmptyOperation = new JSONObject();
+            EmptyOperation.put("OperationType", "EmptyOperation");
+            return EmptyOperation;
+        }
+        JSONObject object = operation.GetJsonForFrontend();
+        return object;
+    }
+
+
     public static void DoOperation(Operation operation)
     {
         Shape shape = MainSystem.ShapesMap.get(operation.GetShapeID());
@@ -68,17 +77,6 @@ public class MainSystem
         int ID = MainSystem.GetAndIncreamentIDCounter();
         Shape NewShape = MainSystem.ShapeFactory.CreateShape(ID, ShapeType);
         JsonConverter.ExtractAllProperties(ShapeJson, NewShape);
-
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(NewShape.GetPosition());
-        System.out.println(NewShape.GetStrokeColor());
-        System.out.println(NewShape.GetStrokeWidth());
-
-
-
 
         Operation operation = new EnableShapeOperation(ID);
         MainSystem.PushOperationToStack(operation);
@@ -160,6 +158,25 @@ public class MainSystem
         DoOperation(operation);
     }
 
+    public static void ChangeFillColor(JSONObject ShapeJson)
+    {
+        int ID = JsonConverter.ExtractId(ShapeJson);
+
+        ClosedShape Shape = (ClosedShape) MainSystem.ShapesMap.get(ID);
+
+        String OldColor = Shape.GetFillColor();
+
+        String NewColor = JsonConverter.ExtractFillColor(ShapeJson);
+
+        Operation operation = new ChangeFillColorOperation(ID, OldColor, NewColor);
+
+        MainSystem.PushOperationToStack(operation);
+
+        DoOperation(operation);
+    }
+
+
+
     public static void DisableShape(JSONObject ShapeJson)
     {
         int ID = JsonConverter.ExtractId(ShapeJson);
@@ -225,6 +242,12 @@ public class MainSystem
     }
     private static boolean CanMakeUndo()
     {
+        System.out.println(MainSystem.OperationStack.empty());
+        System.out.println(MainSystem.OperationStack.empty());
+        System.out.println(MainSystem.OperationStack.empty());
+        System.out.println(MainSystem.OperationStack.empty());
+        System.out.println(MainSystem.OperationStack.empty());
+
         if (MainSystem.OperationStack.empty()) return false;
         return true;
     }
@@ -233,7 +256,6 @@ public class MainSystem
         if (MainSystem.OperationUndoStack.empty()) return false;
         return true;
     }
-
     public static String GetShapeType(int id)
     {
         Shape shape = MainSystem.ShapesMap.get(id);
