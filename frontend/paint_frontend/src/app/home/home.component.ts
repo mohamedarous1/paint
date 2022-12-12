@@ -96,18 +96,18 @@ export class HomeComponent implements OnInit {
   RepairDimentions(shape:any)
   {
     if (shape == undefined) return;
-    let id:number = shape.id;
+    let id:number = shape.id();
 
     let ShapeType = this.hashmap[id];
     if (ShapeType == "Square" || ShapeType == "Rectangle")
     {
-      shape.width( this.selected.width()* this.selected.scaleX());
-      shape.height(  this.selected.height()*this.selected.scaleY());
+      shape.width( shape.width()* shape.scaleX());
+      shape.height(  shape.height()*shape.scaleY());
     }
     else if (ShapeType == "Ellipse")
     {
-      shape.radiusX( this.selected.width()* this.selected.scaleX());
-      shape.radiusY(  this.selected.height()*this.selected.scaleY());
+      shape.radiusX( shape.width()* shape.scaleX());
+      shape.radiusY(  shape.height()*shape.scaleY());
     }
     else if (ShapeType == "Circle")
     {

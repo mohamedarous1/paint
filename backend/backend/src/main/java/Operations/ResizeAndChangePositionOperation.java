@@ -52,7 +52,7 @@ public class ResizeAndChangePositionOperation extends Operation
         MyPoint point = NewPosition.GetPosition();
         jsonObject.put("x", point.Getx());
         jsonObject.put("y", point.Gety());
-
+        this.PutSizeInJson(jsonObject);
         return jsonObject;
     }
 
