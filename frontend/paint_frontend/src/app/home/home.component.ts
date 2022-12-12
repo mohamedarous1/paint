@@ -73,11 +73,15 @@ export class HomeComponent implements OnInit {
       this.http.edit_pos_sizeRequest(this.selected).subscribe(e=>{});
       console.log(this.hashmap[id]);
       console.log(this.GetNewSizeAndPosition());
+
+      //this.RepairDimentions(this.selected);
     });
 
     this.selected.on('dragend' , (e:any) => {
       this.http.edit_pos_sizeRequest(this.selected).subscribe(e=>{});
       console.log(this.GetNewSizeAndPosition());
+
+      //this.RepairDimentions(this.selected);
     });
   }
   SelectShape(SelectedShape:any)
@@ -86,27 +90,32 @@ export class HomeComponent implements OnInit {
     this.selected.draggable(true);
     this.tr.nodes([this.selected]);
   }
-
-  RepairDimentions()
+  /////////////////////////////////////////////////////////////////////////
+  // Function not complete
+  // Michael
+  RepairDimentions(shape:any)
   {
-    let shape = this.selected;
     if (shape == undefined) return;
     let id:number = shape.id;
 
     let ShapeType = this.hashmap[id];
     if (ShapeType == "Square" || ShapeType == "Rectangle")
     {
-      this.selected.width( this.selected.width()* this.selected.scaleX());
-      this.selected.height(  this.selected.height()*this.selected.scaleY());
+      shape.width( this.selected.width()* this.selected.scaleX());
+      shape.height(  this.selected.height()*this.selected.scaleY());
     }
     else if (ShapeType == "Ellipse")
     {
-      this.selected.radiusX( this.selected.width()* this.selected.scaleX());
-      this.selected.radiusY(  this.selected.height()*this.selected.scaleY());
+      shape.radiusX( this.selected.width()* this.selected.scaleX());
+      shape.radiusY(  this.selected.height()*this.selected.scaleY());
+    }
+    else if (ShapeType == "Circle")
+    {
+      shape.radius( this.selected.radoisX()* this.selected.scaleX());
     }
 
-    this.selected.scaleX(1);
-    this.selected.scaleY(1);
+    shape.scaleX(1);
+    shape.scaleY(1);
   }
 
   GetNewSizeAndPosition()
@@ -212,7 +221,6 @@ export class HomeComponent implements OnInit {
     this.BruchColor = e.target.value;
   }
 
-
   ClearEventListeners()
   {
     let ColorBtn = document.getElementById("favcolor");
@@ -291,6 +299,7 @@ export class HomeComponent implements OnInit {
     var temp
     this.http.redoRequest().subscribe(respone => {
       temp = JSON.parse(respone);
+      console.log(temp);
       this.UpdateShapeWithJson(temp);
     })
   }
@@ -299,17 +308,45 @@ export class HomeComponent implements OnInit {
   {
     temp = this.UpdateFillFromBackEnd(temp);
 
+    let shape = this.stage.findOne("#"+temp.id.toString());
+
     if(temp["OperationType"] == "DisableShapeOperation")
     {
-      this.stage.findOne("#"+temp.id.toString()).hide();
+      shape.hide();
     }
     else if (temp["OperationType"] == "EnableShapeOperation")
     {
-      this.stage.findOne("#"+temp.id.toString()).show();
+      shape.show();
     }
     else if(temp["OperationType"]== "ChangeFillColorOperation")
     {
-      this.stage.findOne("#"+temp.id.toString()).fill(temp["fill"]);
+      shape.fill(temp["fill"]);
+    }
+    else if (temp["OperationType"] == "ResizeAndChangePositionOperation")
+    {
+      shape.x(temp["x"]);
+      shape.y(temp["y"]);
+      this.UpdateSizeForShape(shape, temp);
+    }
+  }
+
+
+  UpdateSizeForShape(shape:any, json:any)
+  {
+    let ShapeType = this.hashmap[shape.id()];
+    if (ShapeType == "Square" || ShapeType == "Rectangle")
+    {
+      shape.height(json["height"]);
+      shape.width(json["width"]);
+    }
+    else if (ShapeType == "Ellipse")
+    {
+      shape.radiusX(json["radiusX"]);
+      shape.radiusY(json["radiusY"]);
+    }
+    else if (ShapeType == "Circle" || ShapeType == "Triangle" || ShapeType == "Pentagon")
+    {
+      shape.radius(json["radius"]);
     }
   }
 

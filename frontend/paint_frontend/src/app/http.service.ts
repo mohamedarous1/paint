@@ -55,7 +55,6 @@ export class HttpService {
   }
 
   redoRequest():Observable<any>{
-    console.log("RedoOperation");
     return this.http.get('http://localhost:8080/Redo' ,{responseType : 'text'});
   }
 
@@ -63,7 +62,6 @@ export class HttpService {
   UpdateJsonForFillError(shape : any)
   {
     var temp = JSON.stringify(shape.attrs);
-    console.log(temp);
     var temp2 = JSON.parse(temp);
     temp2["fill"] = shape.fill().slice(1);
     temp = JSON.stringify(temp2);
