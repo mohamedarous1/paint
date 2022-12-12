@@ -128,8 +128,8 @@ export class HomeComponent implements OnInit {
   create(ShapeType : string)
   {
     var temp =  this.shape.shapecreator(ShapeType, this.id.toString()).get();
-    if(this.fill && ShapeType != "line"){
-      temp.fill("color");
+    if(ShapeType != "Line"){
+      temp.fill("#FFFFFF");
     }
     this.layer.add(temp);
     this.id = this.id +1;
@@ -236,10 +236,11 @@ export class HomeComponent implements OnInit {
   }
   ColorShape(SelectedShape:any, color:string)
   {
-    SelectedShape.fill(color);
-    console.log(color + "   "+ SelectedShape.fill());
-    this.http.fillRequest(SelectedShape  ).subscribe(e=>{});
+    this.selected.fill(color);
+    console.log(color + "   "+ color.substring(1,7) + " "+ this.selected.fill());
+
     console.log(color);
+    this.http.fillRequest(SelectedShape  ).subscribe(e=>{});
   }
   DeleteShape(){
     this.ClearEventListeners();
@@ -274,22 +275,8 @@ export class HomeComponent implements OnInit {
   undo(){
     var temp
     this.http.undoRequest().subscribe(response => {
-      console.log(response);
       temp = JSON.parse(response);
-
-      if(temp["OperationType"] == "DisableChangeOperation")
-      {
-        this.stage.findOne("#"+temp.id.toString()).hide();
-      }
-      else if (temp["OperationType"] == "EnableOperation")
-      {
-        this.stage.findOne("#"+temp.id.toString()).show();
-      }
-      else if(temp["OperationType"]== "ChangeFillColorOperation")
-      {
-        this.stage.findOne("#"+temp.id.toString()).fill(temp["fill"]);
-      }
-
+      this.UpdateShapeWithJson(temp);
     })
 
   }
@@ -298,6 +285,35 @@ export class HomeComponent implements OnInit {
     var temp
     this.http.redoRequest().subscribe(respone => {
       temp = JSON.parse(respone);
+      this.UpdateShapeWithJson(temp);
     })
+  }
+
+  UpdateShapeWithJson(temp:any)
+  {
+    temp = this.UpdateFillFromBackEnd(temp);
+
+    if(temp["OperationType"] == "DisableChangeOperation")
+    {
+      this.stage.findOne("#"+temp.id.toString()).hide();
+    }
+    else if (temp["OperationType"] == "EnableOperation")
+    {
+      this.stage.findOne("#"+temp.id.toString()).show();
+    }
+    else if(temp["OperationType"]== "ChangeFillColorOperation")
+    {
+      this.stage.findOne("#"+temp.id.toString()).fill(temp["fill"]);
+    }
+  }
+
+
+  UpdateFillFromBackEnd(temp:any)
+  {
+    if (temp.hasOwnProperty("fill"))
+    {
+      temp["fill"] = "#" + temp["fill"];
+    }
+    return temp;
   }
 }

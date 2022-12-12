@@ -1,7 +1,6 @@
 package ServicePackage;
 
 import Operations.Operation;
-import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import System.MainSystem;
@@ -11,13 +10,13 @@ public class SystemService
 {
     public int Create(String ShapeType, JSONObject obj)
     {
-        int ID = MainSystem.CreateNewObjectFront(ShapeType, obj);
+        int ID = MainSystem.CreateNewObjectFrontAndEmptyUndo(ShapeType, obj);
         return ID;
     }
 
     public void ChangePositionLine(JSONObject obj)
     {
-        MainSystem.ChangePositionLine(obj);
+        MainSystem.ChangePositionLineAndEmtpryUndo(obj);
     }
 
     public void ResizeAndChangePosition(JSONObject obj)
@@ -26,16 +25,16 @@ public class SystemService
     }
     public void ChangeStrokeWidth(JSONObject obj)
     {
-        MainSystem.ChangeStrokeWidth(obj);
+        MainSystem.ChangeStrokeWidthAndEmtpryUndo(obj);
     }
     public void ChangeStrokeColor(JSONObject obj)
     {
-        MainSystem.ChangeStrokeColor(obj);
+        MainSystem.ChangeStrokeColorAndEmtpryUndo(obj);
     }
 
     public void ChangeFilColor(JSONObject obj)
     {
-        MainSystem.ChangeFillColor(obj);
+        MainSystem.ChangeFillColorAndEmtpryUndo(obj);
     }
 
     public void DisableShape(JSONObject obj)
@@ -46,6 +45,13 @@ public class SystemService
     public JSONObject Undo()
     {
         Operation operation = MainSystem.GetAndExecuteUndoOperation();
+        JSONObject object = MainSystem.GenerateJsonForFrontEnd(operation);
+        return object;
+    }
+
+    public JSONObject Redo()
+    {
+        Operation operation = MainSystem.GetAndExecuteRedoOperation();
         JSONObject object = MainSystem.GenerateJsonForFrontEnd(operation);
         return object;
     }

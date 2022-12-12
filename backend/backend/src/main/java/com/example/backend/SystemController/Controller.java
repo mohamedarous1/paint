@@ -75,10 +75,20 @@ public class Controller {
     }
 
     @GetMapping("/Undo")
-    public JSONObject DisableShape()
+    public JSONObject Undo()
     {
         JSONObject object = MyService.Undo();
         return object;
     }
+
+    @GetMapping("/Redo")
+    public JSONObject Redo()
+    {
+        System.out.println("RedoOperation");
+        JSONObject object = MyService.Redo();
+        return object;
+    }
+
+
 
 }

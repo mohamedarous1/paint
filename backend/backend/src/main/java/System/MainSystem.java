@@ -72,8 +72,9 @@ public class MainSystem
         operation.Execute(shape);
     }
 
-    public static int CreateNewObjectFront(String ShapeType, JSONObject ShapeJson)
+    public static int CreateNewObjectFrontAndEmptyUndo(String ShapeType, JSONObject ShapeJson)
     {
+        EmptyOperationUndoStack();
         int ID = MainSystem.GetAndIncreamentIDCounter();
         Shape NewShape = MainSystem.ShapeFactory.CreateShape(ID, ShapeType);
         JsonConverter.ExtractAllProperties(ShapeJson, NewShape);
@@ -88,6 +89,7 @@ public class MainSystem
 
     public static void ResizeAndChangePosition(JSONObject ShapeJson)
     {
+        EmptyOperationUndoStack();
         int ID = JsonConverter.ExtractId(ShapeJson);
 
         Shape Shape = MainSystem.ShapesMap.get(ID);
@@ -106,8 +108,9 @@ public class MainSystem
         DoOperation(operation);
     }
 
-    public static void ChangePositionLine(JSONObject ShapeJson)
+    public static void ChangePositionLineAndEmtpryUndo(JSONObject ShapeJson)
     {
+        EmptyOperationUndoStack();
         int ID = JsonConverter.ExtractId(ShapeJson);
 
         Shape Shape = MainSystem.ShapesMap.get(ID);
@@ -124,8 +127,9 @@ public class MainSystem
         DoOperation(operation);
     }
 
-    public static void ChangeStrokeWidth(JSONObject ShapeJson)
+    public static void ChangeStrokeWidthAndEmtpryUndo(JSONObject ShapeJson)
     {
+        EmptyOperationUndoStack();
         int ID = JsonConverter.ExtractId(ShapeJson);
 
         Shape Shape = MainSystem.ShapesMap.get(ID);
@@ -141,8 +145,9 @@ public class MainSystem
         DoOperation(operation);
     }
 
-    public static void ChangeStrokeColor(JSONObject ShapeJson)
+    public static void ChangeStrokeColorAndEmtpryUndo(JSONObject ShapeJson)
     {
+        EmptyOperationUndoStack();
         int ID = JsonConverter.ExtractId(ShapeJson);
 
         Shape Shape = MainSystem.ShapesMap.get(ID);
@@ -158,8 +163,9 @@ public class MainSystem
         DoOperation(operation);
     }
 
-    public static void ChangeFillColor(JSONObject ShapeJson)
+    public static void ChangeFillColorAndEmtpryUndo(JSONObject ShapeJson)
     {
+        EmptyOperationUndoStack();
         int ID = JsonConverter.ExtractId(ShapeJson);
 
         ClosedShape Shape = (ClosedShape) MainSystem.ShapesMap.get(ID);
