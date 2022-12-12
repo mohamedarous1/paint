@@ -100,8 +100,9 @@ body{
     appearance: none;
     height: 50px;
     background-color: transparent;
-    border: none;
+    /*border: none;*/
     cursor: pointer;
+    border-style: outset;
   }
   #favcolor::-webkit-color-swatch {
     border-radius: 15px;
