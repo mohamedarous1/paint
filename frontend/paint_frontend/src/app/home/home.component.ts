@@ -69,12 +69,13 @@ export class HomeComponent implements OnInit {
     // This part is for requesting from backend
     this.selected.on('transformend', (e:any) =>
     {
+      this.RepairDimentions(this.selected);
+
       this.newtemp = ClickedShape.fill();
       this.http.edit_pos_sizeRequest(this.selected).subscribe(e=>{});
       console.log(this.hashmap[id]);
       console.log(this.GetNewSizeAndPosition());
 
-      //this.RepairDimentions(this.selected);
     });
 
     this.selected.on('dragend' , (e:any) => {
@@ -111,7 +112,8 @@ export class HomeComponent implements OnInit {
     }
     else if (ShapeType == "Circle")
     {
-      shape.radius( this.selected.radoisX()* this.selected.scaleX());
+      shape.radius( this.selected.radius()* this.selected.scaleX());
+      console.log(shape.radius);
     }
 
     shape.scaleX(1);
@@ -307,6 +309,10 @@ export class HomeComponent implements OnInit {
   UpdateShapeWithJson(temp:any)
   {
     temp = this.UpdateFillFromBackEnd(temp);
+    if (temp["OperationType"] == "EmptyOperation")
+    {
+      return;
+    }
 
     let shape = this.stage.findOne("#"+temp.id.toString());
 
