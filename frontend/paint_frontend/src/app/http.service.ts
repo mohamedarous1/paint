@@ -28,9 +28,10 @@ edit_posRequest(shape : any):Observable<any>{
   return this.http.get('http://localhost:8080/edit_pos/' + temp,{responseType : 'text'});
 }
 
-fillRequest(shape : any):Observable<any>{
+fillRequest(shape : any ):Observable<any>{
+  shape.fill("color");
   var temp = JSON.stringify(shape.attrs);
-  return this.http.get('http://localhost:8080/FillColor/' + temp,{responseType : 'text' });
+  return this.http.get('http://localhost:8080/ChangeFillColor/' + temp,{responseType : 'text' });
 }
 
 
@@ -50,7 +51,7 @@ undoRequest():Observable<any>{
     }
 
     redoRequest():Observable<any>{
-      return this.http.get('http://localhost:8080/redo/' ,{responseType : 'text'});
+      return this.http.get('http://localhost:8080/Redo/' ,{responseType : 'text'});
     }
 
 }

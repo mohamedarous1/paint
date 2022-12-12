@@ -55,10 +55,11 @@ public class Controller {
         MyService.ChangeStrokeColor(NewJson);
     }
 
-    @GetMapping("/FillColor/{jsonObject}")
+    @GetMapping("/ChangeFillColor/{jsonObject}")
     public void ChangeFillColor(@PathVariable String jsonObject)
     {
         System.out.println("fill");
+        System.out.println(jsonObject);
         JSONObject NewJson = JsonConverter.GetJsoon(jsonObject);
 
         MyService.ChangeFilColor(NewJson);
