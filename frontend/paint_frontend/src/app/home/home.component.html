@@ -15,14 +15,14 @@
     </div>
 
     <div class="section2">
-      <button class = "button" id ="functions" (click) = "undo()" >
+      <button class = "button" (click) = "undo()" >
         &laquo; Undo
       </button>
-      <button class = "button" id ="functions" >
+      <button class = "button"(click) = "redo()">
         Redo &raquo;
       </button>
-      <button class = "button"id = "functions" (click)="BrushClick()">brush</button>
-      <button class = "button"id = "functions" (click)="DeleteShape()"  >delete</button>
+      <button class = "button" (click)="BrushClick()">brush</button>
+      <button class = "button" (click)="DeleteShape()"  >delete</button>
       <button class="button" (click)="SelectButtonClick()">select</button>
       <button class = "button"id = "copy" (click)="copy()"  >copy</button>
       <!--<li>
@@ -33,7 +33,7 @@
     <div class="section3">
       <form>
         <label for="favcolor">Select Color: </label>
-        <input type="color" id="favcolor" name="favcolor">
+        <input type="color" id="favcolor" name="favcolor" [(ngModel)]="newtemp">
       </form>
 
     </div>

@@ -63,6 +63,7 @@ export class HttpService {
   UpdateJsonForFillError(shape : any)
   {
     var temp = JSON.stringify(shape.attrs);
+    console.log(temp);
     var temp2 = JSON.parse(temp);
     temp2["fill"] = shape.fill().slice(1);
     temp = JSON.stringify(temp2);

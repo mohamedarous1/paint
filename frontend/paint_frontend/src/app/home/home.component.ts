@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   selected : any;
   tr : any;
   BruchColor:string="black";
+  newtemp:string = "#ffffff"
 
   hashmap:any = new Map();
   constructor(public http  : HttpService) { }
@@ -68,6 +69,7 @@ export class HomeComponent implements OnInit {
     // This part is for requesting from backend
     this.selected.on('transformend', (e:any) =>
     {
+      this.newtemp = ClickedShape.fill();
       this.http.edit_pos_sizeRequest(this.selected).subscribe(e=>{});
       console.log(this.hashmap[id]);
       console.log(this.GetNewSizeAndPosition());
@@ -132,7 +134,6 @@ export class HomeComponent implements OnInit {
       temp.fill("#FFFFFF");
     }
     this.layer.add(temp);
-    this.id = this.id +1;
     this.selected = temp;
     this.tr.nodes([this.selected])
 
@@ -272,16 +273,21 @@ export class HomeComponent implements OnInit {
     this.ClearEventListeners();
   }
 
-  undo(){
+  undo()
+  {
+    this.SelectButtonClick();
     var temp
     this.http.undoRequest().subscribe(response => {
       temp = JSON.parse(response);
+      console.log(temp);
       this.UpdateShapeWithJson(temp);
     })
 
   }
 
-  redo(){
+  redo()
+  {
+    this.SelectButtonClick();
     var temp
     this.http.redoRequest().subscribe(respone => {
       temp = JSON.parse(respone);
@@ -293,11 +299,11 @@ export class HomeComponent implements OnInit {
   {
     temp = this.UpdateFillFromBackEnd(temp);
 
-    if(temp["OperationType"] == "DisableChangeOperation")
+    if(temp["OperationType"] == "DisableShapeOperation")
     {
       this.stage.findOne("#"+temp.id.toString()).hide();
     }
-    else if (temp["OperationType"] == "EnableOperation")
+    else if (temp["OperationType"] == "EnableShapeOperation")
     {
       this.stage.findOne("#"+temp.id.toString()).show();
     }
