@@ -1,4 +1,4 @@
-package HelpingClasses.backend.SystemController;
+package com.example.backend.SystemController;
 import ServicePackage.SystemService;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;

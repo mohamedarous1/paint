@@ -8,6 +8,7 @@ import Shapes.ClosedShape;
 import Shapes.Shape;
 import org.json.simple.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
@@ -20,7 +21,16 @@ public class MainSystem
     static ShapeFactory ShapeFactory = new ShapeFactory();
     private static int IDCounter = 1;
 
-
+    public static ArrayList<JSONObject> SaveShapes()
+    {
+        ArrayList<JSONObject> Shapes = new ArrayList<>();
+        ShapesMap.forEach( (key, value)->{
+            JSONObject jsonObject = new JSONObject();
+            value.PutObjectInJson(jsonObject);
+            Shapes.add(jsonObject);
+        } );
+        return Shapes;
+    }
 
     public static Operation GetAndExecuteUndoOperation()
     {

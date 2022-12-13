@@ -39,10 +39,12 @@
     </div>
     <div class="section4">
       <div>
-        <button class="button">save</button>
+        <button class="button" (click)="save()">save</button>
+        <input type="text" id="savetext" value="text" [(ngModel)]="namefile">
       </div>
       <div>
         <button class="button">load</button>
+        <input type="file" id="loadtext">
       </div>
     </div>
 

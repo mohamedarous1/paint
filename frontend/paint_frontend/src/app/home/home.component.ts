@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   tr : any;
   BruchColor:string="black";
   newtemp:string = "#ffffff";
+  namefile:string = "";
 
   hashmap:any = new Map();
   constructor(public http  : HttpService) { }
@@ -260,6 +261,11 @@ export class HomeComponent implements OnInit {
       this.UpdateShapeWithJson(temp);
     })
 
+  }
+
+  save()
+  {
+    
   }
 
   redo()
