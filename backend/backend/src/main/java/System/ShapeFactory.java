@@ -18,8 +18,6 @@ public class ShapeFactory
             return new Ellipse(ID);
         else if (ObjectString.equals("Square"))
             return new Square(ID);
-        else if (ObjectString.equals("Pentagon"))
-            return new Pentagon(ID);
         else if (ObjectString.equals("Line"))
             return new Line(ID);
 
@@ -42,8 +40,6 @@ public class ShapeFactory
             return "Ellipse";
         else if (shape instanceof Square)
             return "Square";
-        else if (shape instanceof Pentagon)
-            return "Pentagon";
         else if (shape instanceof Triangle)
             return "Triangle";
         else if (shape instanceof Line)

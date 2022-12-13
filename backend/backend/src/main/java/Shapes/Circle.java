@@ -1,6 +1,7 @@
 package Shapes;
 
-import HelpingClasses.*;
+import HelpingClasses.Sizes.CircleSize;
+import HelpingClasses.Sizes.Size;
 
 public class Circle extends ClosedShape
 {
@@ -10,6 +11,13 @@ public class Circle extends ClosedShape
     {
         super(id);
     }
+
+    @Override
+    public void Clone(Shape shape)
+    {
+        super.Clone(shape);
+    }
+
     @Override
     public void SetSize(Size size)
     {
@@ -21,11 +29,5 @@ public class Circle extends ClosedShape
         return this.mySize;
     }
 
-
-    @Override
-    public void Clone(Shape shape)
-    {
-        super.Clone(shape);
-    }
 
 }

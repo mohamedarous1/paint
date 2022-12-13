@@ -1,4 +1,4 @@
-package HelpingClasses;
+package HelpingClasses.Sizes;
 import System.Convertable;
 import org.json.simple.JSONObject;
 

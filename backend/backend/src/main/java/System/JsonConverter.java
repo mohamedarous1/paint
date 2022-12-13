@@ -1,12 +1,12 @@
 package System;
 
 import HelpingClasses.*;
+import HelpingClasses.Sizes.*;
 import Shapes.*;
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
-//import org.json.*;
 
 public class JsonConverter
 {
@@ -78,28 +78,21 @@ public class JsonConverter
 
     public static Size ExtractSize(JSONObject shapeJson, Shape shape)
     {
-//        if (ShapeTypesFunctions.isRegularPolygon(ShapeID))
-//            return new RegularPolygonSize(shapeJson);
-//        else if (ShapeTypesFunctions.isEllipse(ShapeID) || ShapeTypesFunctions.isRectangle(ShapeID))
-//            return new LWSize(shapeJson);
-//        else if (ShapeTypesFunctions.isCircle(ShapeID))
-//            return new CircleSize(shapeJson);
-//        else
-//            return null;
-
-        if (shape instanceof RegularPolygon)
-            return new RegularPolygonSize(shapeJson);
-        else if (shape instanceof Ellipse || shape instanceof Rectangle)
-            return new LWSize(shapeJson);
-        else if (shape instanceof Circle)
+        if (shape instanceof Circle)
             return new CircleSize(shapeJson);
+        else if (shape instanceof Rectangle)
+            return new RectangleSize(shapeJson);
+        else if (shape instanceof Square)
+            return new SquareSize(shapeJson);
+        else if (shape instanceof Ellipse)
+            return new EllipseSize(shapeJson);
+        else if (shape instanceof Triangle)
+            return new TriangleSize(shapeJson);
         else
+        {
+            System.out.print("Not Supposed to Reach here (JsonConverter.ExtractSize");
             return null;
-    }
-
-    public static String ExtractName(JSONObject jsonObject)
-    {
-        return (String)jsonObject.get("className");
+        }
     }
 
     public static int ExtractId(JSONObject jsonObject)

@@ -1,4 +1,4 @@
-package com.example.backend.SystemController;
+package HelpingClasses.backend.SystemController;
 import ServicePackage.SystemService;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
@@ -72,12 +72,12 @@ public class Controller {
         return object;
     }
 
-    @GetMapping("/CreateLine/{jsonObject}")
-    public void CreateLine(@PathVariable String jsonObject)
+    @GetMapping("/cc")
+    public void save(@PathVariable String first)
     {
-        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
-        MyService.CreateLine(NewJson);
+        //System.out.println(jsonObject);
+
+//        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
+//        MyService.CreateLine(NewJson);
     }
-
-
 }

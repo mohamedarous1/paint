@@ -1,15 +1,22 @@
 package Shapes;
 
-public class Square extends RegularPolygon
+import HelpingClasses.Sizes.*;
+
+public class Square extends ClosedShape
 {
     public Square(int id)
     {
         super(id);
     }
 
-    @Override
-    public void Clone(Shape shape)
+    public void SetSize(Size size)
     {
-        super.Clone(shape);
+        this.SetTriangleSize((SquareSize) size);
     }
+
+    private void SetTriangleSize(SquareSize size)
+    {
+        this.MySize = size;
+    }
+
 }

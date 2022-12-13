@@ -1,32 +1,23 @@
 package Shapes;
 
-import HelpingClasses.*;
-import org.w3c.dom.css.Rect;
+import HelpingClasses.Sizes.RectangleSize;
+import HelpingClasses.Sizes.Size;
+import HelpingClasses.Sizes.SquareSize;
 
 public class Rectangle extends ClosedShape
 {
-    private LWSize mySize;
-
     public Rectangle(int id)
     {
         super(id);
     }
 
-    @Override
     public void SetSize(Size size)
     {
-        this.mySize = (LWSize)size;
+        this.SetTriangleSize((RectangleSize) size);
     }
 
-    @Override
-    public Size GetSize()
+    private void SetTriangleSize(RectangleSize size)
     {
-        return this.mySize;
-    }
-
-    @Override
-    public void Clone(Shape shape)
-    {
-        super.Clone(shape);
+        this.MySize = size;
     }
 }

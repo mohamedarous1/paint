@@ -1,26 +1,21 @@
 package Shapes;
 
-import HelpingClasses.LWSize;
-import HelpingClasses.Size;
+import HelpingClasses.Sizes.*;
 
 public class Ellipse extends ClosedShape
 {
-    private LWSize mySize;
-
-    @Override
-    public void SetSize(Size size)
-    {
-        this.mySize = (LWSize) size;
-    }
-
-    @Override
-    public Size GetSize()
-    {
-        return this.mySize;
-    }
-
     public Ellipse(int id)
     {
         super(id);
+    }
+
+    public void SetSize(Size size)
+    {
+        this.SetTriangleSize((EllipseSize) size);
+    }
+
+    private void SetTriangleSize(EllipseSize size)
+    {
+        this.MySize = size;
     }
 }

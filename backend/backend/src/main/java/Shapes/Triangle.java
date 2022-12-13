@@ -1,15 +1,23 @@
 package Shapes;
 
-public class Triangle extends RegularPolygon
+import HelpingClasses.Sizes.*;
+
+public class Triangle extends ClosedShape
 {
     public Triangle(int id)
     {
         super(id);
     }
 
-    @Override
-    public void Clone(Shape shape)
+    public void SetSize(Size size)
     {
-        super.Clone(shape);
+        this.SetTriangleSize((TriangleSize) size);
     }
+
+    private void SetTriangleSize(TriangleSize size)
+    {
+        this.MySize = size;
+    }
+
 }
+

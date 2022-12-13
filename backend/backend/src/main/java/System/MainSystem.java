@@ -2,7 +2,7 @@ package System;
 
 import HelpingClasses.Position;
 import HelpingClasses.Scale;
-import HelpingClasses.Size;
+import HelpingClasses.Sizes.Size;
 import Operations.*;
 import Shapes.ClosedShape;
 import Shapes.Shape;

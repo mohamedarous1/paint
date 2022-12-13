@@ -71,13 +71,19 @@ export class HttpService {
     return temp;
   }
 
-
-  CreateLineRequest(shape: any)
+  CreateLineRequest(shape:any):Observable<any>
   {
     var temp = this.UpdateJsonForFillError(shape);
-    console.log(temp);
-    console.log("Reached Line Request");
-    return this.http.get('http://localhost:8080/CreateLine/' + temp
-      ,{responseType : 'text'});
+    return this.http.get('http://localhost:8080/cc'  ,{responseType : 'text'});
   }
+
+
+  saveRequest(shape:any){
+    this.http.get('http://localhost:8080/cc',{
+    responseType:'text',
+      params:{
+      first : "fffff"
+    },
+    observe:'response'}).subscribe(response=>{})
+}
 }

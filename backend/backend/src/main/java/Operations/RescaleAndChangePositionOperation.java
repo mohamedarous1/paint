@@ -1,6 +1,7 @@
 package Operations;
 
 import HelpingClasses.*;
+import HelpingClasses.Sizes.Size;
 import Shapes.ClosedShape;
 import Shapes.Shape;
 import org.json.simple.JSONObject;

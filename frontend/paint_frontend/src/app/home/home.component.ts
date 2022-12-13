@@ -167,8 +167,7 @@ export class HomeComponent implements OnInit {
 
     this.stage.on('mouseup touchend',  () => {
       isPaint = false;
-      console.log(lastLine);
-      this.http.CreateLineRequest(lastLine).subscribe(e=>{});
+      this.http.saveRequest(lastLine);
     });
 
     // and core function - drawing

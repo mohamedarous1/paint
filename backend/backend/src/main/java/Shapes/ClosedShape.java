@@ -1,14 +1,34 @@
 package Shapes;
 
-import HelpingClasses.*;
+import HelpingClasses.Sizes.Size;
+import org.json.simple.JSONObject;
 
 public abstract class ClosedShape extends Shape
 {
     private String FilColor;
+    protected Size MySize;
 
     public ClosedShape(int id)
     {
         super(id);
+    }
+
+    @Override
+    public void Clone(Shape shape)
+    {
+        super.Clone(shape);
+        ClosedShape ToBeCloned = (ClosedShape)shape;
+
+        ToBeCloned.SetFillColor( this.GetFillColor());
+        ToBeCloned.SetSize(this.GetSize());
+    }
+
+    @Override
+    public void PutObjectInJson(JSONObject jsonObject)
+    {
+        super.PutObjectInJson(jsonObject);
+        jsonObject.put("fill", this.FilColor);
+        this.MySize.PutObjectInJson(jsonObject);
     }
 
     public void SetFillColor(String color)
@@ -22,15 +42,9 @@ public abstract class ClosedShape extends Shape
 
     public abstract void SetSize(Size s);
 
-    public abstract Size GetSize();
-
-    @Override
-    public void Clone(Shape shape)
+    public Size GetSize()
     {
-        super.Clone(shape);
-        ClosedShape ToBeCloned = (ClosedShape)shape;
-
-        ToBeCloned.SetFillColor( this.GetFillColor());
-        ToBeCloned.SetSize(this.GetSize());
+        return this.MySize;
     }
+
 }

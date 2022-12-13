@@ -17,11 +17,6 @@ public class Scale implements Convertable
 
     public Scale(JSONObject jsonObject)
     {
-        System.out.println(jsonObject);
-        System.out.println(jsonObject);
-        System.out.println(jsonObject);
-        System.out.println(jsonObject);
-
         this.ScaleX = (double)jsonObject.get("scaleX");
         this.ScaleY = (double)jsonObject.get("scaleY");
     }
