@@ -1,7 +1,11 @@
 package Shapes;
 
 import HelpingClasses.Position;
+import HelpingClasses.RegularPolygonSize;
 import System.MyCloneable;
+import System.Convertable;
+import org.json.simple.JSONObject;
+
 
 public abstract class Shape implements MyCloneable
 {
@@ -59,5 +63,4 @@ public abstract class Shape implements MyCloneable
         shape.StrokeWidth = this.StrokeWidth;
         shape.Enabled = this.Enabled;
     }
-
 }

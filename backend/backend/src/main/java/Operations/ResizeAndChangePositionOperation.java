@@ -58,44 +58,8 @@ public class ResizeAndChangePositionOperation extends Operation
 
     private void PutSizeInJson(JSONObject jsonObject)
     {
-        String ShapeType = MainSystem.GetShapeType(this.GetShapeID());
+        Size size = MainSystem.GetShapeSizeById(this.GetShapeID());
 
-        if (ShapeType == "Square")
-        {
-            RegularPolygonSize size = (RegularPolygonSize) this.NewSize;
-            double x = size.GetSideLength();
-            jsonObject.put("height", x);
-            jsonObject.put("width", x);
-        }
-        else if (ShapeType == "Rectangle")
-        {
-            LWSize size = (LWSize) this.NewSize;
-            double x = size.GetLWSize().Getx();
-            double y = size.GetLWSize().Gety();
-
-            jsonObject.put("height", x);
-            jsonObject.put("width", y);
-        }
-        else if (ShapeType == "Circle")
-        {
-            CircleSize size = (CircleSize) this.NewSize;
-            double x = size.GetRadius();
-            jsonObject.put("radius", x);
-        }
-        else if (ShapeType == "Ellipse")
-        {
-            LWSize size = (LWSize) this.NewSize;
-            double x = size.GetLWSize().Getx();
-            double y = size.GetLWSize().Gety();
-            jsonObject.put("radiusX", x);
-            jsonObject.put("radiusY", y);
-        }
-        else if (ShapeType == "Triangle" || ShapeType == "Pentagon")
-        {
-            RegularPolygonSize size = (RegularPolygonSize) this.NewSize;
-            double x = size.GetSideLength();
-            jsonObject.put("radius", x);
-        }
-
+        size.ConvertObjectToJson(jsonObject);
     }
 }

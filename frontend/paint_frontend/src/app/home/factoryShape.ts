@@ -166,6 +166,8 @@ class line implements Shape {
         lineCap:"round",
         x: 50,
         y: 100,
+        scaleX:1,
+        scalY:1,
         strokeWidth: 3,
         points:[50,100,20,20],
         draggable : false,

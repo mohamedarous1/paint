@@ -12,11 +12,6 @@ public class JsonConverter
 {
     public JSONObject MyJson;
     public Shape MyShape;
-    public JsonConverter(JSONObject obj, Shape shape)
-    {
-        this.MyJson = obj;
-        this.MyShape = shape;
-    }
 
     public static void ExtractAllProperties(JSONObject MyJson, Shape MyShape)
     {
@@ -74,42 +69,25 @@ public class JsonConverter
         return new Position(x, y);
     }
 
-    public static Size ExtractSize(JSONObject ShapeJson, Shape ShapeObject)
+    public static Size ExtractSize(JSONObject shapeJson, Shape shape)
     {
-        ClosedShape closedShape = (ClosedShape) ShapeObject;
-        if (ShapeObject instanceof Square)
-        {
-            double radius = (double) ShapeJson.get("height");
-            RegularPolygonSize size = new RegularPolygonSize(radius);
-            return size;
-        }
-        else if (ShapeObject instanceof Ellipse)
-        {
-            double length = (double)ShapeJson.get("radiusX");
-            double width = (double)ShapeJson.get("radiusY");
-            LWSize size = new LWSize(length, width);
-            return size;
-        }
-        else if (ShapeObject instanceof Rectangle)
-        {
-            double length = (double)ShapeJson.get("height");
-            double width = (double)ShapeJson.get("width");
-            LWSize size = new LWSize(length, width);
-            return size;
-        }
-        else if (ShapeObject instanceof Circle)
-        {
-            double radius = (double) ShapeJson.get("radius");
-            CircleSize size = new CircleSize(radius);
-            return size;
-        }
-        else if (ShapeObject instanceof RegularPolygon)
-        {
-            double radius = (double) ShapeJson.get("radius");
-            RegularPolygonSize size = new RegularPolygonSize(radius);
-            return size;
-        }
-        return null;
+//        if (ShapeTypesFunctions.isRegularPolygon(ShapeID))
+//            return new RegularPolygonSize(shapeJson);
+//        else if (ShapeTypesFunctions.isEllipse(ShapeID) || ShapeTypesFunctions.isRectangle(ShapeID))
+//            return new LWSize(shapeJson);
+//        else if (ShapeTypesFunctions.isCircle(ShapeID))
+//            return new CircleSize(shapeJson);
+//        else
+//            return null;
+
+        if (shape instanceof RegularPolygon)
+            return new RegularPolygonSize(shapeJson);
+        else if (shape instanceof Ellipse || shape instanceof Rectangle)
+            return new LWSize(shapeJson);
+        else if (shape instanceof Circle)
+            return new CircleSize(shapeJson);
+        else
+            return null;
     }
 
     public static String ExtractName(JSONObject jsonObject)
@@ -123,7 +101,6 @@ public class JsonConverter
         int id = Integer.parseInt(idString);
         return id;
     }
-
 
     public static ArrayList<Double> ExtractPointsArrayForLine(JSONObject jsonObject)
     {

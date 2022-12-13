@@ -14,7 +14,6 @@ public class Controller {
     public int CreateNewObject
             (@PathVariable String shapetype, @PathVariable String jsonObject)
     {
-        System.out.println("New Object created");
         JSONObject NewJson = JsonConverter.GetJson(jsonObject);
         int id = MyService.Create(shapetype, NewJson);
         return id;
@@ -54,8 +53,6 @@ public class Controller {
     @GetMapping("/ChangeFillColor/{jsonObject}")
     public void ChangeFillColor(@PathVariable String jsonObject)
     {
-        System.out.println("fill");
-        System.out.println(jsonObject);
         JSONObject NewJson = JsonConverter.GetJson(jsonObject);
 
         MyService.ChangeFilColor(NewJson);
@@ -86,9 +83,9 @@ public class Controller {
     @GetMapping("/CreateLine/{jsonObject}")
     public void CreateLine(@PathVariable String jsonObject)
     {
-        System.out.println("Reached Controller");
         JSONObject NewJson = JsonConverter.GetJson(jsonObject);
         MyService.CreateLine(NewJson);
     }
+
 
 }

@@ -77,6 +77,9 @@ public class MainSystem
     {
         EmptyOperationUndoStack();
         int ID = MainSystem.GetAndIncreamentIDCounter();
+
+        ShapeJson.put("ID", Integer.toString(ID));
+
         Shape NewShape = MainSystem.ShapeFactory.CreateShape(ID, ShapeType);
         JsonConverter.ExtractAllProperties(ShapeJson, NewShape);
 
@@ -90,7 +93,6 @@ public class MainSystem
 
     public static void CreateNewLine(JSONObject ShapeJson)
     {
-        System.out.println("Reached Main system");
         ArrayList<Double> list = JsonConverter.ExtractPointsArrayForLine(ShapeJson);
         for (double i : list)
             System.out.print(i);
@@ -107,7 +109,7 @@ public class MainSystem
         Size OldSize = closedShape.GetSize();
         Position OldPosition = closedShape.GetPosition();
 
-        Size NewSize = JsonConverter.ExtractSize(ShapeJson, Shape);
+        Size NewSize = JsonConverter.ExtractSize(ShapeJson, closedShape);
         Position NewPosition = JsonConverter.ExtractPosition(ShapeJson);
 
         Operation operation = new ResizeAndChangePositionOperation
@@ -257,12 +259,6 @@ public class MainSystem
     }
     private static boolean CanMakeUndo()
     {
-        System.out.println(MainSystem.OperationStack.empty());
-        System.out.println(MainSystem.OperationStack.empty());
-        System.out.println(MainSystem.OperationStack.empty());
-        System.out.println(MainSystem.OperationStack.empty());
-        System.out.println(MainSystem.OperationStack.empty());
-
         if (MainSystem.OperationStack.empty()) return false;
         return true;
     }
@@ -276,4 +272,28 @@ public class MainSystem
         Shape shape = MainSystem.ShapesMap.get(id);
         return MainSystem.ShapeFactory.GetShapeType(shape);
     }
+
+    public static Size GetShapeSizeById(int id)
+    {
+        Shape shape = MainSystem.ShapesMap.get(id);
+        ClosedShape closedShape = (ClosedShape) shape;
+
+        return closedShape.GetSize();
+    }
+
+    public static Position GetShapePositionById(int id)
+    {
+        Shape shape = MainSystem.ShapesMap.get(id);
+        return shape.GetPosition();
+    }
+
+    static Shape GetShapeById(int id)
+    {
+        return MainSystem.ShapesMap.get(id);
+    }
+
+//    public static ArrayList<HashMap<String, String>> func()
+//    {
+//
+//    }
 }

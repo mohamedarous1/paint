@@ -21,7 +21,8 @@ export class HttpService {
   edit_pos_sizeRequest(shape: any) :Observable<any>{
 
     var temp = this.UpdateJsonForFillError(shape);
-    return this.http.get('http://localhost:8080/ResizeAndChangePosition/' + temp,{responseType : 'text'});
+    return this.http.get('http://localhost:8080/ResizeAndChangePosition/' + temp
+      ,{responseType : 'text'});
   }
 
   edit_posRequest(shape : any):Observable<any>{
@@ -70,14 +71,15 @@ export class HttpService {
     return temp;
   }
 
-  CreateLineRequest(shape: any) :Observable<any>
+
+  CreateLineRequest(shape: any)
   {
     var temp = this.UpdateJsonForFillError(shape);
+    console.log(temp);
     console.log("Reached Line Request");
     return this.http.get('http://localhost:8080/CreateLine/' + temp
       ,{responseType : 'text'});
   }
-
 
 
 }

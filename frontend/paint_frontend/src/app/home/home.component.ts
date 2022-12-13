@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   selected : any;
   tr : any;
   BruchColor:string="black";
-  newtemp:string = "#ffffff"
+  newtemp:string = "#ffffff";
 
   hashmap:any = new Map();
   constructor(public http  : HttpService) { }
@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
     this.layer.add(this.tr);
 
     this.stage.on('click',  (e:any) => this.OnClickOnStageSelect(e));
+
   }
 
   SelectButtonClick()
@@ -69,20 +70,15 @@ export class HomeComponent implements OnInit {
     // This part is for requesting from backend
     this.selected.on('transformend', (e:any) =>
     {
-      this.RepairDimentions(this.selected);
+      //this.RepairDimentions(this.selected);
 
       this.newtemp = ClickedShape.fill();
       this.http.edit_pos_sizeRequest(this.selected).subscribe(e=>{});
-      console.log(this.hashmap[id]);
-      console.log(this.GetNewSizeAndPosition());
-
     });
 
     this.selected.on('dragend' , (e:any) => {
-      this.http.edit_pos_sizeRequest(this.selected).subscribe(e=>{});
-      console.log(this.GetNewSizeAndPosition());
-
       //this.RepairDimentions(this.selected);
+      this.http.edit_pos_sizeRequest(this.selected).subscribe(e=>{});
     });
   }
   SelectShape(SelectedShape:any)
@@ -90,34 +86,6 @@ export class HomeComponent implements OnInit {
     this.selected = SelectedShape;
     this.selected.draggable(true);
     this.tr.nodes([this.selected]);
-  }
-  /////////////////////////////////////////////////////////////////////////
-  // Function not complete
-  // Michael
-  RepairDimentions(shape:any)
-  {
-    if (shape == undefined) return;
-    let id:number = shape.id();
-
-    let ShapeType = this.hashmap[id];
-    if (ShapeType == "Square" || ShapeType == "Rectangle")
-    {
-      shape.width( shape.width()* shape.scaleX());
-      shape.height(  shape.height()*shape.scaleY());
-    }
-    else if (ShapeType == "Ellipse")
-    {
-      shape.radiusX( shape.width()* shape.scaleX());
-      shape.radiusY(  shape.height()*shape.scaleY());
-    }
-    else if (ShapeType == "Circle")
-    {
-      shape.radius( this.selected.radius()* this.selected.scaleX());
-      console.log(shape.radius);
-    }
-
-    shape.scaleX(1);
-    shape.scaleY(1);
   }
 
   GetNewSizeAndPosition()
@@ -140,7 +108,7 @@ export class HomeComponent implements OnInit {
 
   create(ShapeType : string)
   {
-    var temp =  this.shape.shapecreator(ShapeType, this.id.toString()).get();
+    var temp =  this.shape.shapecreator(ShapeType, "500").get();
     if(ShapeType != "Line"){
       temp.fill("#FFFFFF");
     }
@@ -201,7 +169,7 @@ export class HomeComponent implements OnInit {
     this.stage.on('mouseup touchend',  () => {
       isPaint = false;
       console.log(lastLine);
-      this.http.CreateLineRequest(lastLine);
+      this.http.CreateLineRequest(lastLine).subscribe(e=>{});
     });
 
     // and core function - drawing
@@ -269,7 +237,8 @@ export class HomeComponent implements OnInit {
     ClickedShape.hide();
     this.ClearEventListeners();
   }
-  copy(){
+  copy()
+  {
     this.ClearEventListeners();
     this.stage.on('click',(e:any)=>this.CopyShape(e));
   }
@@ -336,24 +305,66 @@ export class HomeComponent implements OnInit {
     }
   }
 
-
   UpdateSizeForShape(shape:any, json:any)
   {
     let ShapeType = this.hashmap[shape.id()];
-    if (ShapeType == "Square" || ShapeType == "Rectangle")
+
+    if (ShapeType == "Square")
     {
-      shape.height(json["height"]);
+      shape.height(json["side"]);
+      shape.width(json["side"]);
+    }
+    else if (ShapeType == "Rectangle")
+    {
+      shape.height(json["length"]);
       shape.width(json["width"]);
     }
     else if (ShapeType == "Ellipse")
     {
-      shape.radiusX(json["radiusX"]);
-      shape.radiusY(json["radiusY"]);
+      console.log(shape.height());
+      shape.height(json["length"]);
+      shape.width(json["width"]);
+      console.log(shape.height());
     }
-    else if (ShapeType == "Circle" || ShapeType == "Triangle" || ShapeType == "Pentagon")
+    else if (ShapeType == "Circle")
     {
+      console.log("Reached");
       shape.radius(json["radius"]);
     }
+    else if (ShapeType == "Triangle" || ShapeType == "Pentagon")
+    {
+      shape.radius(json["side"]);
+    }
+  }
+
+  RepairDimentions(shape:any)
+  {
+    if (shape == undefined) return;
+    let id:number = shape.id();
+
+    let ShapeType = this.hashmap[id];
+    if (ShapeType == "Square" || ShapeType == "Rectangle")
+    {
+      shape.width( shape.width()* shape.scaleX());
+      shape.height(  shape.height()*shape.scaleY());
+    }
+    else if (ShapeType == "Ellipse")
+    {
+      shape.width( shape.width(), shape.scaleX());
+      shape.height(  shape.height(), shape.scaleY());
+    }
+    else if (ShapeType == "Circle")
+    {
+      shape.radius( shape.radius()* shape.scaleX());
+    }
+    else if (ShapeType == "Triangle")
+    {
+      shape.height( shape.height * shape.scaleY);
+      shape.width( shape.width * shape.scaleX);
+    }
+
+    shape.scaleX(1);
+    shape.scaleY(1);
   }
 
 
