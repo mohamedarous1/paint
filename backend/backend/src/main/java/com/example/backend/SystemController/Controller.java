@@ -79,13 +79,31 @@ public class Controller {
     public void save()
     {
 
-        ArrayList<JSONObject> Shapes =  MainSystem.SaveShapes();
-
-        System.out.println(Shapes.get(0).toString());
+//        ArrayList<JSONObject> Shapes =  MainSystem.SaveShapes();
+//
+//        System.out.println(Shapes.get(0).toString());
 
         //System.out.println(jsonObject);
 
 //        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
 //        MyService.CreateLine(NewJson);
     }
+
+    //@GetMapping("/hesham/{temp}")
+    @RequestMapping(value="/hesham", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public int Hesham(@RequestBody JSONObject temp)
+    {
+
+        //JSONObject NewJson = JsonConverter.GetJson(temp);
+
+        //System.out.println(temp);
+
+        ArrayList<Double> list = (ArrayList<Double>) temp.get("points");
+
+        System.out.println(list.get(0));
+        //System.out.println(NewJson);
+//        MyService.ResizeAndChangePosition(NewJson);
+        return 55555;
+    }
+
 }

@@ -60,16 +60,6 @@ export class HttpService {
   }
 
 
-  UpdateJsonForFillError(shape : any)
-  {
-    var temp = JSON.stringify(shape.attrs);
-    var temp2 = JSON.parse(temp);
-    if (temp2.hasOwnProperty("fill") == false)
-      return temp;
-    temp2["fill"] = shape.fill().slice(1);
-    temp = JSON.stringify(temp2);
-    return temp;
-  }
 
   CreateLineRequest(shape:any):Observable<any>
   {
@@ -82,7 +72,6 @@ export class HttpService {
     return this.http.get('http://localhost:8080/save'  ,{responseType : 'text'});
   }
 
-
   saveRequest(shape:any){
     this.http.get('http://localhost:8080/cc',{
     responseType:'text',
@@ -91,4 +80,23 @@ export class HttpService {
     },
     observe:'response'}).subscribe(response=>{})
 }
+
+  UpdateJsonForFillError(shape : any)
+  {
+    var temp = JSON.stringify(shape.attrs);
+    var temp2 = JSON.parse(temp);
+    if (temp2.hasOwnProperty("fill") == false)
+      return temp;
+    temp2["fill"] = shape.fill().slice(1);
+    temp = JSON.stringify(temp2);
+    return temp;
+  }
+
+  HeshamService(shape:any)
+  {
+    //var temp = this.UpdateJsonForFillError(shape);
+    var temp = JSON.stringify(shape);
+    console.log(shape);
+    return this.http.post('http://localhost:8080/hesham', shape.attrs);
+  }
 }
