@@ -1,6 +1,7 @@
 package System;
 
 import HelpingClasses.Position;
+import HelpingClasses.Scale;
 import HelpingClasses.Size;
 import Operations.*;
 import Shapes.ClosedShape;
@@ -98,41 +99,22 @@ public class MainSystem
             System.out.print(i);
     }
 
-    public static void ResizeAndChangePosition(JSONObject ShapeJson)
+    public static void RescaleAndChangePosition(JSONObject ShapeJson)
     {
         EmptyOperationUndoStack();
         int ID = JsonConverter.ExtractId(ShapeJson);
 
-        Shape Shape = MainSystem.ShapesMap.get(ID);
-        ClosedShape closedShape = (ClosedShape) Shape;
+        Shape shape = MainSystem.ShapesMap.get(ID);
 
-        Size OldSize = closedShape.GetSize();
-        Position OldPosition = closedShape.GetPosition();
 
-        Size NewSize = JsonConverter.ExtractSize(ShapeJson, closedShape);
+        Scale OldScale = shape.GetScale();
+        Scale NewScale = JsonConverter.ExtractScale(ShapeJson);
+
+        Position OldPosition = shape.GetPosition();
         Position NewPosition = JsonConverter.ExtractPosition(ShapeJson);
 
-        Operation operation = new ResizeAndChangePositionOperation
-                (ID, OldPosition, NewPosition, OldSize, NewSize);
-        MainSystem.PushOperationToStack(operation);
-
-        DoOperation(operation);
-    }
-
-    public static void ChangePositionLineAndEmtpryUndo(JSONObject ShapeJson)
-    {
-        EmptyOperationUndoStack();
-        int ID = JsonConverter.ExtractId(ShapeJson);
-
-        Shape Shape = MainSystem.ShapesMap.get(ID);
-        ClosedShape closedShape = (ClosedShape) Shape;
-
-        Position OldPosition = closedShape.GetPosition();
-
-        Position NewPosition = JsonConverter.ExtractPosition(ShapeJson);
-
-        ChangePositionLineOperation operation
-                = new ChangePositionLineOperation(ID, OldPosition, NewPosition);
+        Operation operation = new RescaleAndChangePositionOperation
+                (ID, OldPosition, NewPosition, OldScale, NewScale);
         MainSystem.PushOperationToStack(operation);
 
         DoOperation(operation);

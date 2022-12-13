@@ -19,14 +19,6 @@ public class Controller {
         return id;
     }
 
-    @GetMapping("/ChangePositionLine/{jsonObject}")
-    public void ChangePositionLine(@PathVariable String jsonObject)
-    {
-        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
-
-        MyService.ChangePositionLine(NewJson);
-    }
-
     @GetMapping("/ResizeAndChangePosition/{jsonObject}")
     public void ResizeAndChangePosition(@PathVariable String jsonObject)
     {

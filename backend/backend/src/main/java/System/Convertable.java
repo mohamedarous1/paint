@@ -4,5 +4,5 @@ import org.json.simple.JSONObject;
 
 public interface Convertable
 {
-    public void ConvertObjectToJson(JSONObject jsonObject);
+    public void PutObjectInJson(JSONObject jsonObject);
 }

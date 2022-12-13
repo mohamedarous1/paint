@@ -20,7 +20,9 @@ public class JsonConverter
         Position position = JsonConverter.ExtractPosition(MyJson);
         String StrokeColor = JsonConverter.ExtractStrokeColor(MyJson);
         double StrokeWidth = JsonConverter.ExtractStrokeWidth(MyJson);
+        Scale scale = JsonConverter.ExtractScale(MyJson);
 
+        MyShape.SetScale(scale);
         if (size != null)
             ((ClosedShape)MyShape).SetSize(size);
         if (FillColor != null)
@@ -69,6 +71,11 @@ public class JsonConverter
         return new Position(x, y);
     }
 
+    public static Scale ExtractScale(JSONObject jsonObject)
+    {
+        return new Scale(jsonObject);
+    }
+
     public static Size ExtractSize(JSONObject shapeJson, Shape shape)
     {
 //        if (ShapeTypesFunctions.isRegularPolygon(ShapeID))
@@ -113,4 +120,5 @@ public class JsonConverter
         JSONObject NewJson = new Gson().fromJson(jsonObject , JSONObject.class);
         return NewJson;
     }
+
 }

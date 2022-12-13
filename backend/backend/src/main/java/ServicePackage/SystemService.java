@@ -1,7 +1,6 @@
 package ServicePackage;
 
 import Operations.Operation;
-import com.sun.tools.javac.Main;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import System.MainSystem;
@@ -15,14 +14,9 @@ public class SystemService
         return ID;
     }
 
-    public void ChangePositionLine(JSONObject obj)
-    {
-        MainSystem.ChangePositionLineAndEmtpryUndo(obj);
-    }
-
     public void ResizeAndChangePosition(JSONObject obj)
     {
-        MainSystem.ResizeAndChangePosition(obj);
+        MainSystem.RescaleAndChangePosition(obj);
     }
     public void ChangeStrokeWidth(JSONObject obj)
     {

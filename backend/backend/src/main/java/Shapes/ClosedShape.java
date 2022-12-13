@@ -4,7 +4,7 @@ import HelpingClasses.*;
 
 public abstract class ClosedShape extends Shape
 {
-    protected String FilColor;
+    private String FilColor;
 
     public ClosedShape(int id)
     {

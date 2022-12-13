@@ -2,6 +2,7 @@ package Shapes;
 
 import HelpingClasses.Position;
 import HelpingClasses.RegularPolygonSize;
+import HelpingClasses.Scale;
 import System.MyCloneable;
 import System.Convertable;
 import org.json.simple.JSONObject;
@@ -11,9 +12,22 @@ public abstract class Shape implements MyCloneable
 {
     private int ID;
     private boolean Enabled;
-    protected double StrokeWidth;
-    protected String StrokeColor;
-    protected Position ShapePosition;
+    private double StrokeWidth;
+    private String StrokeColor;
+    private Position ShapePosition;
+
+    private Scale MyScale;
+
+    public void SetScale(Scale scale)
+    {
+        this.MyScale = scale;
+    }
+
+    public Scale GetScale()
+    {
+        return this.MyScale;
+    }
+
 
     public int GetId()
     {

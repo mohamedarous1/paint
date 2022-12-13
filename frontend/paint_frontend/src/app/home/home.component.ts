@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
     this.layer.add(this.tr);
 
     this.stage.on('click',  (e:any) => this.OnClickOnStageSelect(e));
-
   }
 
   SelectButtonClick()
@@ -297,76 +296,14 @@ export class HomeComponent implements OnInit {
     {
       shape.fill(temp["fill"]);
     }
-    else if (temp["OperationType"] == "ResizeAndChangePositionOperation")
+    else if (temp["OperationType"] == "RescaleAndChangePositionOperation")
     {
       shape.x(temp["x"]);
       shape.y(temp["y"]);
-      this.UpdateSizeForShape(shape, temp);
+      shape.scaleX(temp["scaleX"]);
+      shape.scaleY(temp["scaleY"]);
     }
   }
-
-  UpdateSizeForShape(shape:any, json:any)
-  {
-    let ShapeType = this.hashmap[shape.id()];
-
-    if (ShapeType == "Square")
-    {
-      shape.height(json["side"]);
-      shape.width(json["side"]);
-    }
-    else if (ShapeType == "Rectangle")
-    {
-      shape.height(json["length"]);
-      shape.width(json["width"]);
-    }
-    else if (ShapeType == "Ellipse")
-    {
-      console.log(shape.height());
-      shape.height(json["length"]);
-      shape.width(json["width"]);
-      console.log(shape.height());
-    }
-    else if (ShapeType == "Circle")
-    {
-      console.log("Reached");
-      shape.radius(json["radius"]);
-    }
-    else if (ShapeType == "Triangle" || ShapeType == "Pentagon")
-    {
-      shape.radius(json["side"]);
-    }
-  }
-
-  RepairDimentions(shape:any)
-  {
-    if (shape == undefined) return;
-    let id:number = shape.id();
-
-    let ShapeType = this.hashmap[id];
-    if (ShapeType == "Square" || ShapeType == "Rectangle")
-    {
-      shape.width( shape.width()* shape.scaleX());
-      shape.height(  shape.height()*shape.scaleY());
-    }
-    else if (ShapeType == "Ellipse")
-    {
-      shape.width( shape.width(), shape.scaleX());
-      shape.height(  shape.height(), shape.scaleY());
-    }
-    else if (ShapeType == "Circle")
-    {
-      shape.radius( shape.radius()* shape.scaleX());
-    }
-    else if (ShapeType == "Triangle")
-    {
-      shape.height( shape.height * shape.scaleY);
-      shape.width( shape.width * shape.scaleX);
-    }
-
-    shape.scaleX(1);
-    shape.scaleY(1);
-  }
-
 
   UpdateFillFromBackEnd(temp:any)
   {

@@ -15,7 +15,7 @@ public class CircleSize extends Size
     }
 
     @Override
-    public void ConvertObjectToJson(JSONObject jsonObject)
+    public void PutObjectInJson(JSONObject jsonObject)
     {
         jsonObject.put("radius", this.Radius);
     }

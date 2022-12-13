@@ -19,7 +19,7 @@ public class LWSize extends Size
     }
 
     @Override
-    public void ConvertObjectToJson(JSONObject jsonObject)
+    public void PutObjectInJson(JSONObject jsonObject)
     {
         jsonObject.put("length", this.Length);
         jsonObject.put("width", this.Width);
