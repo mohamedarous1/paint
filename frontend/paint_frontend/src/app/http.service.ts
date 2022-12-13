@@ -77,6 +77,11 @@ export class HttpService {
     return this.http.get('http://localhost:8080/cc'  ,{responseType : 'text'});
   }
 
+  savedemo():Observable<any>
+  {
+    return this.http.get('http://localhost:8080/save'  ,{responseType : 'text'});
+  }
+
 
   saveRequest(shape:any){
     this.http.get('http://localhost:8080/cc',{

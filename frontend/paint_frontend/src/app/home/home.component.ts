@@ -265,7 +265,7 @@ export class HomeComponent implements OnInit {
 
   save()
   {
-    
+    this.http.savedemo().subscribe(e=>{});
   }
 
   redo()

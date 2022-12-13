@@ -3,6 +3,9 @@ import ServicePackage.SystemService;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import System.JsonConverter;
+import System.MainSystem;
+
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin
@@ -72,9 +75,14 @@ public class Controller {
         return object;
     }
 
-    @GetMapping("/cc")
-    public void save(@PathVariable String first)
+    @GetMapping("/save")
+    public void save()
     {
+
+        ArrayList<JSONObject> Shapes =  MainSystem.SaveShapes();
+
+        System.out.println(Shapes.get(0).toString());
+
         //System.out.println(jsonObject);
 
 //        JSONObject NewJson = JsonConverter.GetJson(jsonObject);

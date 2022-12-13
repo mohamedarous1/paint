@@ -3,7 +3,7 @@ package Shapes;
 import HelpingClasses.Position;
 import HelpingClasses.Scale;
 import System.MyCloneable;
-import System.Convertable;
+import System.*;
 import org.json.simple.JSONObject;
 
 
@@ -29,6 +29,10 @@ public abstract class Shape implements MyCloneable, Convertable
     @Override
     public void PutObjectInJson(JSONObject jsonObject)
     {
+        String ShapeType = MainSystem.GetShapeType(this.GetId());
+
+        jsonObject.put("id", Integer.toString(this.GetId()));
+        jsonObject.put("ShapeType", ShapeType);
         jsonObject.put("stroke", this.StrokeColor);
         jsonObject.put("strokewidth", this.StrokeWidth);
         jsonObject.put("Enabled", this.Enabled);

@@ -7,10 +7,13 @@ import Operations.*;
 import Shapes.ClosedShape;
 import Shapes.Shape;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.Stack;
 
 public class MainSystem
@@ -21,15 +24,47 @@ public class MainSystem
     static ShapeFactory ShapeFactory = new ShapeFactory();
     private static int IDCounter = 1;
 
-    public static ArrayList<JSONObject> SaveShapes()
+    public static ArrayList<String> SaveShapes()
     {
-        ArrayList<JSONObject> Shapes = new ArrayList<>();
+        ArrayList<String> Shapes = new ArrayList<>();
         ShapesMap.forEach( (key, value)->{
             JSONObject jsonObject = new JSONObject();
             value.PutObjectInJson(jsonObject);
-            Shapes.add(jsonObject);
+
+            Shapes.add(jsonObject.toJSONString());
         } );
         return Shapes;
+    }
+
+    public void loadjson(String fileName)
+    {
+        String Content = "";
+        JSONObject obj;
+
+        try
+        {
+            File file = new File(fileName);
+            Scanner sc = new Scanner(file);
+
+
+            while (sc.hasNextLine())
+                Content += sc.nextLine();
+
+            sc.close();
+
+            JSONParser parser = new JSONParser();
+
+            obj = (JSONObject)parser.parse(Content);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        // for
+        // get json
+        // Shape shape = Jsonconverter.ExtractAllProperties()
+
     }
 
     public static Operation GetAndExecuteUndoOperation()
