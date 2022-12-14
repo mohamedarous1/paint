@@ -6,6 +6,7 @@ import HelpingClasses.Sizes.Size;
 import Operations.*;
 import Shapes.ClosedShape;
 import Shapes.Shape;
+import com.sun.tools.javac.Main;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -15,6 +16,17 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Stack;
 
+
+
+
+import org.json.*;
+import org.json.simple.parser.JSONParser;
+import java.beans.XMLEncoder;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class MainSystem
 {
     private static HashMap<Integer, Shape> ShapesMap = new HashMap<>();
@@ -23,13 +35,22 @@ public class MainSystem
     static ShapeFactory ShapeFactory = new ShapeFactory();
     private static int IDCounter = 1;
 
+    public static void ClearAllShapes()
+    {
+        MainSystem.IDCounter = 1;
+        MainSystem.ShapesMap = new HashMap<>();
+        MainSystem.OperationStack = new Stack<>();
+        MainSystem.OperationUndoStack = new Stack<>();
+        MainSystem.ShapeFactory = new ShapeFactory();
+    }
+
 
     public static ArrayList<String> SaveShapes()
     {
         ArrayList<String> Shapes = new ArrayList<>();
         ShapesMap.forEach( (key, value)->{
             //verified
-            System.out.println(value.toString());
+            //System.out.println(value.toString());
             JSONObject jsonObject = new JSONObject();
             //error in this line
             value.PutObjectInJson(jsonObject);
@@ -44,6 +65,7 @@ public class MainSystem
         String Content = "";
         JSONObject obj;
 
+        ArrayList<JSONObject> list;
         try
         {
             File file = new File(fileName);
@@ -58,17 +80,68 @@ public class MainSystem
             JSONParser parser = new JSONParser();
 
             obj = (JSONObject)parser.parse(Content);
+
+            list = (ArrayList<JSONObject>) ((JSONObject)obj.get("root") ).get("shape");
+            System.out.println(list);
+            System.out.println(list);
+            System.out.println(list);
+            System.out.println(list);
+
+            System.out.println("nhhhhhhh");
+            System.out.println("nhhhhhhh");
+            System.out.println("nhhhhhhh");
+            System.out.println("nhhhhhhh");
+
+
+            MainSystem.ClearAllShapes();
+
+            for (JSONObject json : list)
+            {
+                String ShapeType = (String) json.get("ShapeType");
+                String id = (String) json.get("ShapeType");
+                System.out.println(id);System.out.println(id);System.out.println(id);System.out.println(id);System.out.println(id);
+                MainSystem.CreateNewShapeFrontAndEmptyUndo(ShapeType, json);
+            }
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
 
-        // for
-        // get json
-        // Shape shape = Jsonconverter.ExtractAllProperties()
 
     }
+
+
+//    public static void func(String content)
+//    {
+//        try
+//        {
+//            JSONObject obj = JsonConverter.GetJson(content);
+//
+//
+//            ArrayList<JSONObject> list = (ArrayList<JSONObject>) ((JSONObject) obj.get("root")).get("shape");
+//
+//            MainSystem.ClearAllShapes();
+//
+//            for (JSONObject json : obj)
+//            {
+//
+//            }
+//
+////            for (org.json.simple.JSONObject json : list)
+////            {
+////                String ShapeType = (String) json.get("ShapeType");
+////                String id = (String)json.get("id");
+////                System.out.println(id);System.out.println(id);System.out.println(id);System.out.println(id);System.out.println(id);System.out.println(id);
+////                MainSystem.CreateNewShapeFrontAndEmptyUndo(ShapeType, json);
+////            }
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
+
 
     public static Operation GetAndExecuteUndoOperation()
     {

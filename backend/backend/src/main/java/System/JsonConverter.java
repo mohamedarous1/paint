@@ -22,6 +22,16 @@ public class JsonConverter
         double StrokeWidth = JsonConverter.ExtractStrokeWidth(MyJson);
         Scale scale = JsonConverter.ExtractScale(MyJson);
 
+
+        ArrayList<Double> list = JsonConverter.ExtractPointsArrayForLine(MyJson);
+
+
+        if (list != null)
+        {
+            Line line = (Line) MyShape;
+            line.SetPointsArray(list);
+        }
+
         MyShape.SetScale(scale);
         if (size != null)
             ((ClosedShape)MyShape).SetSize(size);

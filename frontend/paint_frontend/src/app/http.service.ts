@@ -13,7 +13,7 @@ export class HttpService {
   CreateRequest(shape: any, ShapeType:string):Observable<any>
   {
     var temp = this.UpdateJsonForFillError(shape);
-
+    console.log(11111);
     return this.http.get('http://localhost:8080/create/' + ShapeType +
       "/" + temp, {responseType: 'text'});
   }
@@ -59,18 +59,6 @@ export class HttpService {
     return this.http.get('http://localhost:8080/Redo' ,{responseType : 'text'});
   }
 
-
-  // UpdateJsonForFillError(shape : any)
-  // {
-  //   var temp = JSON.stringify(shape.attrs);
-  //   var temp2 = JSON.parse(temp);
-  //   if (temp2.hasOwnProperty("fill") == false)
-  //     return temp;
-  //   temp2["fill"] = shape.fill().slice(1);
-  //   temp = JSON.stringify(temp2);
-  //   return temp;
-  // }
-
   UpdateJsonForFillError(shape : any)
   {
     var temp = JSON.stringify(shape.attrs);
@@ -84,7 +72,6 @@ export class HttpService {
       temp2["points"] = "";
     }
     temp = JSON.stringify(temp2);
-    console.log(temp);
     return temp;
   }
 
@@ -93,10 +80,8 @@ export class HttpService {
     return this.http.get('http://localhost:8080/save'  ,{responseType : 'text'});
   }
 
-  saveXml(namefile:string):Observable<any>{
-    //let jsonString = JSON.stringify(shape);
-    //console.log(jsonString);
-    //let json = JSON.parse(jsonString);
+  saveXml(namefile:string):Observable<any>
+  {
     return this.http.get("http://localhost:8080/save/"+namefile);
   }
 
@@ -105,19 +90,14 @@ export class HttpService {
   }
 
 
-  saveRequest(shape:any){
-    this.http.get('http://localhost:8080/cc',{
-    responseType:'text',
-      params:{
-      first : "fffff"
-    },
-    observe:'response'}).subscribe(response=>{})
-}
-
 CreateLineRequest(shape:any)
   {
     var temp = JSON.stringify(shape);
-    console.log(shape);
     return this.http.post('http://localhost:8080/CreateLine', shape.attrs);
+  }
+
+  ClearService()
+  {
+    return this.http.get("http://localhost:8080/clear", {responseType : 'text'});
   }
 }

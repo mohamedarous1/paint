@@ -19,6 +19,10 @@ public class Controller {
     {
         JSONObject NewJson = JsonConverter.GetJson(jsonObject);
         int id = MyService.Create(shapetype, NewJson);
+        System.out.println(id);
+        System.out.println(id);
+        System.out.println(id);
+
         return id;
     }
 
@@ -90,11 +94,17 @@ public class Controller {
 
 
     @RequestMapping(value = "/load/{fileName}")
-    public String loadXml(@PathVariable String fileName) {
+    public String loadXml(@PathVariable String fileName)
+    {
         String s = FileHandler.readXml("./"+fileName);
+        MyService.ClearService();
         return FileHandler.readXml("./"+fileName);
     }
 
-//    @CrossOrigin
-//    @GetMapping("/load/")
+    @GetMapping("/clear")
+    public void ClearRequest()
+    {
+        MyService.ClearService();
+    }
+
 }

@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
   constructor(public http  : HttpService) { }
 
   ngOnInit(): void {
-
+    this.ClearAllShapes();
     this.stage = new Konva.Stage({
       container: 'container',
       width: 1370,
@@ -117,11 +117,8 @@ export class HomeComponent implements OnInit {
     this.tr.nodes([this.selected])
 
     this.SelectButtonClick();
-    console.log(ShapeType);
-    console.log(temp.toJSON())
     this.CreateRequest(temp, ShapeType);
   }
-
 
 
   BrushClick()
@@ -133,11 +130,10 @@ export class HomeComponent implements OnInit {
   UpdateIdAndPutInMap(Shape:any, ShapeType:string, id:any)
   {
     Shape.id(id.toString());
-    console.log(id);
     this.hashmap[id] = ShapeType;
   }
 
-  
+
   OnClickOnStageBrush()
   {
     let brushcolor = document.getElementById("favcolor");
@@ -159,17 +155,11 @@ export class HomeComponent implements OnInit {
         strokeWidth: 5.00001,
         globalCompositeOperation:
           mode === 'brush' ? 'source-over' : 'destination-out',
-        // round cap for smoother lines
         lineCap: 'round',
         lineJoin: 'round',
-        // add point twice, so we have some drawings even on a simple click
         points: [0, 0, 0, 0],
       });
 
-
-      // lastLine =  this.shape.shapecreator("Line", "500").get();
-      // lastLine.points([pos.x, pos.y, pos.x, pos.y]);
-      console.log(lastLine.points());
       this.layer.add(lastLine);
     });
 
@@ -283,7 +273,6 @@ export class HomeComponent implements OnInit {
     var temp
     this.http.undoRequest().subscribe(response => {
       temp = JSON.parse(response);
-      console.log(temp);
       this.UpdateShapeWithJson(temp);
     })
 
@@ -295,31 +284,46 @@ export class HomeComponent implements OnInit {
     this.http.saveXml(this.namefile).subscribe(e=>{});
   }
 
-  load(){
+  load()
+  {
+    this.ngOnInit();
     let jsonStr = "";
     this.http.loadXml(this.namefile).subscribe((e)=>{
           jsonStr = e;
-          console.log(jsonStr);
+          if (jsonStr === "{\"root\":\"\"}")
+          {
+            return;
+          }
+
           let shapes = JSON.parse(jsonStr)["root"]["shape"];
 
-          for(let shape of shapes){
-            console.log(shape);
+          const size = Object.keys(shapes).length;
+
+          if (size === 1)
+          {
+            return;
+          }
+
+          for(let shape of shapes)
+          {
             let type = shape["ShapeType"];
             let id = shape["id"].toString();
             shape["fill"] = "#"+shape["fill"];
             let konvaShape = this.shape.shapecreator(type, id).get();
-            for(const key in shape){
+            for(const key in shape)
+            {
                 let value = shape[key];
-                if(key === "ShapeType"){
+                if(key === "ShapeType" || key === "id")
                   continue;
-                }
-                if(key == "full"){}
+
                 konvaShape.attrs[key] = value;
-
-
             }
-            console.log(konvaShape);
             this.layer.add(konvaShape);
+
+            if (type == "Line")
+              this.CreateLineRequest(konvaShape);
+            else
+              this.CreateRequest(konvaShape, type);
           }
 
 
@@ -335,7 +339,6 @@ export class HomeComponent implements OnInit {
     var temp
     this.http.redoRequest().subscribe(respone => {
       temp = JSON.parse(respone);
-      console.log(temp);
       this.UpdateShapeWithJson(temp);
     })
   }
@@ -378,5 +381,10 @@ export class HomeComponent implements OnInit {
       temp["fill"] = "#" + temp["fill"];
     }
     return temp;
+  }
+
+  ClearAllShapes()
+  {
+    this.http.ClearService().subscribe();
   }
 }

@@ -2,7 +2,7 @@ package System;
 
 
 import org.json.*;
-
+import org.json.simple.parser.JSONParser;
 import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileWriter;
@@ -18,7 +18,7 @@ public class FileHandler {
         String xml = "";
         for(int i = 0; i < jsonArray.size(); i++){
             JSONObject json = new JSONObject(jsonArray.get(i));
-            System.out.println(json.toString());
+            //System.out.println(json.toString());
             String newshape = "<shape>"+XML.toString(json)+"</shape>";
             xml += newshape;
         }
@@ -39,19 +39,23 @@ public class FileHandler {
 
     public static String readXml(String xmlStr) {
 
-        String content = null;
-        try {
+        String content = "";
+
+        ArrayList<org.json.simple.JSONObject> list;
+        try
+        {
             File file = new File(xmlStr);
             Scanner scanner = new Scanner(file);
             content = "";
-            while (scanner.hasNextLine()) {
+            while (scanner.hasNextLine())
                 content += scanner.nextLine();
-            }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
-        System.out.println(content);
-        System.out.println(XML.toJSONObject(content).toString());
+        //System.out.println(content);
+        //System.out.println(XML.toJSONObject(content).toString());
         String s = XML.toJSONObject(content).toString();
         return XML.toJSONObject(content).toString();
     }

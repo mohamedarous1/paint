@@ -57,8 +57,8 @@ public class SystemService
         return id;
     }
 
-//    public void CreateLine(JSONObject jsonObject)
-//    {
-//        MainSystem.CreateNewLine(jsonObject);
-//    }
+    public void ClearService()
+    {
+        MainSystem.ClearAllShapes();
+    }
 }
