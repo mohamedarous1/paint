@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   selected : any;
   tr : any;
   BruchColor:string="black";
-  newtemp:string = "#ffffff";
+  newtemp:string = "#ffff00";
   namefile:string = "";
 
   hashmap:any = new Map();
@@ -123,12 +123,17 @@ export class HomeComponent implements OnInit {
 
   CreateRequest(Shape:any, ShapeType:string)
   {
-    console.log(Shape);
     this.http.CreateRequest(Shape, ShapeType)
       .subscribe(id => {this.UpdateIdAndPutInMap(Shape, ShapeType, id)});
   }
 
-  UpdateIdAndPutInMap(Shape:any, ShapeType:string, id:number)
+  CreateLineRequest(Shape:any)
+  {
+    this.http.CreateLineRequest(Shape)
+      .subscribe(id => {this.UpdateIdAndPutInMap(Shape, "Line", id)});
+  }
+
+  UpdateIdAndPutInMap(Shape:any, ShapeType:string, id:any)
   {
     Shape.id(id);
     console.log(id);
@@ -151,25 +156,31 @@ export class HomeComponent implements OnInit {
     {
       isPaint = true;
       var pos = this.stage.getPointerPosition();
-      lastLine = new Konva.Line({
-        stroke: this.BruchColor,
-        id:"5",
-        strokeWidth: 5,
-        globalCompositeOperation:
-          mode === 'brush' ? 'source-over' : 'destination-out',
-        // round cap for smoother lines
-        lineCap: 'round',
-        lineJoin: 'round',
-        // add point twice, so we have some drawings even on a simple click
-        points: [pos.x, pos.y, pos.x, pos.y],
-      });
+      // lastLine = new Konva.Line({
+      //   stroke: this.BruchColor,
+      //   id:"5",
+      //   scaleX:1,
+      //   scaleY:1,
+      //   strokeWidth: 5.0,
+      //   globalCompositeOperation:
+      //     mode === 'brush' ? 'source-over' : 'destination-out',
+      //   // round cap for smoother lines
+      //   lineCap: 'round',
+      //   lineJoin: 'round',
+      //   // add point twice, so we have some drawings even on a simple click
+      //   points: [pos.x, pos.y, pos.x, pos.y],
+      // });
+      console.log(lastLine);
+      lastLine =  this.shape.shapecreator("Line", "500").get();
+      lastLine.points([pos.x, pos.y, pos.x, pos.y]);
       this.layer.add(lastLine);
     });
 
     this.stage.on('mouseup touchend',  () => {
       isPaint = false;
-      this.http.HeshamService(lastLine).subscribe(e=>{console.log(e)});
+      this.CreateLineRequest(lastLine);
     });
+
 
     // and core function - drawing
     this.stage.on('mousemove touchmove',  (e:any) => {

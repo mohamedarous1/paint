@@ -26,6 +26,14 @@ public abstract class ClosedShape extends Shape
     @Override
     public void PutObjectInJson(JSONObject jsonObject)
     {
+        if (this.MySize == null)
+        {
+            System.out.println("Error MySize PutinJson");
+            System.out.println("Error MySize PutinJson");
+            System.out.println("Error MySize PutinJson");
+            System.out.println("Error MySize PutinJson");
+            System.out.println("Error MySize PutinJson");
+        }
         super.PutObjectInJson(jsonObject);
         jsonObject.put("fill", this.FilColor);
         this.MySize.PutObjectInJson(jsonObject);

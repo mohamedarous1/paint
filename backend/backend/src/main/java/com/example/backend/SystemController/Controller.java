@@ -6,6 +6,7 @@ import System.JsonConverter;
 import System.MainSystem;
 
 import java.util.ArrayList;
+import System.FileHandler;
 
 @RestController
 @CrossOrigin
@@ -53,7 +54,6 @@ public class Controller {
         MyService.ChangeFilColor(NewJson);
     }
 
-
     @GetMapping("/DisableShape/{jsonObject}")
     public void DisableShape(@PathVariable String jsonObject)
     {
@@ -75,35 +75,16 @@ public class Controller {
         return object;
     }
 
-    @GetMapping("/save")
-    public void save()
+    @RequestMapping(value="/CreateLine", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public int CreateLine(@RequestBody JSONObject temp)
     {
-
-//        ArrayList<JSONObject> Shapes =  MainSystem.SaveShapes();
-//
-//        System.out.println(Shapes.get(0).toString());
-
-        //System.out.println(jsonObject);
-
-//        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
-//        MyService.CreateLine(NewJson);
+        int id = MyService.CreateLine(temp);
+        return id;
     }
 
-    //@GetMapping("/hesham/{temp}")
-    @RequestMapping(value="/hesham", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public int Hesham(@RequestBody JSONObject temp)
+    @GetMapping("/save/xml")
+    public void saveXml()
     {
-
-        //JSONObject NewJson = JsonConverter.GetJson(temp);
-
-        //System.out.println(temp);
-
-        ArrayList<Double> list = (ArrayList<Double>) temp.get("points");
-
-        System.out.println(list.get(0));
-        //System.out.println(NewJson);
-//        MyService.ResizeAndChangePosition(NewJson);
-        return 55555;
+        FileHandler.writeXml(MainSystem.SaveShapes());
     }
-
 }

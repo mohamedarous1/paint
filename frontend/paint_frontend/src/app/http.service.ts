@@ -59,27 +59,10 @@ export class HttpService {
     return this.http.get('http://localhost:8080/Redo' ,{responseType : 'text'});
   }
 
-
-
-  CreateLineRequest(shape:any):Observable<any>
-  {
-    var temp = this.UpdateJsonForFillError(shape);
-    return this.http.get('http://localhost:8080/cc'  ,{responseType : 'text'});
-  }
-
   savedemo():Observable<any>
   {
-    return this.http.get('http://localhost:8080/save'  ,{responseType : 'text'});
+    return this.http.get('http://localhost:8080/save/xml'  ,{responseType : 'text'});
   }
-
-  saveRequest(shape:any){
-    this.http.get('http://localhost:8080/cc',{
-    responseType:'text',
-      params:{
-      first : "fffff"
-    },
-    observe:'response'}).subscribe(response=>{})
-}
 
   UpdateJsonForFillError(shape : any)
   {
@@ -92,11 +75,12 @@ export class HttpService {
     return temp;
   }
 
-  HeshamService(shape:any)
+  CreateLineRequest(shape:any)
   {
+
     //var temp = this.UpdateJsonForFillError(shape);
     var temp = JSON.stringify(shape);
     console.log(shape);
-    return this.http.post('http://localhost:8080/hesham', shape.attrs);
+    return this.http.post('http://localhost:8080/CreateLine', shape.attrs);
   }
 }

@@ -10,7 +10,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -24,11 +23,15 @@ public class MainSystem
     static ShapeFactory ShapeFactory = new ShapeFactory();
     private static int IDCounter = 1;
 
+
     public static ArrayList<String> SaveShapes()
     {
         ArrayList<String> Shapes = new ArrayList<>();
         ShapesMap.forEach( (key, value)->{
+            //verified
+            System.out.println(value.toString());
             JSONObject jsonObject = new JSONObject();
+            //error in this line
             value.PutObjectInJson(jsonObject);
 
             Shapes.add(jsonObject.toJSONString());
@@ -79,6 +82,7 @@ public class MainSystem
         MainSystem.DoOperation(ReversedOperation);
         return ReversedOperation;
     }
+
     public static Operation GetAndExecuteRedoOperation()
     {
         if (MainSystem.CanMakeRedo() == false)
@@ -112,19 +116,18 @@ public class MainSystem
         return object;
     }
 
-
     public static void DoOperation(Operation operation)
     {
         Shape shape = MainSystem.ShapesMap.get(operation.GetShapeID());
         operation.Execute(shape);
     }
 
-    public static int CreateNewObjectFrontAndEmptyUndo(String ShapeType, JSONObject ShapeJson)
+    public static int CreateNewShapeFrontAndEmptyUndo(String ShapeType, JSONObject ShapeJson)
     {
         EmptyOperationUndoStack();
         int ID = MainSystem.GetAndIncreamentIDCounter();
 
-        ShapeJson.put("ID", Integer.toString(ID));
+        ShapeJson.put("id", Integer.toString(ID));
 
         Shape NewShape = MainSystem.ShapeFactory.CreateShape(ID, ShapeType);
         JsonConverter.ExtractAllProperties(ShapeJson, NewShape);
@@ -134,14 +137,15 @@ public class MainSystem
         MainSystem.InsertInShapeMap(NewShape);
 
         DoOperation(operation);
-        return ID;
-    }
 
-    public static void CreateNewLine(JSONObject ShapeJson)
-    {
-        ArrayList<Double> list = JsonConverter.ExtractPointsArrayForLine(ShapeJson);
-        for (double i : list)
-            System.out.print(i);
+        ClosedShape debugshape = (ClosedShape) NewShape;
+        System.out.println(debugshape.GetSize());
+        System.out.println(debugshape.GetSize());
+        System.out.println(debugshape.GetSize());
+        JSONObject jj = new JSONObject();
+//        debugshape.PutObjectInJson(jj);
+
+        return ID;
     }
 
     public static void RescaleAndChangePosition(JSONObject ShapeJson)
@@ -218,8 +222,6 @@ public class MainSystem
 
         DoOperation(operation);
     }
-
-
 
     public static void DisableShape(JSONObject ShapeJson)
     {
@@ -318,9 +320,4 @@ public class MainSystem
     {
         return MainSystem.ShapesMap.get(id);
     }
-
-//    public static ArrayList<HashMap<String, String>> func()
-//    {
-//
-//    }
 }

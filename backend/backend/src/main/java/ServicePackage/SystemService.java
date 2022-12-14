@@ -10,7 +10,7 @@ public class SystemService
 {
     public int Create(String ShapeType, JSONObject obj)
     {
-        int ID = MainSystem.CreateNewObjectFrontAndEmptyUndo(ShapeType, obj);
+        int ID = MainSystem.CreateNewShapeFrontAndEmptyUndo(ShapeType, obj);
         return ID;
     }
 
@@ -51,8 +51,9 @@ public class SystemService
         return object;
     }
 
-    public void CreateLine(JSONObject jsonObject)
+    public int CreateLine(JSONObject jsonObject)
     {
-        MainSystem.CreateNewLine(jsonObject);
+        int id = MainSystem.CreateNewShapeFrontAndEmptyUndo("Line", jsonObject);
+        return id;
     }
 }

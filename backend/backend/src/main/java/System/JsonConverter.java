@@ -6,6 +6,7 @@ import Shapes.*;
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class JsonConverter
@@ -21,10 +22,24 @@ public class JsonConverter
         String StrokeColor = JsonConverter.ExtractStrokeColor(MyJson);
         double StrokeWidth = JsonConverter.ExtractStrokeWidth(MyJson);
         Scale scale = JsonConverter.ExtractScale(MyJson);
+        ArrayList<Double> PointsArray = JsonConverter.ExtractPointsArrayForLine(MyJson);
+
+        if (PointsArray != null)
+        {
+            Line line = (Line) MyShape;
+            line.SetPointsArray(PointsArray);
+        }
 
         MyShape.SetScale(scale);
         if (size != null)
-            ((ClosedShape)MyShape).SetSize(size);
+        {
+            System.out.println(2);
+            System.out.println(2);
+            System.out.println(2);
+            System.out.println(2);
+
+            ((ClosedShape) MyShape).SetSize(size);
+        }
         if (FillColor != null)
             ((ClosedShape) MyShape).SetFillColor(FillColor);
         MyShape.SetPosition(position);
@@ -52,6 +67,7 @@ public class JsonConverter
 
     public static double ExtractStrokeWidth(JSONObject ShapeJson)
     {
+        System.out.println(ShapeJson);
         Object temp = ShapeJson.get("strokeWidth");
 
         double width = (double)temp;
@@ -65,8 +81,8 @@ public class JsonConverter
 
         if (tempx == null) return null;
 
-        double x = (double)tempx;
-        double y = (double)tempy;
+        Double x = (Double)tempx;
+        Double y = (Double)tempy;
 
         return new Position(x, y);
     }
@@ -78,6 +94,11 @@ public class JsonConverter
 
     public static Size ExtractSize(JSONObject shapeJson, Shape shape)
     {
+        System.out.println(1);
+        System.out.println(1);
+        System.out.println(1);
+        System.out.println(1);
+
         if (shape instanceof Circle)
             return new CircleSize(shapeJson);
         else if (shape instanceof Rectangle)
@@ -90,7 +111,11 @@ public class JsonConverter
             return new TriangleSize(shapeJson);
         else
         {
-            System.out.print("Not Supposed to Reach here (JsonConverter.ExtractSize");
+            System.out.println("Not Supposed to Reach here (JsonConverter.ExtractSize");
+            System.out.println("Not Supposed to Reach here (JsonConverter.ExtractSize");
+            System.out.println("Not Supposed to Reach here (JsonConverter.ExtractSize");
+            System.out.println("Not Supposed to Reach here (JsonConverter.ExtractSize");
+
             return null;
         }
     }
@@ -104,6 +129,8 @@ public class JsonConverter
 
     public static ArrayList<Double> ExtractPointsArrayForLine(JSONObject jsonObject)
     {
+        if (jsonObject.containsKey("points") == false)
+            return null;
         ArrayList<Double> list = (ArrayList<Double>) jsonObject.get("points");
         return list;
     }
@@ -113,5 +140,4 @@ public class JsonConverter
         JSONObject NewJson = new Gson().fromJson(jsonObject , JSONObject.class);
         return NewJson;
     }
-
 }
