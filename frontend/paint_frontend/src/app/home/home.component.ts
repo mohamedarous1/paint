@@ -133,9 +133,15 @@ export class HomeComponent implements OnInit {
       .subscribe(id => {this.UpdateIdAndPutInMap(Shape, "Line", id)});
   }
 
+  CreateCustomLine()
+  {
+    var line =  this.shape.shapecreator("Line", "500").get();
+    this.http.CreateLineRequest(line);
+  }
+
   UpdateIdAndPutInMap(Shape:any, ShapeType:string, id:any)
   {
-    Shape.id(id);
+    Shape.id(id.toString());
     console.log(id);
     this.hashmap[id] = ShapeType;
   }
@@ -156,23 +162,25 @@ export class HomeComponent implements OnInit {
     {
       isPaint = true;
       var pos = this.stage.getPointerPosition();
-      // lastLine = new Konva.Line({
-      //   stroke: this.BruchColor,
-      //   id:"5",
-      //   scaleX:1,
-      //   scaleY:1,
-      //   strokeWidth: 5.0,
-      //   globalCompositeOperation:
-      //     mode === 'brush' ? 'source-over' : 'destination-out',
-      //   // round cap for smoother lines
-      //   lineCap: 'round',
-      //   lineJoin: 'round',
-      //   // add point twice, so we have some drawings even on a simple click
-      //   points: [pos.x, pos.y, pos.x, pos.y],
-      // });
-      console.log(lastLine);
-      lastLine =  this.shape.shapecreator("Line", "500").get();
-      lastLine.points([pos.x, pos.y, pos.x, pos.y]);
+      lastLine = new Konva.Line({
+        stroke: this.BruchColor,
+        id:"5",
+        scaleX:1.001,
+        scaleY:1.001,
+        strokeWidth: 5.00001,
+        globalCompositeOperation:
+          mode === 'brush' ? 'source-over' : 'destination-out',
+        // round cap for smoother lines
+        lineCap: 'round',
+        lineJoin: 'round',
+        // add point twice, so we have some drawings even on a simple click
+        points: [pos.x, pos.y, pos.x, pos.y],
+      });
+
+
+      // lastLine =  this.shape.shapecreator("Line", "500").get();
+      // lastLine.points([pos.x, pos.y, pos.x, pos.y]);
+      console.log(lastLine.points());
       this.layer.add(lastLine);
     });
 

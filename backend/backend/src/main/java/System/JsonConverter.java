@@ -71,7 +71,7 @@ public class JsonConverter
         Object temp = ShapeJson.get("strokeWidth");
 
         double width = (double)temp;
-        return width;
+        return (double)width;
     }
 
     public static Position ExtractPosition(JSONObject ShapeJson)
