@@ -289,6 +289,7 @@ export class HomeComponent implements OnInit {
     this.ngOnInit();
     let jsonStr = "";
     this.http.loadXml(this.namefile).subscribe((e)=>{
+          console.log(e);
           jsonStr = e;
           if (jsonStr === "{\"root\":\"\"}")
           {
@@ -330,8 +331,6 @@ export class HomeComponent implements OnInit {
     });
 
   }
-
-
 
   redo()
   {

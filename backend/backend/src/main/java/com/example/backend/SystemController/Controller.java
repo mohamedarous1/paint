@@ -88,17 +88,24 @@ public class Controller {
 
 
     @RequestMapping(value = "/save/{fileName}")
-    public void saveXml(@PathVariable String fileName) {
-        FileHandler.writeXml(fileName, MainSystem.SaveShapes());
+    public void saveXml(@PathVariable String fileName)
+    {
+        if (fileName.contains(".xml"))
+            FileHandler.writeXml(fileName, MainSystem.SaveShapes());
+        else
+            FileHandler.writeJson(fileName, MainSystem.SaveShapes());
     }
-
 
     @RequestMapping(value = "/load/{fileName}")
     public String loadXml(@PathVariable String fileName)
     {
-        String s = FileHandler.readXml("./"+fileName);
+        String s = "";
+        if (fileName.contains(".xml"))
+            s = FileHandler.readXml("./"+fileName);
+        else
+            s = FileHandler.readJson("./" + fileName);
         MyService.ClearService();
-        return FileHandler.readXml("./"+fileName);
+        return s;
     }
 
     @GetMapping("/clear")

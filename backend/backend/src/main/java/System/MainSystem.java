@@ -112,37 +112,6 @@ public class MainSystem
     }
 
 
-//    public static void func(String content)
-//    {
-//        try
-//        {
-//            JSONObject obj = JsonConverter.GetJson(content);
-//
-//
-//            ArrayList<JSONObject> list = (ArrayList<JSONObject>) ((JSONObject) obj.get("root")).get("shape");
-//
-//            MainSystem.ClearAllShapes();
-//
-//            for (JSONObject json : obj)
-//            {
-//
-//            }
-//
-////            for (org.json.simple.JSONObject json : list)
-////            {
-////                String ShapeType = (String) json.get("ShapeType");
-////                String id = (String)json.get("id");
-////                System.out.println(id);System.out.println(id);System.out.println(id);System.out.println(id);System.out.println(id);System.out.println(id);
-////                MainSystem.CreateNewShapeFrontAndEmptyUndo(ShapeType, json);
-////            }
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-
-
     public static Operation GetAndExecuteUndoOperation()
     {
         if (MainSystem.CanMakeUndo() == false) return null;
