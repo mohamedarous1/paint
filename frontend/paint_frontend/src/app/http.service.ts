@@ -13,7 +13,6 @@ export class HttpService {
   CreateRequest(shape: any, ShapeType:string):Observable<any>
   {
     var temp = this.UpdateJsonForFillError(shape);
-    console.log(11111);
     return this.http.get('http://localhost:8080/create/' + ShapeType +
       "/" + temp, {responseType: 'text'});
   }

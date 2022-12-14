@@ -26,6 +26,16 @@ public class Controller {
         return id;
     }
 
+//    @RequestMapping(value="/create"
+//            , method=RequestMethod.POST, produces = "application/json; charset=utf-8")
+//    public int CreateNewObject
+//            (@RequestBody String shapetype, @RequestBody String jsonObject)
+//    {
+//        JSONObject NewJson = JsonConverter.GetJson(jsonObject);
+//        int id = MyService.Create(shapetype, NewJson);
+//        return id;
+//    }
+
     //@GetMapping("/ResizeAndChangePosition/{jsonObject}")
     @RequestMapping(value="/ResizeAndChangePosition"
             , method=RequestMethod.POST, produces = "application/json; charset=utf-8")
@@ -65,7 +75,6 @@ public class Controller {
 
         MyService.ChangeFilColor(NewJson);
     }
-
 
     @GetMapping("/DisableShape/{jsonObject}")
     public void DisableShape(@PathVariable String jsonObject)

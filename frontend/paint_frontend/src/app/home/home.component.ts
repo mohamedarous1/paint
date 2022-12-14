@@ -278,14 +278,22 @@ export class HomeComponent implements OnInit {
     this.ClearEventListeners();
     this.stage.on('click',(e:any)=>this.CopyShape(e));
   }
-  CopyShape(e:any){
+  CopyShape(e:any)
+  {
     let id = e.target.attrs.id;
+    if (id == undefined) return;
     let shape = e.target;
-    if(id=undefined)return;
     let CopiedShape = shape.clone();
-    CopiedShape.x(50).y(100);
+    CopiedShape.x(50.0000001).y(100.000000001);
     this.layer.add(CopiedShape);
     this.ClearEventListeners();
+
+    let ShapeType = this.hashmap[id];
+
+    if (ShapeType == "Line")
+      this.CreateLine(CopiedShape);
+    else
+      this.CreateRequest(CopiedShape, ShapeType);
   }
 
   undo()
@@ -330,7 +338,8 @@ export class HomeComponent implements OnInit {
           {
             let type = shape["ShapeType"];
             let id = shape["id"].toString();
-            shape["fill"] = "#"+shape["fill"];
+            if (type != "Line")
+              shape["fill"] = "#"+shape["fill"];
             let konvaShape = this.shape.shapecreator(type, id).get();
             for(const key in shape)
             {
