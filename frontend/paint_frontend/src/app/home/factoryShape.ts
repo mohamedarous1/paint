@@ -177,19 +177,34 @@ class line implements Shape {
 
   constructor(id : string) {
 
+    // this.structure = new Konva.Line({
+    //   lineCap:"round",
+    //   x: 50.00001,
+    //   y: 100.0000001,
+    //   scaleX:1.00000001,
+    //   scaleY:1.000000001,
+    //   strokeWidth: 3.00000001,
+    //   points:[0,0,20,20],
+    //   draggable : false,
+    //   stroke:"black",
+    //   id : id,
+    // });
+
     this.structure = new Konva.Line({
-      lineCap:"round",
-      x: 50,
-      y: 100,
-      scaleX:1,
-      scaleY:1,
-      strokeWidth: 3,
-      points:[50,100,20,20],
-      draggable : false,
-      stroke:"black",
-      id : id,
-      fill:"#FFFFFF",
+      x:20 + 0.0000001,
+      y:30 + 0.0000001,
+      stroke: "#000000",
+      id:"5",
+      scaleX:1.001,
+      scaleY:1.001,
+      strokeWidth: 5.00001,
+      globalCompositeOperation: 'source-over',
+      lineCap: 'round',
+      lineJoin: 'round',
+      points: [0, 0, 50, 20],
     });
+
+
   }
 
   public get(): any {

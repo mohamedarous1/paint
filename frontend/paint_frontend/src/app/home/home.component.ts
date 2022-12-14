@@ -120,7 +120,6 @@ export class HomeComponent implements OnInit {
     this.CreateRequest(temp, ShapeType);
   }
 
-
   BrushClick()
   {
     this.ClearEventListeners();
@@ -132,7 +131,6 @@ export class HomeComponent implements OnInit {
     Shape.id(id.toString());
     this.hashmap[id] = ShapeType;
   }
-
 
   OnClickOnStageBrush()
   {
@@ -165,7 +163,7 @@ export class HomeComponent implements OnInit {
 
     this.stage.on('mouseup touchend',  () => {
       isPaint = false;
-      this.CreateLineRequest(lastLine);
+      this.CreateLine(lastLine);
     });
 
 
@@ -191,18 +189,18 @@ export class HomeComponent implements OnInit {
       .subscribe(id => {this.UpdateIdAndPutInMap(Shape, ShapeType, id)});
   }
 
-  CreateLineRequest(Shape:any)
+  CreateCustomLine()
+  {
+    var line =  this.shape.shapecreator("Line", "500").get()
+    this.layer.add(line);
+    this.CreateLine(line);
+  }
+
+  CreateLine(Shape:any)
   {
     this.http.CreateLineRequest(Shape)
       .subscribe(id => {this.UpdateIdAndPutInMap(Shape, "Line", id)});
   }
-
-  CreateCustomLine()
-  {
-    var line =  this.shape.shapecreator("Line", "500").get();
-    this.http.CreateLineRequest(line);
-  }
-
 
   BrushColorValue(e:any){
     this.BruchColor = e.target.value;
@@ -322,7 +320,7 @@ export class HomeComponent implements OnInit {
             this.layer.add(konvaShape);
 
             if (type == "Line")
-              this.CreateLineRequest(konvaShape);
+              this.CreateLine(konvaShape);
             else
               this.CreateRequest(konvaShape, type);
           }
