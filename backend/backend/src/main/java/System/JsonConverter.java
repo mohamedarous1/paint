@@ -124,6 +124,11 @@ public class JsonConverter
 
     public static JSONObject GetJson(String jsonObject)
     {
+        System.out.println(jsonObject);
+        System.out.println(jsonObject);
+        System.out.println(jsonObject);
+        System.out.println(jsonObject);
+
         JSONObject NewJson = new Gson().fromJson(jsonObject , JSONObject.class);
         return NewJson;
     }

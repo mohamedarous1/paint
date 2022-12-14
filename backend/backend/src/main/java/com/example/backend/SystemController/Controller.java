@@ -26,8 +26,10 @@ public class Controller {
         return id;
     }
 
-    @GetMapping("/ResizeAndChangePosition/{jsonObject}")
-    public void ResizeAndChangePosition(@PathVariable String jsonObject)
+    //@GetMapping("/ResizeAndChangePosition/{jsonObject}")
+    @RequestMapping(value="/ResizeAndChangePosition"
+            , method=RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public void ResizeAndChangePosition(@RequestBody String jsonObject)
     {
         JSONObject NewJson = JsonConverter.GetJson(jsonObject);
         MyService.ResizeAndChangePosition(NewJson);

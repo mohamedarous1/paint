@@ -18,11 +18,18 @@ export class HttpService {
       "/" + temp, {responseType: 'text'});
   }
 
-  edit_pos_sizeRequest(shape: any) :Observable<any>{
+  // edit_pos_sizeRequest(shape: any) :Observable<any>{
+  //
+  //   var temp = this.UpdateJsonForFillError(shape);
+  //   return this.http.get('http://localhost:8080/ResizeAndChangePosition/' + temp
+  //     ,{responseType : 'text'});
+  // }
 
-    var temp = this.UpdateJsonForFillError(shape);
-    return this.http.get('http://localhost:8080/ResizeAndChangePosition/' + temp
-      ,{responseType : 'text'});
+  edit_pos_sizeRequest(shape:any)
+  {
+    console.log("edit-pos");
+    console.log(shape.attrs);
+    return this.http.post('http://localhost:8080/ResizeAndChangePosition', shape.attrs);
   }
 
   edit_posRequest(shape : any):Observable<any>{
@@ -89,10 +96,8 @@ export class HttpService {
     return this.http.get("http://localhost:8080/load/"+namefile, {responseType : 'text'});
   }
 
-
   CreateLineRequest(shape:any)
   {
-    var temp = JSON.stringify(shape);
     return this.http.post('http://localhost:8080/CreateLine', shape.attrs);
   }
 
