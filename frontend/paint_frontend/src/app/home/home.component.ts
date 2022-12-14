@@ -231,8 +231,8 @@ export class HomeComponent implements OnInit {
 
   ClearEventListeners()
   {
-    let ColorBtn = document.getElementById("favcolor");
-    ColorBtn?.removeEventListener('input', (e:any)=>this.ColorValue(e));
+    //let ColorBtn = document.getElementById("favcolor");
+    //ColorBtn?.removeEventListener('input', (e:any)=>this.ColorValue(e));
 
     this.RemoveSelection();
     this.stage.off("click");
@@ -243,17 +243,22 @@ export class HomeComponent implements OnInit {
 
   fillshape()
   {
+    this.ClearEventListeners();
     this.stage.on('click',(e:any)=>this.ColorValue(e));
   }
   ColorValue(evt:any)
   {
-    if (this.selected == undefined) return;
+    let shape = evt.target;
+    if (shape == undefined) return;
+
     let color:string = this.newtemp;
-    this.ColorShape(this.selected, color);
+    this.ColorShape(shape, color);
   }
   ColorShape(SelectedShape:any, color:string)
   {
-    this.selected.fill(color);
+    SelectedShape.fill(color);
+
+    console.log(this.newtemp);
     this.http.fillRequest(SelectedShape  ).subscribe(e=>{});
   }
 
@@ -271,7 +276,7 @@ export class HomeComponent implements OnInit {
     this.RemoveSelection();
     this.http.deleteRequest(ClickedShape).subscribe(e=>{});
     ClickedShape.hide();
-    this.ClearEventListeners();
+    //this.ClearEventListeners();
   }
   copy()
   {
@@ -306,10 +311,18 @@ export class HomeComponent implements OnInit {
     })
 
   }
+  redo()
+  {
+    this.SelectButtonClick();
+    var temp
+    this.http.redoRequest().subscribe(respone => {
+      temp = JSON.parse(respone);
+      this.UpdateShapeWithJson(temp);
+    })
+  }
 
   save()
   {
-    //this.http.savedemo().subscribe(e=>{});
     this.http.saveXml(this.namefile).subscribe(e=>{});
   }
 
@@ -360,16 +373,6 @@ export class HomeComponent implements OnInit {
 
     });
 
-  }
-
-  redo()
-  {
-    this.SelectButtonClick();
-    var temp
-    this.http.redoRequest().subscribe(respone => {
-      temp = JSON.parse(respone);
-      this.UpdateShapeWithJson(temp);
-    })
   }
 
   UpdateShapeWithJson(temp:any)

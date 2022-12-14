@@ -19,10 +19,6 @@ public class Controller {
     {
         JSONObject NewJson = JsonConverter.GetJson(jsonObject);
         int id = MyService.Create(shapetype, NewJson);
-        System.out.println(id);
-        System.out.println(id);
-        System.out.println(id);
-
         return id;
     }
 

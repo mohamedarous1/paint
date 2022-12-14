@@ -49,10 +49,8 @@ public class MainSystem
     {
         ArrayList<String> Shapes = new ArrayList<>();
         ShapesMap.forEach( (key, value)->{
-            //verified
-            //System.out.println(value.toString());
             JSONObject jsonObject = new JSONObject();
-            //error in this line
+
             value.PutObjectInJson(jsonObject);
 
             Shapes.add(jsonObject.toJSONString());
@@ -82,15 +80,6 @@ public class MainSystem
             obj = (JSONObject)parser.parse(Content);
 
             list = (ArrayList<JSONObject>) ((JSONObject)obj.get("root") ).get("shape");
-            System.out.println(list);
-            System.out.println(list);
-            System.out.println(list);
-            System.out.println(list);
-
-            System.out.println("nhhhhhhh");
-            System.out.println("nhhhhhhh");
-            System.out.println("nhhhhhhh");
-            System.out.println("nhhhhhhh");
 
 
             MainSystem.ClearAllShapes();
