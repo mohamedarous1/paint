@@ -26,11 +26,13 @@ body{
     border-width: 10px;
 
 }
-
+.list{
+  border-style: outset;
+}
 .program{
     position: relative;
     height: 100px;
-    width: 1400px;
+    width: 1470px;
     color : black;
     background-color: rgb(253, 253, 253);
     display: flex;

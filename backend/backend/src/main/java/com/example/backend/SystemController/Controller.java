@@ -3,10 +3,9 @@ import ServicePackage.SystemService;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import System.JsonConverter;
-import System.MainSystem;
+import System.*;
 
 import java.util.ArrayList;
-import System.FileHandler;
 
 @RestController
 @CrossOrigin
@@ -46,6 +45,13 @@ public class Controller {
         MyService.ChangeStrokeColor(NewJson);
     }
 
+    @RequestMapping(value="/CreateLine", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public int CreateLine(@RequestBody JSONObject temp)
+    {
+        int id = MyService.CreateLine(temp);
+        return id;
+    }
+
     @GetMapping("/ChangeFillColor/{jsonObject}")
     public void ChangeFillColor(@PathVariable String jsonObject)
     {
@@ -53,6 +59,7 @@ public class Controller {
 
         MyService.ChangeFilColor(NewJson);
     }
+
 
     @GetMapping("/DisableShape/{jsonObject}")
     public void DisableShape(@PathVariable String jsonObject)
@@ -75,16 +82,19 @@ public class Controller {
         return object;
     }
 
-    @RequestMapping(value="/CreateLine", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public int CreateLine(@RequestBody JSONObject temp)
-    {
-        int id = MyService.CreateLine(temp);
-        return id;
+
+    @RequestMapping(value = "/save/{fileName}")
+    public void saveXml(@PathVariable String fileName) {
+        FileHandler.writeXml(fileName, MainSystem.SaveShapes());
     }
 
-    @GetMapping("/save/xml")
-    public void saveXml()
-    {
-        FileHandler.writeXml(MainSystem.SaveShapes());
+
+    @RequestMapping(value = "/load/{fileName}")
+    public String loadXml(@PathVariable String fileName) {
+        String s = FileHandler.readXml("./"+fileName);
+        return FileHandler.readXml("./"+fileName);
     }
+
+//    @CrossOrigin
+//    @GetMapping("/load/")
 }

@@ -5,6 +5,8 @@ import HelpingClasses.Sizes.Size;
 
 public class Circle extends ClosedShape
 {
+    private CircleSize mySize;
+
     public Circle(int id)
     {
         super(id);

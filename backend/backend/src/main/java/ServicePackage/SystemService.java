@@ -56,4 +56,9 @@ public class SystemService
         int id = MainSystem.CreateNewShapeFrontAndEmptyUndo("Line", jsonObject);
         return id;
     }
+
+//    public void CreateLine(JSONObject jsonObject)
+//    {
+//        MainSystem.CreateNewLine(jsonObject);
+//    }
 }

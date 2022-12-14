@@ -28,10 +28,9 @@ public class RescaleAndChangePositionOperation extends Operation
     @Override
     public void Execute(Shape shape)
     {
-        ClosedShape closedShape = (ClosedShape) shape;
 
-        closedShape.SetPosition(NewPosition);
-        closedShape.SetScale(NewScale);
+        shape.SetPosition(NewPosition);
+        shape.SetScale(NewScale);
     }
     @Override
     public Operation GetReversedOperation()

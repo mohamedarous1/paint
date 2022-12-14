@@ -5,7 +5,7 @@
       <button class="button"  (click)="create('Square')"><i><img src="assets/images/square3.png" /></i></button>
       <button class="button"  (click)="create('Circle')"><i><img src="assets/images/circle3.png" /></i></button>
       <button class="button"  (click)="create('Rectangle')"><i><img src="assets/images/rectangle3.png" /></i></button>
-      <button class="button"  (click)="CreateCustomLine()"><i><img src="assets/images/traingle3.png" /></i></button>
+      <button class="button"  (click)="create('Triangle')"><i><img src="assets/images/traingle3.png" /></i></button>
       <button class="button"  (click)="create('Line')"><i><img src="assets/images/line3.png" /></i></button>
       <li>
   <!--      <input type="checkbox" id ="fill-color" (click)="check_fill()">-->
@@ -34,19 +34,35 @@
       <form>
         <label for="favcolor">Select Color: </label>
         <input type="color" id="favcolor" name="favcolor" [(ngModel)]="newtemp">
+        <button class="button" (click)="fillshape()">fill</button>
       </form>
 
     </div>
     <div class="section4">
       <div>
         <button class="button" (click)="save()">save</button>
-        <input type="text" id="savetext" value="text" [(ngModel)]="namefile">
+        <select id="save" name="save" class="list" [(ngModel)]="namefile">
+          <option value="File1.xml">File1.xml</option>
+          <option value="File2.xml">File2.xml</option>
+          <option value="File3.xml">File3.xml</option>
+          <option value="File4.xml">File4.xml</option>
+          <option value="File5.xml">File5.xml</option>
+          <option value="File6.xml">File6.xml</option>
+          <option value="File7.xml">File7.xml</option>
+          <option value="File1.JSON">File1.JSON</option>
+          <option value="File2.JSON">File2.JSON</option>
+          <option value="File3.JSON">File3.JSON</option>
+          <option value="File4.JSON">File4.JSON</option>
+          <option value="File5.JSON">File5.JSON</option>
+          <option value="File6.JSON">File6.JSON</option>
+          <option value="File7.JSON">File7.JSON</option>
+        </select>
       </div>
       <div>
-        <button class="button">load</button>
-        <input type="file" id="loadtext">
+        <button class="button" (click)="load()">load</button>
       </div>
     </div>
+
 
   </div>
 

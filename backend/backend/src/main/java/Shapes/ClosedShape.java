@@ -33,6 +33,7 @@ public abstract class ClosedShape extends Shape
             System.out.println("Error MySize PutinJson");
             System.out.println("Error MySize PutinJson");
             System.out.println("Error MySize PutinJson");
+
         }
         super.PutObjectInJson(jsonObject);
         jsonObject.put("fill", this.FilColor);

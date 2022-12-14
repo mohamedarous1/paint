@@ -47,7 +47,8 @@ class circle implements Shape {
       stroke:"black",
       strokeWidth: 2,
       draggable: false,
-      id: id
+      id: id,
+      fill:"#FFFFFF",
 
     });
   }
@@ -75,7 +76,8 @@ class rectangle implements Shape {
       stroke:"black",
       strokeWidth: 2,
       draggable: false,
-      id: id
+      id: id,
+      fill:"#FFFFFF",
 
     });
   }
@@ -102,7 +104,8 @@ class ellipse implements Shape {
       stroke:"black",
       strokeWidth: 2,
       draggable : false,
-      id: id
+      id: id,
+      fill:"#FFFFFF",
 
     });
   }
@@ -130,7 +133,8 @@ class square implements Shape {
       stroke:"black",
       strokeWidth: 2,
       id: id,
-      rotation:0
+      rotation:0,
+      fill:"#FFFFFF",
 
     });
   }
@@ -157,7 +161,8 @@ export class triangle implements Shape {
       stroke:"black",
       strokeWidth: 2,
       draggable: false,
-      id : id
+      id : id,
+      fill:"#FFFFFF",
     });
   }
 
@@ -182,7 +187,8 @@ class line implements Shape {
       points:[50,100,20,20],
       draggable : false,
       stroke:"black",
-      id : id
+      id : id,
+      fill:"#FFFFFF",
     });
   }
 

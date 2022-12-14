@@ -26,8 +26,9 @@ export class HomeComponent implements OnInit {
   selected : any;
   tr : any;
   BruchColor:string="black";
-  newtemp:string = "#ffff00";
-  namefile:string = "";
+  newtemp:string = "#ffffff";
+  namefile:string = "File1.xml";
+
 
   hashmap:any = new Map();
   constructor(public http  : HttpService) { }
@@ -52,7 +53,6 @@ export class HomeComponent implements OnInit {
   SelectButtonClick()
   {
     this.ClearEventListeners();
-    this.AddFillEventListener();
     this.stage.on('click', (e:any) => this.OnClickOnStageSelect(e));
   }
   OnClickOnStageSelect(e:any)
@@ -118,25 +118,16 @@ export class HomeComponent implements OnInit {
 
     this.SelectButtonClick();
     console.log(ShapeType);
+    console.log(temp.toJSON())
     this.CreateRequest(temp, ShapeType);
   }
 
-  CreateRequest(Shape:any, ShapeType:string)
-  {
-    this.http.CreateRequest(Shape, ShapeType)
-      .subscribe(id => {this.UpdateIdAndPutInMap(Shape, ShapeType, id)});
-  }
 
-  CreateLineRequest(Shape:any)
-  {
-    this.http.CreateLineRequest(Shape)
-      .subscribe(id => {this.UpdateIdAndPutInMap(Shape, "Line", id)});
-  }
 
-  CreateCustomLine()
+  BrushClick()
   {
-    var line =  this.shape.shapecreator("Line", "500").get();
-    this.http.CreateLineRequest(line);
+    this.ClearEventListeners();
+    this.OnClickOnStageBrush();
   }
 
   UpdateIdAndPutInMap(Shape:any, ShapeType:string, id:any)
@@ -146,11 +137,7 @@ export class HomeComponent implements OnInit {
     this.hashmap[id] = ShapeType;
   }
 
-  BrushClick()
-  {
-    this.ClearEventListeners();
-    this.OnClickOnStageBrush();
-  }
+  
   OnClickOnStageBrush()
   {
     let brushcolor = document.getElementById("favcolor");
@@ -163,6 +150,8 @@ export class HomeComponent implements OnInit {
       isPaint = true;
       var pos = this.stage.getPointerPosition();
       lastLine = new Konva.Line({
+        x:pos.x + 0.0000001,
+        y:pos.y + 0.0000001,
         stroke: this.BruchColor,
         id:"5",
         scaleX:1.001,
@@ -174,7 +163,7 @@ export class HomeComponent implements OnInit {
         lineCap: 'round',
         lineJoin: 'round',
         // add point twice, so we have some drawings even on a simple click
-        points: [pos.x, pos.y, pos.x, pos.y],
+        points: [0, 0, 0, 0],
       });
 
 
@@ -200,11 +189,31 @@ export class HomeComponent implements OnInit {
       e.evt.preventDefault();
 
       const pos = this.stage.getPointerPosition();
-      var newPoints = lastLine.points().concat([pos.x, pos.y]);
+      var newPoints = lastLine.points().concat([pos.x - lastLine.x(), pos.y - lastLine.y()]);
       lastLine.points(newPoints);
     });
 
   }
+
+  CreateRequest(Shape:any, ShapeType:string)
+  {
+    this.http.CreateRequest(Shape, ShapeType)
+      .subscribe(id => {this.UpdateIdAndPutInMap(Shape, ShapeType, id)});
+  }
+
+  CreateLineRequest(Shape:any)
+  {
+    this.http.CreateLineRequest(Shape)
+      .subscribe(id => {this.UpdateIdAndPutInMap(Shape, "Line", id)});
+  }
+
+  CreateCustomLine()
+  {
+    var line =  this.shape.shapecreator("Line", "500").get();
+    this.http.CreateLineRequest(line);
+  }
+
+
   BrushColorValue(e:any){
     this.BruchColor = e.target.value;
   }
@@ -220,25 +229,23 @@ export class HomeComponent implements OnInit {
     this.stage.off('mousemove touchmove');
     this.stage.off('mouseup touchend');
   }
-  AddFillEventListener()
+
+  fillshape()
   {
-    let colorbtn = document.getElementById("favcolor");
-    colorbtn?.addEventListener('input', (e:any)=>this.ColorValue(e));
+    this.stage.on('click',(e:any)=>this.ColorValue(e));
   }
   ColorValue(evt:any)
   {
     if (this.selected == undefined) return;
-    let color:string = evt.target.value;
+    let color:string = this.newtemp;
     this.ColorShape(this.selected, color);
   }
   ColorShape(SelectedShape:any, color:string)
   {
     this.selected.fill(color);
-    console.log(color + "   "+ color.substring(1,7) + " "+ this.selected.fill());
-
-    console.log(color);
     this.http.fillRequest(SelectedShape  ).subscribe(e=>{});
   }
+
   DeleteShape(){
     this.ClearEventListeners();
     //this.AddFillEventListener();
@@ -284,8 +291,43 @@ export class HomeComponent implements OnInit {
 
   save()
   {
-    this.http.savedemo().subscribe(e=>{});
+    //this.http.savedemo().subscribe(e=>{});
+    this.http.saveXml(this.namefile).subscribe(e=>{});
   }
+
+  load(){
+    let jsonStr = "";
+    this.http.loadXml(this.namefile).subscribe((e)=>{
+          jsonStr = e;
+          console.log(jsonStr);
+          let shapes = JSON.parse(jsonStr)["root"]["shape"];
+
+          for(let shape of shapes){
+            console.log(shape);
+            let type = shape["ShapeType"];
+            let id = shape["id"].toString();
+            shape["fill"] = "#"+shape["fill"];
+            let konvaShape = this.shape.shapecreator(type, id).get();
+            for(const key in shape){
+                let value = shape[key];
+                if(key === "ShapeType"){
+                  continue;
+                }
+                if(key == "full"){}
+                konvaShape.attrs[key] = value;
+
+
+            }
+            console.log(konvaShape);
+            this.layer.add(konvaShape);
+          }
+
+
+    });
+
+  }
+
+
 
   redo()
   {
