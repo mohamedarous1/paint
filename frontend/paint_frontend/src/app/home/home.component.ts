@@ -98,6 +98,7 @@ export class HomeComponent implements OnInit {
   }
   SelectShape(SelectedShape:any)
   {
+    this.RemoveSelection();
     this.selected = SelectedShape;
     this.selected.draggable(true);
 
