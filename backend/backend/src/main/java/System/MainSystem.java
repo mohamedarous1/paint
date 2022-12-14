@@ -138,13 +138,6 @@ public class MainSystem
 
         DoOperation(operation);
 
-        ClosedShape debugshape = (ClosedShape) NewShape;
-        System.out.println(debugshape.GetSize());
-        System.out.println(debugshape.GetSize());
-        System.out.println(debugshape.GetSize());
-        JSONObject jj = new JSONObject();
-//        debugshape.PutObjectInJson(jj);
-
         return ID;
     }
 

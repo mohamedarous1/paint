@@ -5,8 +5,6 @@ import HelpingClasses.Sizes.Size;
 
 public class Circle extends ClosedShape
 {
-    private CircleSize mySize;
-
     public Circle(int id)
     {
         super(id);
@@ -21,12 +19,12 @@ public class Circle extends ClosedShape
     @Override
     public void SetSize(Size size)
     {
-        this.mySize = (CircleSize) size;
+        this.MySize = (CircleSize) size;
     }
     @Override
     public Size GetSize()
     {
-        return this.mySize;
+        return this.MySize;
     }
 
 
