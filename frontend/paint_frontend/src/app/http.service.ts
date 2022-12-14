@@ -18,13 +18,6 @@ export class HttpService {
       "/" + temp, {responseType: 'text'});
   }
 
-  // edit_pos_sizeRequest(shape: any) :Observable<any>{
-  //
-  //   var temp = this.UpdateJsonForFillError(shape);
-  //   return this.http.get('http://localhost:8080/ResizeAndChangePosition/' + temp
-  //     ,{responseType : 'text'});
-  // }
-
   edit_pos_sizeRequest(shape:any)
   {
     console.log("edit-pos");

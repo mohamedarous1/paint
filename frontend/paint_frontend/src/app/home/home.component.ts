@@ -24,7 +24,8 @@ export class HomeComponent implements OnInit {
   fill : boolean = false ;
   color : string = "black";
   selected : any;
-  tr : any;
+  tr1 : any;
+  tr2: any;
   BruchColor:string="black";
   newtemp:string = "#ffffff";
   namefile:string = "File1.xml";
@@ -44,8 +45,22 @@ export class HomeComponent implements OnInit {
     this.layer = new Konva.Layer;
     this.stage.add(this.layer);
 
-    this.tr  = new Konva.Transformer();
-    this.layer.add(this.tr);
+    this.tr1 = new Konva.Transformer({
+      rotateEnabled:false,
+      keepRatio: true,
+      enabledAnchors: [
+        'top-left',
+        'top-right',
+        'bottom-left',
+        'bottom-right',
+      ],
+    });
+    this.tr2 = new Konva.Transformer({
+      rotateEnabled:false,
+    });
+
+    this.layer.add(this.tr1);
+    this.layer.add(this.tr2);
 
     this.stage.on('click',  (e:any) => this.OnClickOnStageSelect(e));
   }
@@ -85,7 +100,14 @@ export class HomeComponent implements OnInit {
   {
     this.selected = SelectedShape;
     this.selected.draggable(true);
-    this.tr.nodes([this.selected]);
+
+    let id:number = SelectedShape.id();
+    let ShapeType:any = this.hashmap[id];
+
+    if (ShapeType == "Circle" || ShapeType == "Square")
+      this.tr1.nodes([SelectedShape]);
+    else
+      this.tr2.nodes([SelectedShape]);
   }
 
   GetNewSizeAndPosition()
@@ -102,7 +124,8 @@ export class HomeComponent implements OnInit {
     if (this.selected == undefined) return;
 
     this.selected.draggable(false);
-    this.tr.nodes([]);
+    this.tr1.nodes([]);
+    this.tr2.nodes([]);
     this.selected = undefined;
   }
 
@@ -113,8 +136,6 @@ export class HomeComponent implements OnInit {
       temp.fill("#FFFFFF");
     }
     this.layer.add(temp);
-    this.selected = temp;
-    this.tr.nodes([this.selected])
 
     this.SelectButtonClick();
     this.CreateRequest(temp, ShapeType);
@@ -126,10 +147,11 @@ export class HomeComponent implements OnInit {
     this.OnClickOnStageBrush();
   }
 
-  UpdateIdAndPutInMap(Shape:any, ShapeType:string, id:any)
+  UpdateIdAndPutInMapAndSelectShape(Shape:any, ShapeType:string, id:any)
   {
     Shape.id(id.toString());
     this.hashmap[id] = ShapeType;
+    this.SelectShape(Shape);
   }
 
   OnClickOnStageBrush()
@@ -186,7 +208,7 @@ export class HomeComponent implements OnInit {
   CreateRequest(Shape:any, ShapeType:string)
   {
     this.http.CreateRequest(Shape, ShapeType)
-      .subscribe(id => {this.UpdateIdAndPutInMap(Shape, ShapeType, id)});
+      .subscribe(id => {this.UpdateIdAndPutInMapAndSelectShape(Shape, ShapeType, id)});
   }
 
   CreateCustomLine()
@@ -199,7 +221,7 @@ export class HomeComponent implements OnInit {
   CreateLine(Shape:any)
   {
     this.http.CreateLineRequest(Shape)
-      .subscribe(id => {this.UpdateIdAndPutInMap(Shape, "Line", id)});
+      .subscribe(id => {this.UpdateIdAndPutInMapAndSelectShape(Shape, "Line", id)});
   }
 
   BrushColorValue(e:any){
@@ -242,10 +264,10 @@ export class HomeComponent implements OnInit {
   DeleteSelectedShape(e:any){
     let id = e.target.attrs.id;
     let ClickedShape = e.target;
-    if(id==undefined){
+    if(id==undefined)
       return;
-    }
-    this.tr.nodes([]);
+
+    this.RemoveSelection();
     this.http.deleteRequest(ClickedShape).subscribe(e=>{});
     ClickedShape.hide();
     this.ClearEventListeners();
